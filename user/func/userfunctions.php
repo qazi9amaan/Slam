@@ -26,14 +26,14 @@
 				            <div class="fans">
 				                <i class="icofont-star-shape"></i>
 				                 <h4>'.$row["fans"].'</h4>
-				                 <p>Fans</p>
+				                 
 				            </div>  
 				            </div>
 				        <div class="col-6">
 				             <div class="fans">
 				                <i class="icofont-ui-user-group"></i>
 				                 <h4>'.$row["friends"].'</h4>
-				                 <p>Friends</p>
+				                 
 				               </div>
 				        </div>
 						</div>

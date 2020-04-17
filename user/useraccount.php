@@ -1,20 +1,3 @@
-
-
-
-
-<!-- 
-
-TO DO
-PASSWORD RESET
-URL HANDLING
-
- -->
-
-
-
-
-
-
 <?php 
     session_start();
    
@@ -22,7 +5,7 @@ URL HANDLING
     {
     	     header("Location: home");
     }
-    $sharelink = "localhost/".$_SESSION['currentusername'];
+    $sharelink = "".$_SESSION['currentusername'];
 
 
 ?>
@@ -62,54 +45,10 @@ URL HANDLING
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
 <style>
-    #hero .fans i {
-        font-size: 24px;
-color: #7cc576;
-float: left;
-width: 50px;
-height: 50px;
-background: #eaf6e9;
-display: flex;
-justify-content: center;
-align-items: center;
-border-radius: 50px;
-transition: all 0.3s ease-in-out;
+  
+section{
+  padding: 41px 0px;
 }
-
-
-#hero .fans:hover i {
-    background: #7cc576;
-    color: #fff;
-}
-
-#hero .fans h4 {
-  padding: 0 0 0 60px;
-  font-size: 22px;
-  font-weight: 600;
-  margin-bottom: 2px;
-  color: #fafafa;
-}
-
-#hero .fans p {
-  padding: 0 0 0 60px;
-  margin-bottom: 0;
-  font-size: 14px;
-  color: #fafafa;
-}
-#hero .fans {
-  margin-top: 40px;
-}
-
-
-
-#hero .hero-logo  img {
-  height: 150px;
-  width: 150px;
-  padding: 1px;
-  border-radius: 50%;
-  border: 3px solid #7cc576;
-}
-
 
 .nav-link{
     color: #7cc576;
@@ -605,7 +544,7 @@ transition: all 0.3s ease-in-out;
 #share_count_btn .fans h4{
 position: absolute;
 left: 38px;
-top: -3px;
+top: 5px;
  size: 12px;
 }
 #share_count_btn .fans p{
@@ -653,7 +592,7 @@ top: 18px;
   color: #7cc576;
 }
 
-#sharemodal h2 , #sharemodal p , #help_share{
+#sharemodal h4 , #sharemodal p , #help_share{
 color: #7cc576
 }
 
@@ -675,7 +614,7 @@ color: #7cc576
   background: #fff;
   border: 1px;
   background-clip: border-box;
-  border: 1px solid rgba(0,0,0,.125);
+ 
   border-radius: .25rem;
 }
 #large_searchresult{
@@ -688,11 +627,11 @@ color: #7cc576
 }
 
 #searchmodal i {
-    padding: 9.57px;
+    padding: 9.87px;
     background-clip: padding-box;
     border: 1px solid #ced4da;
     border-radius: .25rem;
-    font-size: 15px;
+    font-size: 17px;
     margin-left: -28px;
 }
 
@@ -731,7 +670,7 @@ color: #7cc576
           <div class="container">
            <div class="row">
              
-            <div class="col-11 my-2 ">
+            <div class="col-10 my-2 ">
               <input type="search" name="" id ="large_search_box" class="form-control" placeholder="Use @ to search by username ...">
                 <div id="large_searchresult" class="container">
                   
@@ -769,13 +708,13 @@ color: #7cc576
       <div class="modal-body">
           <div class="container">
            <div class="row">
-             <div class="col-4 ">
-                  <div class="share_image pull-right mr-3 ">
+             <div class="col-4">
+                  <div class="share_image pull-right ">
                  <a href="#"><img src="<?php echo $_SESSION['currentimageurl']; ?>" alt=""></a>
                 </div>
             </div>
-            <div class="col-8 p-0">
-              <h2><?php echo $_SESSION['currentusername']; ?></h2>
+            <div class="col-7">
+              <h4><?php echo $_SESSION['currentusername']; ?></h4>
               <p><?php echo $_SESSION['currentuserbio']; ?></p>
               <div class="container">
                 <div id ="share_count_btn" class="count">
@@ -866,40 +805,6 @@ color: #7cc576
 
 
 
-  <!-- ======= Hero Section ======= -->
-  <section id="hero">
-
-    <div class="hero-container">
-        <div class="user-box">
-                    <div class="img-relative">
-                        <!-- Loading image -->
-                        <div class="overlay uploadProcess" style="display: none;">
-                            <div class="overlay-content"><img src="/assets/img/loading.gif"/></div>
-                        </div>
-                        <!-- Hidden upload form -->
-                        <form method="post" action="upload.php" enctype="multipart/form-data" id="picUploadForm" target="uploadTarget">
-                            <input type="file" name="picture" id="fileInput"  style="display:none"/>
-                        </form>
-                        <iframe id="uploadTarget" name="uploadTarget" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe>
-                        <!-- Image update link -->
-                        <a id = "update_account" class="editLink" href="javascript:void(0);">
-                             <i class="icofont-settings-alt"></i>
-                        </a>
-                        <!-- Profile image -->
-                        <img src="<?php echo $_SESSION['currentimageurl']; ?>" class = "profile_image" id="imagePreview">
-                    </div>
-        </div>
-
-      <div class="container break-text"> 
-      <h1  data-aos="fade-up"><?php echo $_SESSION['currentuserbio']; ?> </h1>
-        </div>
-          <div id ="" class="row align-content-center count"> 
-           
-        </div>
-
-          
-    </div>
-  </section><!-- End Hero -->
 
 
       <!-- ======= Header ======= -->
@@ -915,11 +820,11 @@ color: #7cc576
                   <img class = "profile_image_main img-responsive" src="<?php echo $_SESSION['currentimageurl']; ?>" alt="">
                 </a>
                 </div>
-                <div id = "searchbtn" class="col-1 ml-4 p-0 m-0 mt-2 mr-0 text-left">
+                <div id = "searchbtn" class="col-1 ml-4 pl-2 p-0 m-0 mt-2 mr-0 text-left">
                   <a href=""> <i class="icofont-search"></i></a>
                 </div>
 
-                <div id ="searchdiv" style="margin-right: 6rem!important" class="col p-0 m-0 mt-2 mt-2 text-left">
+                <div id ="searchdiv" style="margin-right: 5rem !important" class="col p-0 m-0 mt-2 mt-2 text-left">
                 <a id ="showusername"><?php echo $_SESSION['currentusername']; ?></a>
                 <input type="search" name="" id="showsearchbar" class="form-control" placeholder="Use @ to search by username">
                 <div id="searchresult" class="container">
@@ -963,7 +868,7 @@ color: #7cc576
   <main id="main">
 
     <!-- ======= About Us Section ======= -->
-    <section id="about" class="about mt-4">
+    <section id="about" class="about ">
       <div class="container">
             <div class="section-title" data-aos="fade-up">
                 <ul class="nav nav-pills  nav-fill justify-content-center" id="myTab" role="tablist">
@@ -1103,13 +1008,11 @@ var question_ini = $("#questions").val();
 var selected_questions_list = getArray(question_ini);
 
 $(document).ready(function () {
-  getCount();
   initialise_counter();
   notification_color();
    
       setInterval(function()
   {
-    getCount();
     initialise_counter();
   } ,1300);
 
@@ -1320,6 +1223,9 @@ $('.pinnedpostshowbtn').click(function(e){
        $('#searchdiv').attr('class','col p-0 m-0 mt-2 text-left');
          $('#askquestion').attr('class','icofont-tack-pin');
          $('#searchresult').css('display','none');
+         $('.mobile-nav-toggle').css('display','block');
+         $('#askquestion').css('right','45px');
+
   }
 
 });
@@ -1348,6 +1254,7 @@ $(document).on('click', '#delete_pin', function(e){
 //SHARE IT
 $(document).on('click', '.sharebtn', function(e){  
     e.preventDefault();
+    getCount();
   $('#sharemodal').modal('show');
 });
 
@@ -1371,11 +1278,14 @@ $('#searchbtn').click(function(e){
  $('#showusername').css('display','none');
  $('#showsearchbar').css('display','block');
  $('#searchresult').css('display','block');
+  $('.mobile-nav-toggle').css('display','none');
 
- $('#showsearchbar').css('margin-left','8rem !important');
- $('#searchdiv').attr('style','margin-left: 1rem !important; margin-right: 6rem!important;');
+
+ $('#showsearchbar').css('margin-left','2.2rem !important');
+ $('#searchdiv').attr('style','margin-left: 2.2rem !important; margin-right: 3rem!important;');
   $('#searchdiv').attr('class','col p-0 m-0 mt-1 text-left');
  $('#askquestion').attr('class','icofont-close');
+ $('#askquestion').css('right','1px');
 });
 
 $('#showsearchbar').keyup(function(){
@@ -1386,6 +1296,7 @@ $('#showsearchbar').keyup(function(){
     type:'get',
     data: "searchuser=true&value="+$(this).val(),
     success: function(data) {
+      $('#searchresult').css( 'border','1px solid rgba(0,0,0,.125)');
         $('#searchresult').html(data);
     }
   });

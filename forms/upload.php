@@ -22,7 +22,7 @@ if(!empty($_FILES['picture']['name'])){
                if ($result = mysqli_query($conn, $delete_sql)) {
                     while ($row = mysqli_fetch_assoc($result)){
 
-                        if($row['profile_picture'] !='../assets/img/default.png')
+                        if($row['profile_picture'] !='/assets/img/default.png')
                             unlink('..'.$row['profile_picture']);
                         }
                     }
