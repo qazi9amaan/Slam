@@ -702,6 +702,24 @@ color: #7cc576
 }
 
 
+.carousel-indicators li {
+    
+      
+    background-color: #7cc576;
+   width: .625rem;
+    height: .625rem;
+    cursor: pointer;
+    border-radius: 50%;
+  }
+
+.carousel-indicators {
+    top: -230%;
+    position: absolute;
+    right: 0;
+  }
+#posts :hover{
+  cursor: pointer;
+}
 </style>
 <body>
 
@@ -833,6 +851,9 @@ color: #7cc576
 
       <div class="modal-body">
           <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                  <ol class="carousel-indicators">
+                  <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                  </ol>
                   <div class="carousel-inner">
                     <div id="posts">
                    
@@ -923,14 +944,15 @@ color: #7cc576
         
           <nav class="nav-menu d-none d-lg-block">
             <ul class="nav-inner">
-              <li><a class="" href="index.html">Home</a></li>
+              <li><a class="searchbtnlg" href="#">Search</a></li>
               <li><a class="pinnedpostshowbtn" href="#">Pinned Stories</a></li>
               <li><a class="sharebtn" href="#">Share Link</a></li>
 
 
               <li class="nav-logo"><a href="/public/showuser.php?username=<?php echo $_SESSION['currentusername']; ?> "><img src="<?php echo $_SESSION['currentimageurl']; ?>" alt="" class="img-responsive profile_image_main large img-fluid"></a></li>
-             
-              <li><a class="searchbtnlg" href="#">Search</a></li>
+
+              <li><a c href="/forms/setupaccount.php">Settings</a></li>
+
 
                         <li><a href="/public/showuser.php?username=<?php echo $_SESSION['currentusername']; ?> ">My wall</a></li>
               <li><a href="/logout.php">Logout</a></li>
@@ -1399,6 +1421,14 @@ $('#large_search_box').keyup(function(){
   });
    }
 });
+
+
+
+$(document).on('click', '#posts', function(e){  
+   $('#carouselExampleIndicators').carousel('next');
+});
+
+
 </script>
 
                         

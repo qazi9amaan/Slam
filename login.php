@@ -288,7 +288,6 @@
         });
 
 
-
         $('#loginbtn').click(function(){
                 
              var str = $("#loginform").serialize();
@@ -307,12 +306,6 @@
                 }
             });
         });
-
-       
-    
-            
-    
-    
     
     </script>
 </body>

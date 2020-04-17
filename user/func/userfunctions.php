@@ -371,14 +371,14 @@
 
 
          function getallpinnedposts($conn, $user){
-            $active =0;
+            $active =1;
 
             $sql = "SELECT * FROM pinnedposts WHERE owner='$user' ORDER BY udate DESC ";
             $result = mysqli_query($conn, $sql);
             if (mysqli_num_rows($result) > 0) {
                 while($row = mysqli_fetch_assoc($result)) {
 
-                            if($active ==0 ){
+                            if($active ==1 ){
                                 echo ' <div class="carousel-item active">
                                  <div id ="msgbox" class="post p-3 mt-3">
                                  <div class="container ">
@@ -409,7 +409,7 @@
                                  </div>
                                 </div>   
                                      ';
-                                     $active=1;
+                                     $active=2;
                                  }else{
                                     echo ' <div class="carousel-item ">
                                  <div id ="msgbox" class="post p-3 mt-3">
@@ -425,7 +425,7 @@
                                  </div>
                                  <div class="container mt-2">
                                    <div class="row">
-                                     <div class="col-11">
+                                     <div class="col-11 text-justify">
                                        <small class="caption text-lowercase">
                                             <span class = "text-lowercase" style="color: #fff;">@'.$row['questioner'].' </span>&nbsp;
                                             '.$row['caption'].'
@@ -441,6 +441,12 @@
                                  </div>
                                 </div>   
                                      ';
+
+                                      echo '<script>
+                                        $(".carousel-indicators").append(\'<li data-target= "#carouselExampleIndicators"data-slide-to="'.$active.'" class=""></li>\');
+                                     </script>';
+                                     $active =  $active+1;
+
                                  }
 
 

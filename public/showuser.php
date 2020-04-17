@@ -336,8 +336,24 @@ transition: all 0.3s ease-in-out;
   padding: 3px;
 }
 
+.carousel-indicators li {
+    
+      
+    background-color: #7cc576;
+   width: .625rem;
+    height: .625rem;
+    cursor: pointer;
+    border-radius: 50%;
+  }
 
-
+.carousel-indicators {
+    top: -230%;
+    position: absolute;
+    right: 0;
+  }
+#posts :hover{
+  cursor: pointer;
+}
 </style>
 
 
@@ -366,6 +382,9 @@ transition: all 0.3s ease-in-out;
     </div>
       <div class="modal-body">
           <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                  <ol class="carousel-indicators">
+                  <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                  </ol>
                   <div class="carousel-inner">
                     <div id="posts">
                    
@@ -828,6 +847,11 @@ setInterval(function()
 {
   initialise_counter();
 } , 3000);
+
+
+$(document).on('click', '#posts', function(e){  
+   $('#carouselExampleIndicators').carousel('next');
+});
 
 
 </script>

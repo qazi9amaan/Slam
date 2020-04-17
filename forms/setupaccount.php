@@ -329,13 +329,32 @@ user i {
                         <input hidden type="text" value ="<?php echo $_SESSION['currentusername']; ?>" name ="username" id = "image_upload_name">
 
                 </div>
+                                     <?php
+                        if(isset($_SESSION['currentuserbio'])) {
+                      ?>
+
                <div class="container">
                         <div class="col-12">
                            <textarea name = "bio" maxlength="50"rows ="4" data-aos="fade-up" type="text" id="user-bio" 
                            placeholder = "Write about yourself?" class="form-control "></textarea>
                        </div>
                </div>
+    
+        <?php
+          }else{
 
+        ?>
+           <div class="container">
+                        <div class="col-12">
+                           <textarea name = "bio" maxlength="50"rows ="4" data-aos="fade-up" type="text" id="user-bio" 
+                           placeholder = "Write about yourself?" class="form-control "><?php echo $_SESSION['currentuserbio']; ?></textarea>
+                       </div>
+               </div>
+
+
+        <?php 
+
+      }?>
            <div class="row" data-aos="fade-down">
                 <div class="col-12 text-center">
                     <div class="fans active_btn">
@@ -533,7 +552,7 @@ user i {
              jQuery.ajax({
                 url: "authentication.php",
                 type: "POST",
-                 data: "&update_details=true&" + str,
+                 data: "update_details=true&" + str,
                 success: function(data) {
                      if (data == 'OK') {
                              window.location = '/user/useraccount.php';

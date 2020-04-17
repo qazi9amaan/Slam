@@ -4,8 +4,8 @@
   {
      header("Location: user/useraccount.php");
   }
-
-
+ include('connection.php');
+  $error =0;
 ?>
 
 <!DOCTYPE html>
@@ -13,15 +13,15 @@
 
 <head>
     <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta conntent="width=device-width, initial-scale=1.0" name="viewport">
 
     <title>Knight Bootstrap Template - Index</title>
-    <meta content="" name="descriptison">
-    <meta content="" name="keywords">
+    <meta conntent="" name="descriptison">
+    <meta conntent="" name="keywords">
 
-    <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon">
-    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <!-- Faviconns -->
+    <link href="assets/img/faviconn.png" rel="iconn">
+    <link href="assets/img/apple-touch-iconn.png" rel="apple-touch-iconn">
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -29,7 +29,7 @@
     <!-- Vendor CSS Files -->
     <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/vendor/icofont/icofont.min.css" rel="stylesheet">
-    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="assets/vendor/boxiconns/css/boxiconns.min.css" rel="stylesheet">
     <link href="assets/vendor/venobox/venobox.css" rel="stylesheet">
     <link href="assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
     <link href="assets/vendor/aos/aos.css" rel="stylesheet">
@@ -51,11 +51,11 @@
       
       
 
-      .aligner {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-}
+    .aligner {
+      display: flex;
+      justify-conntent: center;
+      flex-direction: column;
+    }
 
 
 
@@ -71,7 +71,7 @@ user i {
   height: 38px;
   border: 1px solid #7cc576;
   display: flex;
-  justify-content: center;
+  justify-conntent: center;
   align-items: center;
   border-radius: 50px;
   transition: all 0.3s ease-in-out;
@@ -107,6 +107,10 @@ user i {
     border: 1px solid;
 }
 
+
+#not{
+  display: none;
+}
     </style>
 
 </head>
@@ -123,33 +127,89 @@ user i {
      
   
   <?php 
-      if(isset($_GET['changepassword']))
-      {
-    ?>
-        <section id="resetpass">
-                <div class="container">
+        if (isset($_GET["key"]) && isset($_GET["email"]) && isset($_GET["action"]) 
+          && ($_GET["action"]=="reset") && !isset($_POST["action"])){
+
+          $key = $_GET["key"];
+          $email = $_GET["email"];
+          $curDate = date("Y-m-d H:i:s");
+          $query = mysqli_query($conn,
+          "SELECT * FROM `password_reset_temp` WHERE `key`='".$key."' and `email`='".$email."';"
+          );
+          $row = mysqli_num_rows($query);
+
+          if($row==""){
+            $error = 1;
+            
+          ?>
+            
+        <section id="conntact" >
+            <div class="conntainer">
                   <div class="row">
                     <div class="col-12">
                       <div class="card text-center p-3 mx-xl-5">
                             <div class="card-body">
-                               <form id = "forgetform" >
-                              <h5 class="card-title"><img id ="userimg" src="/assets/img/default.png" alt=""></h5>
+                          <h5 class="card-title lead">INVALID / EXPIRED LINK</h5>
                               <p class="card-text px-4 text-center px-lg-5">
-                                <p id ="mainname" class="text-muted lead ">Reset your password</p>
-                              <p class="text-left mb-0"> 
-                                 <small class="lead " style="font-size: 0.9rem !important">  Password</small>
+                                  <p class="text-center m-3 p-3">
+                                  <small class="lead" style="font-size: 1rem">
+                                      The link is invalid/expired. Either you did not copy the correct link
+                                      from the email, or you have already used the key in which case it is 
+                                      deactivated.                                   
+                                    </small><br><br>
+                                    <a href="forgotpassword.php" class="btn btn-outline-success">Reset Again</a>
+                                </p>
+                                </p>
+                            </div>
+                          </div>
+                    </div>
+                  </div>
+            </div>
+        </section>
+
+
+
+          <?php
+
+          }else{
+
+          $row = mysqli_fetch_assoc($query);
+          $expDate = $row['expDate'];
+          if ($expDate >= $curDate){
+       
+    ?>
+        <section id="conntact">
+                <div class="conntainer">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="card text-center p-3 mx-xl-5">
+                             <div class="card-body">
+                               <form id = "changepassword" >
+                              <h5 class="card-title"><img id ="userimg" src="/assets/img/default.png" alt=""></h5>
+                              <p class="card-text px-3 text-center px-lg-5">
+                                <p class="text-left">
+
+                                <!-- EMAIL ADDRESS -->
+                                <input type="email" name="email"  hidden value ="<?php echo $_GET['email']; ?>">
+
+                                  <small class="lead">
+                                  New password
+                                </small>
+                                <input type="password" name="password" id="newpass" class="form-control">
+                                </p>
+                                <p class="text-left">
+                                  <small class="lead ">
+                                 Confirm New password
+                                </small>
+                                <input type="password" name="confirmpassword" id="confirmnewpass" class="form-control">
+                                </p>
+                                <p class="text-left">
+                                  <small class="lead" style="color: red;" id="changenewpass-helptext"></small>
+                                </p>
                               </p>
-                                  <input type="password" name="password" id="password" class="form-control ">
-                                   <p class="text-left mb-0"> 
-                                 <small class="lead " style="font-size: 0.9rem !important">  Confirm Password</small>
-                              </p>
-                                  <input type="password" name="confirmpassword" id="confirmpassword" class="form-control ">
-                                  <p id ="">
-                                    <small class="lead " id ="messagealert" style="font-size: 0.9rem !important; color:#dc3545"></small>
-                                  </p>
-                              </p>
+
                               <div class="text-center">
-                                <button href="#" id ="changepass" type="submit" class="btn btn-outline-success">Change password</button>
+                                <button id ="changeoldpassword" class="btn btn-outline-success">Change password</button>
                               </div>
                               </form>
                             </div>
@@ -159,39 +219,81 @@ user i {
                   </div>
             </div>
         </section>
-        <?php 
+
+        <?php
+
+          }else{
+            $error = $error+1;
+           
+
+           ?>
+
+            <section id="conntact" >
+            <div class="conntainer">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="card text-center p-3 mx-xl-5">
+                            <div class="card-body">
+                                <h5 class="card-title lead"> EXPIRED LINK</h5>
+                              <p class="card-text px-4 text-center px-lg-5">
+                                  <p class="text-center m-3 p-2">
+                                  <small class="lead " style="font-size: 1rem">
+                                     Sorry, the link is expired. You are trying to use the expired link which 
+                                     was valid only for 24 hours.                    
+                                    </small><br><br>
+                                    <a href="forgotpassword.php" class="btn btn-outline-success">Reset Again</a>
+                                </p>
+                                </p>
+                            </div>
+                          </div>
+                    </div>
+                  </div>
+            </div>
+        </section>
+
+           <?php
+          }
+
+          }
         }else{
+
+          if($error==0)
+          {
         ?>
 
-        <section id="contact" >
+        <section id="conntact" >
           <div class="user">
             <a class  href="index.php"><i id = "askquestion" class="icofont-home"></i></a>
           </div>
           </div>
 
 
-            <div class="container">
+            <div class="conntainer">
                   <div class="textleft">
                   
                   </div>
                   <div class="row">
                     <div class="col-12">
                       <div class="card text-center p-3 mx-xl-5">
-                          
+                           
                             <div class="card-body">
-                               <form id = "changepassword" >
+                               <form id = "findaccount" >
                               <h5 class="card-title"><img id ="userimg" src="/assets/img/default.png" alt=""></h5>
                               <p class="card-text px-4 text-center px-lg-5">
                                 <p id ="mainname" class="text-muted lead ">Find your account?</p>
-                              <p class="text-left mb-0"> 
-                                 <small class="lead " style="font-size: 0.9rem !important">   Please enter you email address or username to find</small>
-                              </p>
-                                  <input type="text" name="username" id="userinput" class="form-control ">
-                                    <input type="text" hidden name="emailaddress" id="userinput" value ="<?php $user;?>" class="form-control ">
-                              </p>
+                                  
+                                  <p class="text-left">
+                                  <small class="lead" style="font-size: .9rem">
+                                      Please enter you email address or username to find
+                                   </small>
+                                  <input type="text" name="username" id="username" class="form-control">
+                                </p>
+                                </p>
+
                               <div class="text-center">
                                 <button href="#" id ="sendlinkbtn" class="btn btn-outline-success">Find Account</button>
                                <button href="#" id ="sendresetlink" class="btn btn-outline-success mx-auto">Send Reset Link</button>
+                                <button href="forgotpassword.php" id ="not" class="btn btn-outline-danger mx-auto mt-2"></button>
                               </div>
                               </form>
                             </div>
@@ -202,7 +304,8 @@ user i {
             </div>
         </section>
 
-        <?php 
+        <?php
+      }
         }
         ?>
 
@@ -210,7 +313,6 @@ user i {
         <!-- End Signup Section -->
         <form id ="resetlink">
       <input type="text" name ="useremail" hidden id="useremailid">
-      <input type="text" name ="fullname" hidden id="useremailid">
 
       </form>
     </main>
@@ -237,9 +339,8 @@ user i {
       
     $('#sendlinkbtn').click(function(e){
        e.preventDefault();
-      $('#sendlinkbtn').prop('disabled',true);
       $('#sendlinkbtn').html('Finding your account...');
-     var str = $("#forgetform").serialize();
+     var str = $("#findaccount").serialize();
       jQuery.ajax({
         url: "forms/authentication.php",
         type: "get",
@@ -247,57 +348,67 @@ user i {
         success: function(data) {
              if (data == 'NO') 
              {
-                $('#login_help').html(data);
+                
                 $('#sendlinkbtn').css('display','block');
-                $('#sendlinkbtn').prop('disabled',false);
+                $('#not').css('display','none');
                 $('#sendlinkbtn').html('Not found');
-                $("#forgetform").reset();
-                setTimeout(function(){ $('#sendlinkbtn').html('Find Account'); }, 3000);
             }
             else
             { 
                 $('#result').html(data);
 
              }
+            setTimeout(function(){ $('#sendlinkbtn').html('Not found, Find again?'); }, 2000);
+
         }
     });
     });
     
      $('#sendresetlink').click(function(e){
          e.preventDefault();
-        
+        $('#sendresetlink').html("Sending!");
        var str = $("#resetlink").serialize();
         jQuery.ajax({
           url: "forms/authentication.php",
           type: "POST",
            data: "sendlink=true&"+ str,
           success: function(data) {
-              alert(data);
+             if(data = 'SUCCESS')
+             {
+                $('#sendresetlink').html('Your link is sent, check your email!');
+                setTimeout(function(){
+                   window.location = "forgotpassword.php";
+                 }, 2000);
+
+             }else{
+              alert('Some error has occured!');
+             }
           }
     });
     });
 
 
-$('#changepass').click(function(e){
+$('#changeoldpassword').click(function(e){
          e.preventDefault();
-        if($('#password').val()==$('#confirmpassword').val())
-        {         
-          $('#changepass').html('Changing ...')
-                  var str = $("#changepassword").serialize();
 
-                  jQuery.ajax({
-                    url: "forms/authentication.php",
-                    type: "POST",
-                     data: "sendlink=true&"+ str,
-                    success: function(data) {
-                        alert(data);
-                    }
-            });
+        if($('#newpasss').val()!="" && $('#newpasss').val() == $('#confirmnewpass').val())
+        {
+          $('#changenewpass-helptext').html('Password not same!');
+        }else{
+            $(this).html('Changing...');
+
+              var str = $("#changepassword").serialize();
+              jQuery.ajax({
+                url: "forms/authentication.php",
+                type: "POST",
+                 data: "changepassword=true&"+ str,
+                success: function(data) {
+                      window.location = "user/useraccount.php";
+                }
+              });
+
         }
-        else{
-          $('#messagealert').html('Password doesnot match');
-        }
-       
+
     });
 
 

@@ -208,8 +208,11 @@ function execute($conn, $sql){
   
       if (mysqli_query($conn, $sql)) {
         echo 'OK';
+        return true;
       } else {
           echo mysqli_error($conn);
+                  return false;
+
       }
     
 
@@ -222,7 +225,13 @@ if(isset($_POST['updatepassword']))
   $password = $_POST['password'];
   $password = md5($password);
   $sql = "UPDATE authenticate set  password = '$password' WHERE username ='$user'";
-   execute($conn, $sql);
+   if(execute($conn, $sql))
+   {
+    if(isset($_COOKIE['user_name']) && $_COOKIE['user_name'] == $user )
+    {
+      $_COOKIE['pass_word'] = $password;
+    }
+   }
 }
 
 if(isset($_POST['updateuserdetails']))
@@ -233,7 +242,10 @@ if(isset($_POST['updateuserdetails']))
   $bio = $_POST['bio'];  
 
   $sql = "UPDATE users set  firstname = '$firstname' , lastname = '$lastname' , bio = '$bio' WHERE username ='$user'";
-   execute($conn, $sql);
+   if(execute($conn, $sql))
+   {
+    $_SESSION['currentuserbio'] = $bio;
+   }
 }
 
 
@@ -298,11 +310,12 @@ if(isset($_GET['findaccount']))
    
 }
 
+  // SENDING MAIL
   if(isset($_POST['sendlink']))
   {
     $email = $_POST['useremail'];
    
-    $expFormat = mktime(date("H"), date("i"), date("s"), date("m") ,date("d")+1, date("Y"));
+    $expFormat = mktime(date("H")+4, date("i"), date("s"), date("m") ,date("d"), date("Y"));
     $expDate = date("Y-m-d H:i:s",$expFormat);
     $key = md5(2418*2+(int)$email);
     $addKey = substr(md5(uniqid(rand(),1)),3,10);
@@ -316,13 +329,14 @@ if(isset($_GET['findaccount']))
       $output.='<p>You have recently requested for the reset link to change your accounts password.</p>';
        $output.='<p>Please click on the attached link or be sure to copy the entire link into your browser, to navigate to the reset page.
       The link will expire after 4 hours for security reason.</p>';
-      
-      $output.='<p><a href="https://www.allphptricks.com/forgot-password/reset-password.php?
+
+      $output.= '<p>................................................</p>';
+      $output.='<p><a href=" localhost/forgotpassword.php?
       key='.$key.'&email='.$email.'&action=reset" target="_blank">
-      https://www.allphptricks.com/forgot-password/reset-password.php
+      localhost/forgotpassword.php
       ?key='.$key.'&email='.$email.'&action=reset</a></p> <br>';   
-   
-     
+      $output.= '<p>................................................</p>';
+
       $output.='<p>If you did not request this forgotten password email, no action 
       is needed, your password will not be reset. However, you may want to log into 
       your account and change your security password as someone may have guessed it.</p>';    
@@ -330,7 +344,7 @@ if(isset($_GET['findaccount']))
       $output.='<p>Team</p>';
 
       $body=$output;
-      $subject = "Password Recovery - BEKUS";
+      $subject = "Password Recovery - MY-SLAM";
       $email_to = $email;
       $fromserver = "qazi9amaan@gmail.com"; 
 
@@ -345,25 +359,57 @@ if(isset($_GET['findaccount']))
       $mail->Port = 587;
       $mail->IsHTML(true);
       $mail->From = "noreply@bekus.com";
-      $mail->FromName = "BE-KUS";
+      $mail->FromName = "My-SLAM | Password Recovery";
       $mail->Sender = $fromserver; // indicates ReturnPath header
       $mail->Subject = $subject;
       $mail->Body = $body;
       $mail->AddAddress($email_to);
-
-
 
       if(!$mail->Send()){
       echo "Mailer Error: " . $mail->ErrorInfo;
       }else{
       echo "SUCCESS";
     }
-
-
-
-
   }
   
+// CHANGING PASSWORS
+if(isset($_POST['changepassword']))
+{
+
+    $user = $_POST['email'];
+    $pass =md5($_POST['password']);
+    mysqli_query($conn,"DELETE FROM `password_reset_temp` WHERE `email`='".$user."';");
+    if(mysqli_query($conn,"UPDATE `authenticate` SET `password`='".$pass."'WHERE `emailaddress`='".$user."';"))
+    {
+        $host = "localhost";
+        $path = "forms/authentication.php";
+        $data = "username=".$user."&password=".$_POST['password'];
+        $data = urlencode($data);
+
+        $query="select * from authenticate where emailaddress = '$user'";
+         if ($result = mysqli_query($conn, $query)) 
+         {
+               while ($row = mysqli_fetch_row($result)) 
+               {
+                      
+                         $_SESSION['currentusername']=$row[1];
+                          $user = $row[1];
+                          setSession($conn,$user,null) ;                         
+                          echo 'OK';
+
+                          
+
+
+                      }
+                }
+         
+          
+         
+    }
+   
+  
+      
+}
 
 
 
