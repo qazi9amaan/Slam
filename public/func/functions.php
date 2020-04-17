@@ -1,5 +1,5 @@
 <?php
-   include('C:/xampp/htdocs/connection.php');
+   include('/var/www/html/connection.php');
 
 
 
@@ -14,9 +14,9 @@
 
           	$replier = $_POST['replier'];
           	$questioner = $_POST['questioner'];
-
-	        $sql = "INSERT INTO answers(replier,questioner)
-	        VALUES ('$replier', '$questioner')";
+            $dt = date('Y-m-d');
+	        $sql = "INSERT INTO answers(replier,questioner,udate)
+	        VALUES ('$replier', '$questioner','$dt')";
 	        if (mysqli_query($conn, $sql)) {
 			    $last_id = mysqli_insert_id($conn);
 			} else{
@@ -55,10 +55,10 @@
 
           	$replier = $_POST['replier'];
           	$questioner = $_POST['questioner'];
-          	$msg = $_POST['msg'];
-
-	        $sql = "INSERT INTO confessions(replier,questioner,msg)
-	        VALUES ('$replier', '$questioner','$msg')";
+            $msg = $_POST['msg'];
+            $dt = date('Y-m-d');
+	        $sql = "INSERT INTO confessions(replier,questioner,msg ,udate)
+	        VALUES ('$replier', '$questioner','$msg','$dt')";
 	        if (mysqli_query($conn, $sql)) {
 			} else{
 				echo("Failure");	

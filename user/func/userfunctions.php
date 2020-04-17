@@ -1,5 +1,5 @@
 <?php
-  		include('C:/xampp/htdocs/connection.php');
+  		include('/var/www/html/connection.php');
         session_start();
         if(isset($_SESSION['currentuserid']))
         {
@@ -82,7 +82,7 @@
 
 
 
-        	$sql = "SELECT udate FROM answers WHERE questioner='$user' ORDER BY udate DESC ";
+        	$sql = "SELECT udate , DATE_FORMAT(udate, '%e %b, %Y') AS u_date FROM answers WHERE questioner='$user' ORDER BY udate DESC ";
 			$result = mysqli_query($conn, $sql);
 			if (mysqli_num_rows($result) > 0) {
 			    while($row = mysqli_fetch_assoc($result)) {
@@ -96,7 +96,7 @@
                           <div class="date">
                             <div class="col-12 p-2 mb-1">
                                 <small id= "" class="form-text text-muted text-center">
-                                    '.$date.'
+                                    '.$row['u_date'].'
                                 </small>
                             </div>
                           </div>
@@ -188,7 +188,7 @@
 
 
 
-        	$sql = "SELECT udate FROM confessions WHERE questioner='$user' ORDER BY udate DESC ";
+        	$sql = "SELECT udate, DATE_FORMAT(udate, '%e %b, %Y') AS u_date FROM confessions WHERE questioner='$user' ORDER BY udate DESC ";
 			$result = mysqli_query($conn, $sql);
 			if (mysqli_num_rows($result) > 0) {
 			    while($row = mysqli_fetch_assoc($result)) {
@@ -202,7 +202,7 @@
                           <div class="date">
                             <div class="col-12 p-2 mb-1">
                                 <small id= "" class="form-text text-muted text-center">
-                                    '.$date.'
+                                    '.$row['u_date'].'
                                 </small>
                             </div>
                           </div>
@@ -566,7 +566,7 @@ if(isset($_GET['searchuser'])){
                 </div>
               </div>
             </div>
-                <a href="/public/showuser.php?username='.$row['username'].'" class="stretched-link"></a>
+                <a href="/'.$row['username'].'" class="stretched-link"></a>
           </div>
         </div>
       </div>
@@ -649,7 +649,7 @@ if(isset($_GET['searchuser'])){
                 </div>
               </div>
             </div>
-                <a href="/public/showuser.php?username='.$row['username'].'" class="stretched-link"></a>
+                <a href="/'.$row['username'].'" class="stretched-link"></a>
           </div>
         </div>
       </div>

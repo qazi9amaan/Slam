@@ -323,7 +323,7 @@ user i {
         
              </div>
                 <div class="container">
-                      <form method="post" action="authentication.php" id="setupform" >
+                      <form method="post" action="/auth-helper" id="setupform" >
                     <h1 id = "username" data-aos="zoom-in"><?php echo $_SESSION['currentusername']; ?> </h1>
                         <input hidden type="text" value ="" name ="ImageUrL" id = "image_upload_name">
                         <input hidden type="text" value ="<?php echo $_SESSION['currentusername']; ?>" name ="username" id = "image_upload_name">
@@ -550,7 +550,7 @@ user i {
         $('#uploadbtn').click(function(){
              var str = $("#setupform").serialize();
              jQuery.ajax({
-                url: "authentication.php",
+                url: "/auth-helper",
                 type: "POST",
                  data: "update_details=true&" + str,
                 success: function(data) {
@@ -582,7 +582,7 @@ user i {
   {
              var str = $("#privacysetting").serialize();
              jQuery.ajax({
-                url: "authentication.php",
+                url: "/auth-helper",
                 type: "POST",
                  data: "updatepassword=true&" + str,
                 success: function(data) {
@@ -606,7 +606,7 @@ user i {
  $('#updatedetailsbtn').click(function(){
         var str = $("#generalsetting").serialize();
              jQuery.ajax({
-                url: "authentication.php",
+                url: "/auth-helper",
                 type: "POST",
                  data: "updateuserdetails=true&" + str,
                 success: function(data) {
@@ -637,7 +637,7 @@ $('#deletetbn').click(function(){
         if(confirm('Do you really want to delete your account?')){
 
              jQuery.ajax({
-                url: "authentication.php",
+                url: "/auth-helper",
                 type: "POST",
                  data: "deleteuser=true",
                 success: function(data) {

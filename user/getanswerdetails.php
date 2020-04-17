@@ -12,6 +12,7 @@
     }
     $usr = $_GET['answer'];
     $sql = "SELECT * FROM answers WHERE answer_id='$usr';";
+    
 
         if ($result = mysqli_query($conn, $sql)) {
          while ($row = mysqli_fetch_assoc($result)){

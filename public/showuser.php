@@ -503,7 +503,7 @@ transition: all 0.3s ease-in-out;
           </div>
        
         <div class="user">
-            <a href="account"><i id = "home" class="icofont-home"></i></a>
+            <a href="account"><i id = "/home" class="icofont-home"></i></a>
             <a href="<?php  echo $username;?>/ask"><i id = "askquestion" class="icofont-paper-plane"></i></a>
 
             
@@ -554,11 +554,11 @@ transition: all 0.3s ease-in-out;
             </li>
             <li><a href="<?php  echo $username;   ?>/ask"> Ask <?php echo $fname; ?></a></li>
 
-          <li><a href="account">Home</a></li>
+          <li><a href="/account">Home</a></li>
                 <?php
             if(isset($_SESSION['currentuserid'])) {
           ?>
-                  <li><a href="logout">Logout</a></li>
+                  <li><a href="/logout">Logout</a></li>
          <?php
           }else{
          ?> 
