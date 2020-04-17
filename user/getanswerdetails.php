@@ -4,11 +4,11 @@
   include('../connection.php');
   if(!isset($_SESSION['currentusername']))
   {
-     header("Location: /index.php");
+     header("Location: /home");
   }else{
     if(!isset($_GET['answer']))
     {
-       header("Location: /user/useraccount.php");
+       header("Location: /account");
     }
     $usr = $_GET['answer'];
     $sql = "SELECT * FROM answers WHERE answer_id='$usr';";
@@ -25,7 +25,7 @@
 
           }     
         }else{
-          header("Location: /user/useraccount.php");       
+          header("Location: /account");       
            }
   }
    
@@ -201,21 +201,21 @@ section {
 
       <!-- The main logo is shown in mobile version only. The centered nav-logo in nav menu is displayed in desktop view  -->
       <div class="logo d-block d-lg-none">
-        <a href="/user/useraccount.php#main" class="img-fluid"><img class = "profile_image_main img-responsive" src="<?php echo $_SESSION['currentimageurl']; ?>" alt=""></a>
+        <a href="/account" class="img-fluid"><img class = "profile_image_main img-responsive" src="<?php echo $_SESSION['currentimageurl']; ?>" alt=""></a>
         &nbsp; &nbsp;<a><?php echo $_SESSION['currentusername']; ?></a>
       </div>
 
       <nav class="nav-menu d-none d-lg-block">
         <ul class="nav-inner">
-          <li><a href="/public/showuser.php?username=<?php echo $_SESSION['currentusername']; ?> ">My wall</a></li>
+          <li><a href="/<?php echo $_SESSION['currentusername']; ?> ">My wall</a></li>
 
           <li><a href="#">Share Link</a></li>
 
-          <li class="nav-logo"><a href="/user/useraccount.php#main"><img src="<?php echo $_SESSION['currentimageurl']; ?>" alt="" class="img-responsive profile_image_main large img-fluid"></a></li>
+          <li class="nav-logo"><a href="/account"><img src="<?php echo $_SESSION['currentimageurl']; ?>" alt="" class="img-responsive profile_image_main large img-fluid"></a></li>
 
-          <li><a href=" /user/useraccount.php">My Account</a></li>
+          <li><a href=" /account">My Account</a></li>
                     
-          <li><a href="/logout.php">Logout</a></li>
+          <li><a href="/logout">Logout</a></li>
 
         </ul>
       </nav><!-- .nav-menu -->
@@ -231,7 +231,7 @@ section {
       <div class="container">
             <div class="col-12">
                 <div class="user ">
-                   <a href="/user/useraccount.php?answer"><i class="icofont-reply"></i></a>
+                   <a href="/account"><i class="icofont-reply"></i></a>
                     <h4><?php echo $replier; ?></h4>
                     <p><?php echo $udate; ?></p>
                     

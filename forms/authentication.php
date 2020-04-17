@@ -44,13 +44,14 @@ if(isset($_POST['login'])){
     else
     {	
         $user = $_POST['username'];
-        if(!isset($_COOKIE['pass_word']))
+        if(substr($_POST['password'], 0,3) == "hash")
         {
-          $auth = md5($_POST['password']);
-        }else{
           $auth = $_POST['password'];
+          
+        }else{
+          $auth = 'hash'.md5($_POST['password']);
         }
-        
+          
         $query="select * from authenticate where username = '$user' or  emailaddress = '$user'";
          if ($result = mysqli_query($conn, $query)) 
          {
@@ -95,7 +96,7 @@ if(isset($_POST['login'])){
 
 function create_account($username,$pass,$firstname,$lastname,$phonenumber,$conn)
 {
-  $pass =md5($pass);
+  $pass = 'hash'.md5($pass);
   $sql = "INSERT INTO authenticate(username,password,firstname,emailaddress)
     VALUES ('$username', '$pass', '$firstname', '$phonenumber');";
   $sql .= "INSERT INTO users(username,firstname,lastname)
@@ -259,7 +260,7 @@ if(isset($_POST['deleteuser']))
                     while ($row = mysqli_fetch_assoc($result)){
 
                         if($row['profile_picture'] !='../assets/img/default.png')
-                            unlink($row['profile_picture']);
+                            unlink('..'.$row['profile_picture']);
                         }
                     }
 

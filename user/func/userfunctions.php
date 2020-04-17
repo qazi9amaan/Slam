@@ -122,7 +122,7 @@
                                         </div>
                                         <div id = "insbtn"class="col-2" style="margin-left: -1rem;">
                                             <div class="show">
-                                                <a href = "getanswerdetails.php?answer='.$row['answer_id'].'"><i class="icofont-eye-alt"></i></a>
+                                                <a href = "account/answer/'.$row['answer_id'].'"><i class="icofont-eye-alt"></i></a>
                                             </div>
         
                                         </div>
@@ -230,7 +230,7 @@
                                     </div>
                                     <div id = "insbtn"class="col-2" style="margin-left: -1rem;">
                                         <div class="show">
-											  <a href = "getquestiondetails.php?id='.$row['confessionid'].'"><i class="icofont-eye-alt"></i></a>
+											  <a href = "account/message/'.$row['confessionid'].'"><i class="icofont-eye-alt"></i></a>
                                                 
                                         </div>
     
@@ -267,7 +267,7 @@
                                                 </div>
                                                    <div.col-6
                                                 <div class="col-6 mx-auto">
-                                                    <p class = "text-center mt-1"> bekus.ml/'.$_SESSION['currentusername'] .'</p>
+                                                    <p class = "text-center mt-1"> localhost/'.$_SESSION['currentusername'] .'</p>
                                                 </div>
                                                         </div>
                                         </div>

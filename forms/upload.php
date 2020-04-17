@@ -23,12 +23,13 @@ if(!empty($_FILES['picture']['name'])){
                     while ($row = mysqli_fetch_assoc($result)){
 
                         if($row['profile_picture'] !='../assets/img/default.png')
-                            unlink($row['profile_picture']);
+                            unlink('..'.$row['profile_picture']);
                         }
                     }
 
 
-            $sql = "UPDATE users set profile_picture = '$targetPath' WHERE username ='$username';";
+            $upload_target = substr($targetPath, 2);
+            $sql = "UPDATE users set profile_picture = '$upload_target' WHERE username ='$username';";
             if (mysqli_query($conn, $sql)) {
                 $_SESSION['currentimageurl'] =$targetPath;
               echo "Profile Updated!";

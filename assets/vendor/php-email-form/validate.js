@@ -131,7 +131,7 @@ jQuery(document).ready(function($) {
                     this_form.find('.error-message').slideDown().html("There is some error please try later.");
 
                 } else if (msg == 'success') {
-                    window.location = '/forms/setupaccount.php?accountcreated'
+                    window.location = 'setupaccount/new';
 
                 } else {
                     this_form.find('.sent-message').slideDown();

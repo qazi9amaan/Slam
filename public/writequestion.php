@@ -3,7 +3,7 @@
   include('../connection.php');
   if(!isset($_GET['username']))
   {
-     header("Location: /index.php");
+     header("Location: home");
   }else{
     $usr = $_GET['username'];
     $sql = "SELECT * FROM users WHERE username ='$usr'";
@@ -20,7 +20,7 @@
             $userid =  $row["userid"];
           }     
         }else{
-          header("Location: /index.php");
+          header("Location: home");
         }
   }
    
@@ -332,7 +332,7 @@ transition: all 0.3s ease-in-out;
        <div class="container">
          <div class="col-12">
             <div class="pin">
-             <a href="/user/useraccount.php?message"><img src="<?php echo $profile; ?>" alt=""></a>
+             <a href="account"><img src="<?php echo $profile; ?>" alt=""></a>
              <h4> <?php echo $username; ?></h4>
             </div>
           </div>
@@ -456,8 +456,8 @@ transition: all 0.3s ease-in-out;
           </div>
        
         <div class="user">
-         <a href="/user/useraccount.php#main"><i id = "home" class="icofont-home"></i></a> 
-        <a href="showuser.php?username=<?php  echo $username;   ?>"><i id = "askquestion" class="icofont-speech-comments"></i></a>
+         <a href="/account"><i id = "home" class="icofont-home"></i></a> 
+        <a href="/<?php  echo $username;   ?>"><i id = "askquestion" class="icofont-speech-comments"></i></a>
           </div>
 
       </div>
@@ -503,17 +503,17 @@ transition: all 0.3s ease-in-out;
                      </div>
                 </div>
             </li>
-            <li><a href="showuser.php?username=<?php  echo $username;   ?>"><?php echo $fname; ?>'s Slam</a></li>
+            <li><a href="/<?php  echo $username;   ?>"><?php echo $fname; ?>'s Slam</a></li>
         
-          <li><a href="/user/useraccount.php#main">Home</a></li>
+          <li><a href="/account">Home</a></li>
                   <?php
             if(isset($_SESSION['currentuserid'])) {
           ?>
-                  <li><a href="/logout.php">Logout</a></li>
+                  <li><a href="/logout">Logout</a></li>
          <?php
           }else{
          ?> 
-                  <li><a href="/login.html">Login</a></li>
+                  <li><a href="/login">Login</a></li>
             
          <?php
           }
@@ -605,7 +605,7 @@ transition: all 0.3s ease-in-out;
      function askby(user){
       $('#ask').prop('disabled', true);
           jQuery.ajax({
-            url: "func/functions.php",
+            url: "/public-helper",
             type: "POST",
             data: "submitquestion=true&replier="+user+"&questioner="+$("#masteruserid").val()+"&msg="+$("textarea").val(),
             success: function(response){
@@ -663,7 +663,7 @@ transition: all 0.3s ease-in-out;
 function getcountfor(string){
   var count = 0;
   $.ajax({
-    url : "func/functions.php",
+    url : "/public-helper",
     type:'get',
     data: "storycount=true&id="+$('#masteruserid').val(),
     success: function(data) {
@@ -693,7 +693,7 @@ initialise_counter();
 // PINNED POSTS
 function getallpinnedposts(){
     $.ajax({
-    url : "func/functions.php",
+    url : "/public-helper",
     type:'get',
     data: "getpinnedposts=true&id="+$('#masteruserid').val(),
     success: function(data) {

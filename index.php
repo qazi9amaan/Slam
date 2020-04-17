@@ -159,11 +159,11 @@
             <?php
             if(isset($_SESSION['currentuserid'])) {
           ?>
-            <a data-aos="fade-up" href="user/useraccount.php" class="btn-get-started">My Account </a>
+            <a data-aos="fade-up" href="account" class="btn-get-started">My Account </a>
          <?php
           }else{
          ?> 
-             <a data-aos="fade-up" href="login.php" class="btn-get-started scrollto">Get Started</a>
+             <a data-aos="fade-up" href="login" class="btn-get-started scrollto">Get Started</a>
             
          <?php
           }
@@ -178,7 +178,7 @@
 
       <!-- The main logo is shown in mobile version only. The centered nav-logo in nav menu is displayed in desktop view  -->
       <div class="logo d-block d-lg-none">
-        <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>
+        <a href="home"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>
       </div>
 
       <div class="user">
@@ -193,21 +193,21 @@
           <?php
             if(isset($_SESSION['currentuserid'])) {
           ?>
-           <li><a href="user/useraccount.php">My Account</a></li>
+           <li><a href="account">My Account</a></li>
           <li><a href="#">Share Link</a></li>
 
-          <li class="nav-logo"><a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a></li>
-           <li><a href="public/showuser.php?username=<?php echo $_SESSION['currentusername']; ?> ">  <?php echo $_SESSION['currentusername']; ?>'s Wall</a></li>
-          <li><a href="logout.php">Logout</a></li>
+          <li class="nav-logo"><a href="home"><img src="assets/img/logo.png" alt="" class="img-fluid"></a></li>
+           <li><a href="account/wall/<?php echo $_SESSION['currentusername']; ?> ">  <?php echo $_SESSION['currentusername']; ?>'s Wall</a></li>
+          <li><a href="logout">Logout</a></li>
 
        <?php
           }else{
          ?> 
-          <li class="active"><a href="index.html">Home</a></li>
+          <li class="active"><a href="home">Home</a></li>
           <li><a href="#services">About</a></li>
-          <li class="nav-logo"><a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a></li>
-          <li><a href="login.php">Login</a></li>
-          <li><a href="login.php#register">Register</a></li>            
+          <li class="nav-logo"><a href="home"><img src="assets/img/logo.png" alt="" class="img-fluid"></a></li>
+          <li><a href="login">Login</a></li>
+          <li><a href="register">Register</a></li>            
          <?php
           }
          ?>

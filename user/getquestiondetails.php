@@ -296,21 +296,21 @@ section {
 
       <!-- The main logo is shown in mobile version only. The centered nav-logo in nav menu is displayed in desktop view  -->
       <div class="logo d-block d-lg-none">
-        <a href="/user/useraccount.php" class="img-fluid"><img class = "profile_image_main img-responsive" src="<?php echo $_SESSION['currentimageurl']; ?>" alt=""></a>
+        <a href="/account" class="img-fluid"><img class = "profile_image_main img-responsive" src="<?php echo $_SESSION['currentimageurl']; ?>" alt=""></a>
         &nbsp; &nbsp;<a><?php echo $_SESSION['currentusername']; ?></a>
       </div>
 
       <nav class="nav-menu d-none d-lg-block">
         <ul class="nav-inner">
-          <li><a href="/public/showuser.php?username=<?php echo $_SESSION['currentusername']; ?> ">My wall</a></li>
+          <li><a href="/<?php echo $_SESSION['currentusername']; ?> ">My wall</a></li>
 
           <li><a href="#">Share Link</a></li>
 
-          <li class="nav-logo"><a href="/user/useraccount.php"><img src="<?php echo $_SESSION['currentimageurl']; ?>" alt="" class="img-responsive profile_image_main large img-fluid"></a></li>
+          <li class="nav-logo"><a href="/account"><img src="<?php echo $_SESSION['currentimageurl']; ?>" alt="" class="img-responsive profile_image_main large img-fluid"></a></li>
 
-          <li><a href=" /user/useraccount.php">My Account</a></li>
+          <li><a href="/account">My Account</a></li>
                     
-          <li><a href="/logout.php">Logout</a></li>
+          <li><a href="/logout">Logout</a></li>
 
         </ul>
       </nav><!-- .nav-menu -->
@@ -398,13 +398,13 @@ section {
     function upload(cap)
     {
         $.ajax({
-      url : "func/userfunctions.php",
+      url : "/user-helper",
       type:'post',
       data: "pinpost=true&cap="+cap+"&id="+$('#pin_to_wall').attr('data-postid'),
       success: function(data) {
         if(data=="OK")
         {
-        window.location ="/user/useraccount.php";
+        window.location ="/account";
         }else{
           alert(data);
         }
@@ -423,16 +423,16 @@ section {
 
     $('#back').click(function(){
         $.ajax({
-      url : "func/userfunctions.php",
+      url : "/user-helper",
       type:'post',
       data: "deleteconfession=true",
       success: function(data) {
         if(data=="OK")
         {
-                window.location ="/user/useraccount.php";
+                window.location ="/account";
 
         }else{
-          window.location ="/user/useraccount.php";
+          window.location ="/account";
         }
       }
     });

@@ -20,9 +20,9 @@ URL HANDLING
    
     if(!isset($_SESSION['currentusername']))
     {
-    	     header("Location: /index.php");
+    	     header("Location: home");
     }
-    $sharelink = "bekus.ml/".$_SESSION['currentusername'];
+    $sharelink = "localhost/".$_SESSION['currentusername'];
 
 
 ?>
@@ -57,12 +57,7 @@ URL HANDLING
   <!-- Template Main CSS File -->
   <link href="/assets/css/style.css" rel="stylesheet">
 
-  <!-- =======================================================
-  * Template Name: Knight - v2.0.0
-  * Template URL: https://bootstrapmade.com/knight-free-bootstrap-theme/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+ 
 </head>
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
@@ -916,7 +911,7 @@ color: #7cc576
             <div class="container">
               <div class="row">
                 <div class="col-1 p-0 m-0 text-left">
-                  <a href="/public/showuser.php?username=<?php echo $_SESSION['currentusername']; ?> " class="img-fluid">
+                  <a href="<?php echo $_SESSION['currentusername']; ?> " class="img-fluid">
                   <img class = "profile_image_main img-responsive" src="<?php echo $_SESSION['currentimageurl']; ?>" alt="">
                 </a>
                 </div>
@@ -949,13 +944,13 @@ color: #7cc576
               <li><a class="sharebtn" href="#">Share Link</a></li>
 
 
-              <li class="nav-logo"><a href="/public/showuser.php?username=<?php echo $_SESSION['currentusername']; ?> "><img src="<?php echo $_SESSION['currentimageurl']; ?>" alt="" class="img-responsive profile_image_main large img-fluid"></a></li>
+              <li class="nav-logo"><a href="<?php echo $_SESSION['currentusername']; ?> "><img src="<?php echo $_SESSION['currentimageurl']; ?>" alt="" class="img-responsive profile_image_main large img-fluid"></a></li>
 
-              <li><a c href="/forms/setupaccount.php">Settings</a></li>
+              <li><a  href="account/settings">Settings</a></li>
 
 
-                        <li><a href="/public/showuser.php?username=<?php echo $_SESSION['currentusername']; ?> ">My wall</a></li>
-              <li><a href="/logout.php">Logout</a></li>
+                        <li><a href="<?php echo $_SESSION['currentusername']; ?> ">My wall</a></li>
+              <li><a href="logout">Logout</a></li>
 
             </ul>
           </nav><!-- .nav-menu -->
@@ -1157,7 +1152,7 @@ function getCount()
 {
  var user_id = $('#user_id').val();
   $.ajax({
-      url : "func/userfunctions.php",
+      url : "user-helper",
       type:'get',
       data: "getcount=true&userid=" + user_id,
      success: function(data) {
@@ -1170,7 +1165,7 @@ function getCount()
 function upload_question_changes(list)
 {
   $.ajax({
-      url : "func/userfunctions.php",
+      url : "user-helper",
       type:'get',
       data: "savequestions=true&list=" + list,
      success: function(data) {
@@ -1200,7 +1195,7 @@ $('.save_choosed_questions').click(function(e){
 // loading answers
 function getallanswers(){
 	$.ajax({
-		url : "func/userfunctions.php",
+		url : "user-helper",
 		type:'get',
 		data: "loadanswers=true",
 		success: function(data) {
@@ -1213,7 +1208,7 @@ function getallanswers(){
 // loading messages
 function getallmsgs(){
 	$.ajax({
-		url : "func/userfunctions.php",
+		url : "user-helper",
 		type:'get',
 		data: "loadmsgs=true",
 		success: function(data) {
@@ -1226,7 +1221,7 @@ function getallmsgs(){
 function getcountfor(string){
 	var count = 0;
 	$.ajax({
-		url : "func/userfunctions.php",
+		url : "user-helper",
 		type:'get',
 		data: string+"count=true",
 		success: function(data) {
@@ -1250,7 +1245,7 @@ getcountfor('messages');
 
 // ACCOUNT SETTINGS
 $('#update_account').click(function(){
-	window.location = '/forms/setupaccount.php';
+	window.location = 'account/settings';
 });
 
 
@@ -1270,7 +1265,7 @@ $('.b_answers').click(function(){
 
 function notification_color(){
     $.ajax({
-        url : "func/userfunctions.php",
+        url : "user-helper",
         type:'get',
         data:"notificationcolor=true",
         success: function(data) {
@@ -1297,7 +1292,7 @@ function notification_color(){
 
 function getallpinnedposts(){
     $.ajax({
-    url : "func/userfunctions.php",
+    url : "user-helper",
     type:'get',
     data: "getpinnedposts=true",
     success: function(data) {
@@ -1337,7 +1332,7 @@ $(document).on('click', '#delete_pin', function(e){
     e.preventDefault();
   
    $.ajax({
-    url : "func/userfunctions.php",
+    url : "user-helper",
     type:'post',
     data: "deletestory=true&id="+$(this).data('postid'),
     success: function(data) {
@@ -1387,7 +1382,7 @@ $('#showsearchbar').keyup(function(){
    if($(this).val()!=""||$(this).val()!=null)
    {
       $.ajax({
-    url : "func/userfunctions.php",
+    url : "user-helper",
     type:'get',
     data: "searchuser=true&value="+$(this).val(),
     success: function(data) {
@@ -1412,7 +1407,7 @@ $('#large_search_box').keyup(function(){
    if($(this).val()!=""||$(this).val()!=null)
    {
       $.ajax({
-    url : "func/userfunctions.php",
+    url : "user-helper",
     type:'get',
     data: "searchuser=true&value="+$(this).val(),
     success: function(data) {

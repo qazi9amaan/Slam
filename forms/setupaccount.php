@@ -3,7 +3,7 @@
 session_start();
 if(!isset($_SESSION['currentusername']))
 {
-    header("Location: /login.php");
+    header("Location: login");
 }
 
  if(isset($_GET['accountcreated']))
@@ -280,7 +280,7 @@ user i {
   
 
             <div class="user">
-            <a class  href="/user/useraccount.php"><i id = "askquestion" class="icofont-home"></i></a>
+            <a class  href="/account"><i id = "askquestion" class="icofont-home"></i></a>
           </div>
           </div>
 <?php 
@@ -298,7 +298,7 @@ user i {
                         </div>
 
                         <!-- Hidden upload form -->
-                        <form method="post" action="upload.php" enctype="multipart/form-data" id="picUploadForm" target="uploadTarget">
+                        <form method="post" action="/image-uploader" enctype="multipart/form-data" id="picUploadForm" target="uploadTarget">
                             <input type="file" name="picture" id="fileInput"  style="display:none"/>
                         </form>
                         <iframe id="uploadTarget" name="uploadTarget" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe>
@@ -555,7 +555,7 @@ user i {
                  data: "update_details=true&" + str,
                 success: function(data) {
                      if (data == 'OK') {
-                             window.location = '/user/useraccount.php';
+                             window.location = '/account';
                         }
                     else{
                         alert(data);
@@ -642,7 +642,7 @@ $('#deletetbn').click(function(){
                  data: "deleteuser=true",
                 success: function(data) {
                      if (data == 'OK') {
-                           window.location='/logout.php';
+                           window.location='/logout';
                         }
                     else{
                         
@@ -657,7 +657,7 @@ $('#deletetbn').click(function(){
  });
 
 $('#home').click(function(){
-   window.location='/user/useraccount.php';
+   window.location='/account';
 });
 
 
