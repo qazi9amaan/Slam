@@ -536,7 +536,7 @@ if(isset($_GET['searchuser'])){
                 <div class="card-body" style="margin: 0;">
               <div class="container">
                     <div class="row">
-                <div class="col-3">
+                <div class="col-3 pl-0 ml-0">
                   <img src="'.$row['profile_picture'].'" alt="" style="border-radius: 50%;
                     WIDTH: 46px;
                     HEIGHT: 46px;
@@ -619,7 +619,7 @@ if(isset($_GET['searchuser'])){
                 <div class="card-body" style="margin: 0;">
               <div class="container">
                     <div class="row">
-                <div class="col-3">
+                <div class="col-3 ml-0 pl-0">
                   <img src="'.$row['profile_picture'].'" alt="" style="border-radius: 50%;
                     WIDTH: 46px;
                     HEIGHT: 46px;
@@ -683,6 +683,20 @@ if(isset($_GET['searchuser'])){
   }
    }  
 
+}
+
+
+if(isset($_POST['changelanguage'])){
+  $region = $_POST['region'];
+  
+  $sql = "UPDATE users set region = '$region'  WHERE userid ='$Current_user_id';";
+  $sql .= "UPDATE users set selected_questions = 'ABCDEFGHIJKLMNOPQRST'  WHERE userid ='$Current_user_id';";
+  if (mysqli_multi_query($conn, $sql)){
+  $_SESSION['selected_questions'] = 'ABCDEFGHIJKLMNOPQRST';
+    echo "OK";
+  } else {
+      echo "Error";
+  }
 }
 
 

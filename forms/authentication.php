@@ -3,12 +3,15 @@
         session_start();
 
    
-function savecookie($user,$auth)
+function savecookie($user,$auth,$fname,$pic)
 {
   $cookie_username = $user;
   $cookie_password = $auth;
   setcookie('user_name', $cookie_username, time() + (86400 * 30), "/");
   setcookie('pass_word', $cookie_password, time() + (86400 * 30), "/");
+  setcookie('f_name', $fname, time() + (86400 * 30), "/");
+  setcookie('profile_pic', $pic, time() + (86400 * 30), "/");
+
 }    
        
 
@@ -24,17 +27,45 @@ function setSession($conn,$user,$auth)
              $_SESSION['currentimageurl'] = $row["profile_picture"];
               $_SESSION['currentuserbio'] = $row["bio"];
               $_SESSION['selected_questions']= $row["selected_questions"];
+              setcookie('region', $row["region"], time() + (86400 * 30), "/");
+
+              
                $_SESSION['accountstatus']= $row["accountstatus"];
                if(isset($_POST['signedin']))
                 {
-                          savecookie($user,$auth);
+                          savecookie($user,$auth,$row["firstname"],$row["profile_picture"]);
                 }
           }     
         }
 }
 
 
+function login_user($conn,$user,$auth)
+{
+  
+  $query="select * from authenticate where username = '$user' or  emailaddress = '$user'";
+   if ($result = mysqli_query($conn, $query)) 
+   {
+         while ($row = mysqli_fetch_row($result)) 
+         {
+                if($row[2]==$auth)
+                {
+                   $_SESSION['currentusername']=$row[1];
+                   
+                    setSession($conn,$user,$auth) ;                         
+                    echo 'OK';
 
+
+                }else{
+                  echo('Sorry wrong credential!');
+                }
+          }
+    }else{
+        
+          echo('No user found!');
+            
+    }
+}
 
 if(isset($_POST['login'])){
     if(empty($_POST['username']) || empty($_POST['password']))
@@ -43,40 +74,22 @@ if(isset($_POST['login'])){
     }
     else
     {	
-        $user = $_POST['username'];
-        if(substr($_POST['password'], 0,3) == "hash")
-        {
-          $auth = $_POST['password'];
-          
-        }else{
-          $auth = 'hash'.md5($_POST['password']);
-        }
-          
-        $query="select * from authenticate where username = '$user' or  emailaddress = '$user'";
-         if ($result = mysqli_query($conn, $query)) 
-         {
-               while ($row = mysqli_fetch_row($result)) 
-               {
-                      if($row[2]==$auth)
-                      {
-                         $_SESSION['currentusername']=$row[1];
-                         
-                          setSession($conn,$user,$auth) ;                         
-                          echo 'OK';
-
-
-                      }else{
-                        echo('Sorry wrong credential!');
-                      }
-                }
-          }else{
-              
-                echo('No user found!');
-                  
-          }
-            
+      $user = $_POST['username'];
+      $auth = md5($_POST['password']);
+      login_user($conn,$user,$auth);
     }
 } 
+
+
+if(isset($_POST['cookielogin'])){
+
+    $user = $_COOKIE['user_name'];
+    $auth = $_COOKIE['pass_word'];
+    login_user($conn,$user,$auth);
+} 
+
+
+
 
 
 // REGISTRATION PROCESS
@@ -96,11 +109,12 @@ if(isset($_POST['login'])){
 
 function create_account($username,$pass,$firstname,$lastname,$phonenumber,$conn)
 {
-  $pass = 'hash'.md5($pass);
+  $pass = md5($pass);
+  $region =$_COOKIE['region'];
   $sql = "INSERT INTO authenticate(username,password,firstname,emailaddress)
     VALUES ('$username', '$pass', '$firstname', '$phonenumber');";
-  $sql .= "INSERT INTO users(username,firstname,lastname)
-  VALUES ('$username', '$firstname', '$lastname');";
+  $sql .= "INSERT INTO users(username,firstname,lastname,region)
+  VALUES ('$username', '$firstname', '$lastname','$region');";
   if (mysqli_multi_query($conn, $sql)) {
     return true;
   } else {

@@ -32,22 +32,17 @@
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 
-  <!-- =======================================================
-  * Template Name: Knight - v2.0.0
-  * Template URL: https://bootstrapmade.com/knight-free-bootstrap-theme/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+ 
 </head>
   <style>
     
   .user i {
           font-size: 18px;
-  color: #7cc576;
+  color: #fff;
   float: right;
   width: 35px;
   height: 35px;
-  background: #fff;
+  background: #7cc576;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -76,7 +71,7 @@
   }
   .user #askquestion:hover  {
       border: 1px solid #7cc576;
-      color: #7cc576;
+      color: #fff;
   }
   
   .mobile-nav-toggle{
@@ -149,36 +144,76 @@
   </div>
 </div>
 
-
-  <!-- ======= Hero Section ======= -->
+<?php 
+  if(isset($_COOKIE['user_name'])) {
+?>
+  <style>
+  
+  .hero-logo img{
+    border-radius:50%;
+    width: 9.8rem;
+    height: 9.8rem;
+    border:3px solid  #7cc576;
+  }
+  
+  </style>
   <section id="hero">
     <div class="hero-container">
-      <a href="index.html" class="hero-logo" data-aos="zoom-in"><img src="assets/img/hero-logo.png" alt=""></a>
-      <h1 data-aos="zoom-in">BE-KUS</h1>
-      <h2 data-aos="fade-up">Curious? Find Mates & ask Anonymously</h2>
+      <a href="#" class="hero-logo" data-aos="zoom-in"><img src="<?php echo $_COOKIE['profile_pic']; ?>" alt=""></a>
+      <h1 data-aos="zoom-in">Hey <?php echo $_COOKIE['f_name'];?>!<h2>
             <?php
             if(isset($_SESSION['currentuserid'])) {
           ?>
-            <a data-aos="fade-up" href="account" class="btn-get-started">My Account </a>
+            <a data-aos="fade-up" href="account" class="btn-get-started">My Account</a>
          <?php
           }else{
          ?> 
-             <a data-aos="fade-up" href="login" class="btn-get-started scrollto">Get Started</a>
-            
+             <a data-aos="fade-up" id="cookie_login" href="#" class="btn-get-started scrollto">login as <?php echo $_COOKIE['f_name'];?></a>
+             <p class="text-center text-white mt-2">
+                 <a href="logout" class="text-muted text-white">NOT <?php echo $_COOKIE['f_name'];?>?</a>
+             </p>
          <?php
           }
          ?>
 
     </div>
-  </section><!-- End Hero -->
+  </section>
 
-  <!-- ======= Header ======= -->
+  <?php 
+   }else{
+  ?>
+
+  <section id="hero">
+      <div class="hero-container">
+        <a href="index.html" class="hero-logo" data-aos="zoom-in"><img src="assets/img/hero-logo.png" alt=""></a>
+        <h1 data-aos="zoom-in">BE-KUS</h1>
+        <h2 data-aos="fade-up">Curious? Find Mates & ask Anonymously</h2>
+              <?php
+              if(isset($_SESSION['currentuserid'])) {
+            ?>
+              <a data-aos="fade-up" href="account" class="btn-get-started">My Account </a>
+          <?php
+            }else{
+          ?> 
+              <a data-aos="fade-up" href="login" class="btn-get-started scrollto">Get Started</a>
+              
+          <?php
+            }
+          ?>
+      </div>
+    </section>
+
+<?php 
+   }   
+  ?>
+
+
+
   <header id="header" class="d-flex align-items-center">
     <div class="container">
 
       <!-- The main logo is shown in mobile version only. The centered nav-logo in nav menu is displayed in desktop view  -->
       <div class="logo d-block d-lg-none">
-        <a href="home"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>
       </div>
 
       <div class="user">
@@ -230,7 +265,7 @@
 
         <div class="section-title" data-aos="fade-up">
           <h2>BE-KUS . ML</h2>
-          <p>
+          <p id ="loac">
             Let world find you! we allows you to receive feedback from whoever there is and give you a feeling of what world thinks about you.
             </p>
         </div>
@@ -296,11 +331,38 @@
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
   <script>
+
+
+
+
+var request = new XMLHttpRequest();
+            request.open('GET', 'https://api.ipdata.co/?api-key=eca0458f84dd578dfa6f649bae55f9137da51a3194c9d89b430758f6');
+            request.setRequestHeader('Accept', 'application/json');
+            request.onreadystatechange = function() {
+                if (this.readyState === 4) {
+                    var data = JSON.parse(this.responseText);
+                    console.log(data.region.toLowerCase())
+                    document.cookie = 'region='+ data.region.toLowerCase();
+
+                }else{
+                  document.cookie = 'region=english';
+
+                }
+            };
+            request.send();
+
+
+      
+
+
+
+
+
     $('.searchbtn_small').click(function(e){
       e.preventDefault();
             $('#searchmodal').modal('show');
 
-})
+});
 
 $('#large_search_box').keyup(function(){
    if($(this).val()!=""||$(this).val()!=null)
@@ -321,7 +383,30 @@ $('#large_search_box').keyup(function(){
 $('#searchmodal').on('hide.bs.modal', function (e) {
    $('#large_searchresult').css('background','none');
         $('#large_searchresult').css('border','none');
-})
+});
+
+
+
+
+$('#cookie_login').click(function(){
+ 
+                jQuery.ajax({
+                   url: "forms/authentication.php",
+                   type: "POST",
+                    data: "cookielogin=true",
+                   success: function(data) {
+                    if (data == 'OK') {
+                           window.location = 'account';
+                           }
+                       else{ 
+                           $('#login_help').html(data);
+                          
+                            }
+                   
+               }
+                });
+});
+         
 
   </script>
 </body>

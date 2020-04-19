@@ -43,7 +43,6 @@
 
     <!-- ======= Header ======= -->
      <div class="logo d-block d-lg-none">
-        <a href="home"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>
       </div>
 
 
@@ -84,51 +83,65 @@
                                 <p> Curious? Find Mates!</p>
                             </div>
 
-
-                            <form id = "loginform"  
-                                <?php
-                                   if(isset($_COOKIE['user_name'])) {
-                                        echo 'class="php-email-form  was-validated"';
-                                    }else{
-                                         echo 'class="php-email-form"';
-                                       } 
-                                     ?> 
-                                     data-aos="fade-right">
-                                    
-
-                                <div class="form-row">
-                                    <div class="col-md-12 form-group">
-                                        
-                                        <input type="text" name="username" class="form-control" id="login_username" placeholder="Username /email" data-rule="required" data-msg="Please provide an input." 
-                                    <?php
-                                    if(isset($_COOKIE['user_name'])) {
-                                        echo 'value='.$_COOKIE['user_name'];
-                                    }
-                                     ?>  />
-                                        <div class="validate"></div>
-
-                                    </div>
-                                    <div class="col-md-12 form-group">
+                            <?php
+                                if(isset($_COOKIE['user_name']))
+                                {
+                            ?>
+                            <style>
+                               .php-email-form img{
+                                   width:150px;
+                                   border-radius:50%;
+                                   border:3px solid #7cc576;
+                               }                             
+                            </style>
+                            <form  class="php-email-form" data-aos="fade-right">
+                                    <div class="form-row">
+                                        <div class="col-md-12 form-group text-center">
+                                            <img src="<?php echo $_COOKIE['profile_pic']; ?>" alt="">          
+                                        </div>  
+                                        <div class="col-md-12 px-3 form-group">
                                   
-                                        <input type="password" name="password" class="form-control" id="login_password" placeholder="Your Password" data-rule="minlen:4" data-msg="Please nter at least 4 chars of password."   
-                                    <?php
-                                    if(isset($_COOKIE['pass_word'])) {
-                                        echo 'value='.$_COOKIE['pass_word'];
-                                    }
-                                     ?>  />
-                                        <div id = "login_help" class="validate"></div>
+                                        <input type="text" name="password" disabled class="form-control" placeholder="Your username"
+                                        value ="<?php echo $_COOKIE['user_name']?>"
+                                        data-rule="minlen:4" data-msg="Please enter at least 4 chars of password." />
+                                            <div id = "login_help" class="validate"></div>
+                                        </div>
+                                   </div>
+                                        <div class="text-center "><button id = "cookielogin" type="submit">Login as <span class="text-lowercase"><?php echo $_COOKIE['f_name']; ?></span></button></div>
+                                </form>
+                                    <small class ="text-center" >  <a href="logout">Not  <?php echo $_COOKIE['f_name']; ?>?</a></small>
+                            
+                            <?php
+                            }else{
+                            ?>
+                                <form id = "loginform"   class="php-email-form" data-aos="fade-right">
+                                    <div class="form-row">
+                                        <div class="col-md-12 form-group">
+                                        <input type="text" name="username" class="form-control" id="login_username" placeholder="Username /email" 
+                                        data-rule="required" data-msg="Please provide an input." />
+                                            <div class="validate"></div>
+                                        </div>
+                                        <div class="col-md-12 form-group">
+                                    
+                                        <input type="password" name="password" class="form-control" id="login_password" placeholder="Your Password" 
+                                        data-rule="minlen:4" data-msg="Please nter at least 4 chars of password." />
+                                            <div id = "login_help" class="validate"></div>
 
-                                    </div>
-                                   <div class="col-md-12 form-group">
-                                     <div class="custom-control custom-checkbox">
-                                       <input checked type="checkbox" name="signedin" class="custom-control-input" id="keepmesignedin" >
-                                        <label class="custom-control-label" for="keepmesignedin">Keep me signed in</label>
-                                     
-                                      </div>
-                                   </div></div>
-                                <div class="text-center"><button id = "loginbtn" type="submit">Login</button></div>
-                            </form>
-                              <small class ="text-center" >  <a href="forgotpassword.php">Forgot password?</a></small>
+                                        </div>
+                                    <div class="col-md-12 form-group">
+                                        <div class="custom-control custom-checkbox">
+                                        <input checked type="checkbox" name="signedin" class="custom-control-input" id="keepmesignedin" >
+                                            <label class="custom-control-label" for="keepmesignedin">Keep me signed in</label>
+                                        
+                                        </div>
+                                    </div></div>
+                                        <div class="text-center"><button id = "loginbtn" type="submit">Login</button></div>
+                                </form>
+                                    <small class ="text-center" >  <a href="forgotpassword.php">Forgot password?</a></small>
+                            <?php
+                            }
+                            ?>
+
                         </div>
 
                     </div>
@@ -205,8 +218,26 @@
     <!-- Template Main JS File -->
     <script src="assets/js/main.js"></script>
     <script>
+
+
+            var request = new XMLHttpRequest();
+            request.open('GET', 'https://api.ipdata.co/?api-key=eca0458f84dd578dfa6f649bae55f9137da51a3194c9d89b430758f6');
+            request.setRequestHeader('Accept', 'application/json');
+            request.onreadystatechange = function() {
+                if (this.readyState === 4) {
+                    var data = JSON.parse(this.responseText);
+                    console.log(data.region.toLowerCase())
+                    
+                    document.cookie = 'region='+ data.region.toLowerCase();
+                }
+            };
+            request.send();
+
+
+      
         // REGISTER  
         $(document).on('click', '#create_account', function() {
+            
 
             $(this).find('.loading').slideUp();
 
@@ -266,6 +297,7 @@
 
         $('#loginbtn').click(function(){
                 
+            
              var str = $("#loginform").serialize();
              jQuery.ajax({
                 url: "forms/authentication.php",
@@ -282,6 +314,26 @@
                 }
             });
         });
+
+
+
+        $('#cookielogin').click(function(){
+            
+                jQuery.ajax({
+                   url: "forms/authentication.php",
+                   type: "POST",
+                    data: "cookielogin=true",
+                   success: function(data) {
+                        if (data == 'OK') {
+                           window.location = 'account';
+                           }
+                       else{ 
+                           $('#login_help').html(data);
+                          
+                            }
+                   }
+               });
+           });
     
     </script>
 </body>

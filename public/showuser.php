@@ -19,6 +19,7 @@
             $questions =   $row["selected_questions"];
             $friends =   $row["friends"];
             $userid =  $row["userid"];
+            $region =  $row["region"];
 
 
             $sql2 = "DELETE FROM pinnedposts WHERE utime<=DATE_SUB(NOW(), INTERVAL 1 DAY)";
@@ -660,6 +661,10 @@ transition: all 0.3s ease-in-out;
  <input  hidden value = "<?php echo $userid; ?>" id = "masteruserid" class="text-muted"/>
  <input  hidden value = "" id = "storiescount" class="text-muted"/>
   <input type="text" id ="questions" hidden value="<?php echo $questions; ?>">
+  <input type="text" id ="region" hidden value="<?php echo $region; ?>">
+
+
+
   <a href="#main" class="back-to-top"><i class="icofont-simple-up"></i></a>
 
   <!-- Vendor JS Files -->
@@ -678,9 +683,9 @@ transition: all 0.3s ease-in-out;
 <script>
     var question_ini = $("#questions").val();
     var selected_questions_list = getArray(question_ini);
-
+    var region = $("#region").val();
     $.ajax({
-        url : "/assets/json/questions.json",
+        url : "/assets/json/"+region+".json",
         dataType:"json",
         type:'get',
         

@@ -274,6 +274,7 @@ section {
 </main>
       <input  hidden value = "<?php echo $_SESSION['currentuserid']; ?>" id = "user_id" class="text-muted"/>
     <input type="text" id ="questions" hidden value="<?php echo $_SESSION['selected_questions']; ?>">
+    <input  hidden value = "<?php echo $_COOKIE['region']; ?>" id = "region" class="text-muted"/>
 
 
   <a href="#main" class="back-to-top"><i class="icofont-simple-up"></i></a>
@@ -301,7 +302,7 @@ section {
     $(document).ready(function () {
 
            $.ajax({
-                url : "/assets/json/questions.json",
+            url : "/assets/json/"+$('#region').val()+".json",
                 dataType:"json",
                 type:'get',
                 success: function(data)

@@ -1,0 +1,16 @@
+{
+    "languages": [
+
+        {
+            "language": "Default",
+            "region": "english"
+        }, {
+            "language": "Kannada",
+            "region": "karnataka"
+        },
+        {
+            "language": "Kashmiri",
+            "region": "kashmir"
+        }
+    ]
+}
