@@ -110,7 +110,12 @@ if(isset($_POST['cookielogin'])){
 function create_account($username,$pass,$firstname,$lastname,$phonenumber,$conn)
 {
   $pass = md5($pass);
-  $region =$_COOKIE['region'];
+  if(isset($_COOKIE['region'])){
+    $region = $_COOKIE['region'];
+  }else{
+    $region = "english";
+    setcookie('region', "english", time() + (86400 * 30), "/");
+  }
   $sql = "INSERT INTO authenticate(username,password,firstname,emailaddress)
     VALUES ('$username', '$pass', '$firstname', '$phonenumber');";
   $sql .= "INSERT INTO users(username,firstname,lastname,region)
