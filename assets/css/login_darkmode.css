@@ -1,0 +1,113 @@
+@media (prefers-color-scheme: dark) {
+    /* 
+    -----------------------
+    # LOGIN PAGE
+    -----------------------
+    */
+    body {
+        background: #1d1d1d !important;
+    }
+    section {
+        background: #1d1d1d !important;
+    }
+    section .info {
+        background: #3d3d3d !important;
+        border-color: #3d3d3d !important;
+        box-shadow: 0 4px 15px -2px rgba(0, 0, 0, 0.5) !important;
+    }
+    section form {
+        background: #3d3d3d !important;
+        border-color: #3d3d3d !important;
+    }
+    section form input {
+        background: #2E2E2E !important;
+        border-color: #2E2E2E !important;
+        color: #fafafa !important;
+    }
+    section form label {
+        color: #999 !important;
+    }
+    section h4,
+    section h2 {
+        color: #999 !important;
+    }
+    section p {
+        color: #fafafa !important;
+    }
+    section .address i {
+        background: #4d4d4d !important;
+        color: #999 !important;
+    }
+    section button {
+        background: #2d2d2d !important;
+        color: #999 !important;
+        box-shadow: 0 4px 15px -2px rgba(0, 0, 0, 0.5) !important;
+    }
+    section img {
+        border-color: #999 !important;
+    }
+    .info small a {
+        color: #999 !important;
+    }
+    /* -----------------------
+        # END LOGIN
+    -------------------------- */
+    /* -----------------------
+        # INDEX
+    -------------------------- */
+    #hero #cookie_login {
+        background: #2d2d2d !important;
+        color: #999 !important;
+        box-shadow: 0 4px 15px -2px rgba(0, 0, 0, 0.5) !important;
+    }
+    #services i {
+        color: #999 !important;
+    }
+    /* -----------------------
+        # INDEX
+    -------------------------- */
+
+    /* 
+    FORGOT PASSWORD
+    */
+
+   
+
+    #findaccount input{
+        background: #2E2E2E !important;
+        border-color: #2E2E2E !important;
+        color: #fafafa !important;
+    }
+    #findaccount small{
+        color: #999 !important;
+
+    }
+    
+    #findaccount button{
+        background: #2d2d2d !important;
+        color: #999 !important;
+        border-color:#2d2d2d !important;
+        box-shadow: 0 4px 15px -2px rgba(0, 0, 0, 0.5) !important;
+    }
+    #changepassword{
+        background:none !important;
+    }
+    
+    #changepassword #newpass{
+        background: #222 !important;
+        border-color: #222 !important;
+        color: #fafafa !important;    }
+
+    #changepassword #confirmnewpass{
+        background: #222 !important;
+        border-color: #222 !important;
+        color: #fafafa !important;    }
+
+    .aligner .card-body a{
+        background: #2d2d2d !important;
+        color: #999 !important;
+        border-color:#999 !important;
+        box-shadow: 0 4px 15px -2px rgba(0, 0, 0, 0.5) !important;
+    }
+
+}

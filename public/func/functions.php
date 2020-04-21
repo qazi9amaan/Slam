@@ -93,7 +93,7 @@
 
 
                function getallpinnedposts($conn, $user){
-            $active =0;
+            $active =1;
 
             $sql = "SELECT * FROM pinnedposts WHERE owner='$user' ORDER BY udate DESC ";
             $result = mysqli_query($conn, $sql);

@@ -142,7 +142,7 @@
                 echo'
                             <script>
                              $(\'#pills-questions\').css("background","none");
-                              $(\'.share_card\').css("color","#7cc576");
+                             
                              $(\'#share_card_id\').css("border-radius",".45rem");
                      
                             </script>
@@ -251,7 +251,7 @@
                 echo'
                             <script>
                              $(\'#pills-questions\').css("background","none");
-                              $(\'.share_card\').css("color","#7cc576");
+                             
                              $(\'#share_card_id\').css("border-radius",".45rem");
                      
                             </script>
@@ -693,6 +693,7 @@ if(isset($_POST['changelanguage'])){
   $sql .= "UPDATE users set selected_questions = 'ABCDEFGHIJKLMNOPQRST'  WHERE userid ='$Current_user_id';";
   if (mysqli_multi_query($conn, $sql)){
   $_SESSION['selected_questions'] = 'ABCDEFGHIJKLMNOPQRST';
+  $_SESSION['region'] = $_POST['region']; 
     echo "OK";
   } else {
       echo "Error";

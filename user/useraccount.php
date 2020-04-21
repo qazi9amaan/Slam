@@ -659,8 +659,15 @@
     background:none;
     border:none;
   }
-</style>
 
+    .share_card {
+        color: #7cc576 !important;
+    }
+
+    .coloured-notification{
+      border: 3px solid #ee0979 !important ;
+    }
+</style>
 
 
 <link href="/darkmode/dark-user.css" rel="stylesheet">
@@ -695,14 +702,14 @@
           <div class="container">
            <div class="row">
              
-            <div class="col-10 my-2 ">
+            <div class="col-11 my-2 ">
               <input type="search" name="" id ="large_search_box" class="form-control" placeholder="Use @ to search by username ...">
                 <div id="large_searchresult" class="container">
                   
                 </div>
 
             </div>
-            <div class="col px-3 pt-2 my-2">
+            <div style = "margin-top :.3rem !important;" class="col px-3 pt-2 ">
               <i style ="font-size: 15px;" class="icofont-search"></i>
             </div>
            </div>
@@ -1004,7 +1011,7 @@
     <!-- FROM DATABASE -->
     <input  hidden value = "<?php echo $_SESSION['currentuserid']; ?>" id = "user_id" class="text-muted"/>
     <input type="text" id ="questions" hidden value="<?php echo $_SESSION['selected_questions']; ?>">
-    <input  hidden value = "<?php echo $_COOKIE['region']; ?>" id = "region" class="text-muted"/>
+    <input  hidden value = "<?php echo $_SESSION['region']; ?>" id = "region" class="text-muted"/>
 
 
 
@@ -1097,27 +1104,57 @@ $(document).ready(function () {
   {
     initialise_counter();
   } ,1300);
-
-   $.ajax({
+  
+  // CHECKING LANGUAGE PRESENCE
+  $.ajax({
+      url : "/assets/json/languages.json",
+      dataType:"json",
+      type:'get',
+      success: function(data)
+      {
+        var flag =0;
+          $(data.languages).each(function(index,value){
+                 if($('#region').val()== value.region)
+                 {
+                  flag = 1;
+                 }
+                 
+                
+          });
+          if(flag ==0)
+          {
+            $('#region').attr("value","english");
+            $('#chooselanguage').html("Default");
+          }
+      },
+      complete:function(data)
+      {
+        $.ajax({
       
-        url : "/assets/json/"+$('#region').val()+".json",
-        dataType:"json",
-        type:'get',
-        success: function(data)
-        {
-          console.log(selected_questions_list)
-            $(data.questions).each(function(index,value){
-              console.log(index);
-                if(jQuery.inArray(value.id, selected_questions_list)!== -1) {
-                    
-                   var t = '<div class="message my-2 questionid-'+index+'"><div class="col-12"><div class="row"><div class="col-10"><div  class="card card-plain p-4 questionid-'+index+'"><div class="body">'+value.question+'</div></div></div><div id = "insbtn"class="col-2 questionid-'+index+'" style="margin-left: -1rem;">';
-                   t+= '<div class="show"><i data-questionid="'+index+'" data-visibility ="show"  data-questionidname= "'+value.id+'"  id = "select_question_btn" class="icofont-bin" ></i></div></div></div></div></div>';
-                    $('#getallquestions').append(t);
-                } 
-               
-            });
-        }
-    });
+      url : "/assets/json/"+$('#region').val()+".json",
+      dataType:"json",
+      type:'get',
+      success: function(data)
+      {
+        console.log(selected_questions_list)
+          $(data.questions).each(function(index,value){
+            console.log(index);
+              if(jQuery.inArray(value.id, selected_questions_list)!== -1) {
+                  
+                 var t = '<div class="message my-2 questionid-'+index+'"><div class="col-12"><div class="row"><div class="col-10"><div  class="card card-plain p-4 questionid-'+index+'"><div class="body">'+value.question+'</div></div></div><div id = "insbtn"class="col-2 questionid-'+index+'" style="margin-left: -1rem;">';
+                 t+= '<div class="show"><i data-questionid="'+index+'" data-visibility ="show"  data-questionidname= "'+value.id+'"  id = "select_question_btn" class="icofont-bin" ></i></div></div></div></div></div>';
+                  $('#getallquestions').append(t);
+              } 
+             
+          });
+      }
+  });
+      }
+  });
+
+ 
+
+
 });
 
     
@@ -1164,7 +1201,7 @@ function upload_question_changes(list)
        }
         $('.save_choosed_questions').html("Changes Saved!");
          $('.save_choosed_questions').prop('disabled', false);
-         loaction.reload();
+         location.reload();
       }
   });
 }
@@ -1256,13 +1293,14 @@ function notification_color(){
         success: function(data) {
           if(data !=0)
           {
-            $('.profile_image_main').css('border','3px solid #ee0979'); 
-            $('.profile_image').css('border','3px solid #ee0979'); 
-            $('.large').css('border','3px solid #ee0979 ');  
+            $
+            $('.profile_image_main').addClass('coloured-notification'); 
+            $('.profile_image').addClass('coloured-notification');  
+            $('.large').addClass('coloured-notification'); 
           }else{
-            $('.profile_image_main').css('border','3px solid '); 
-            $('.profile_image').css('border','none'); 
-            $('.large').css('border','none '); 
+            $('.profile_image_main').removeClass('coloured-notification'); 
+            $('.profile_image').removeClass('coloured-notification');  
+            $('.large').removeClass('coloured-notification'); 
           }
         }
       });

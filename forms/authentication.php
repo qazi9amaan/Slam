@@ -27,6 +27,7 @@ function setSession($conn,$user,$auth)
              $_SESSION['currentimageurl'] = $row["profile_picture"];
               $_SESSION['currentuserbio'] = $row["bio"];
               $_SESSION['selected_questions']= $row["selected_questions"];
+              $_SESSION['region']= $row["region"];
               setcookie('region', $row["region"], time() + (86400 * 30), "/");
 
               
@@ -110,6 +111,7 @@ if(isset($_POST['cookielogin'])){
 function create_account($username,$pass,$firstname,$lastname,$phonenumber,$conn)
 {
   $pass = md5($pass);
+  $pic =  '';
   if(isset($_COOKIE['region'])){
     $region = $_COOKIE['region'];
   }else{
@@ -121,6 +123,7 @@ function create_account($username,$pass,$firstname,$lastname,$phonenumber,$conn)
   $sql .= "INSERT INTO users(username,firstname,lastname,region)
   VALUES ('$username', '$firstname', '$lastname','$region');";
   if (mysqli_multi_query($conn, $sql)) {
+    savecookie($username,$pass,$firstname,$pic);
     return true;
   } else {
       return false;
@@ -173,6 +176,7 @@ if(isset($_POST['register_now']))
     if(create_account($username,$pass,$firstname,$lastname,$phonenumber,$conn))
     {
         $_SESSION['currentusername']=$_POST['username'];
+       
           echo 'success';
     }
     else
@@ -307,7 +311,7 @@ if(isset($_GET['findaccount']))
          while ($row = mysqli_fetch_assoc($result)){
           echo "
               <script>
-                $('#userimg').attr('src','".substr($row['profile_picture'],3)."');
+                $('#userimg').attr('src','".substr($row['profile_picture'],1)."');
                  $('#sendlinkbtn').css('display','none');
                 $('#sendresetlink').css('display','block');
                  $('#useremailid').val('".$row1['emailaddress']."');

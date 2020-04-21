@@ -31,10 +31,43 @@
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
+  <link href="assets/css/login_darkmode.css" rel="stylesheet">
 
  
 </head>
+<style>
+        @media (prefers-color-scheme: dark) {
+        /* 
+        -----------------------
+        # INDEX PAGE
+        -----------------------
+        */
+        #large_searchresult {
+        background: #2d2d2d  !important;
+        }
+        .btn-get-started{
+          background: #2d2d2d !important;
+        color: #999 !important;
+        box-shadow: 0 4px 15px -2px rgba(0, 0, 0, 0.5) !important;
+        }
+
+        #searchmodal i{
+          background: #4d4d4d !important;
+          color:#fafafa !important;
+        }
+        
+        /* -----------------------
+            # END INDEX
+        -------------------------- */
+        }
+
+        #searchmodal .modal-content{
+          background: none !important;
+        }
+    </style>
   <style>
+
+    
     
   .user i {
           font-size: 18px;
@@ -335,21 +368,7 @@
 
 
 
-var request = new XMLHttpRequest();
-            request.open('GET', 'https://api.ipdata.co/?api-key=eca0458f84dd578dfa6f649bae55f9137da51a3194c9d89b430758f6');
-            request.setRequestHeader('Accept', 'application/json');
-            request.onreadystatechange = function() {
-                if (this.readyState === 4) {
-                    var data = JSON.parse(this.responseText);
-                    console.log(data.region.toLowerCase())
-                    document.cookie = 'region='+ data.region.toLowerCase();
 
-                }else{
-                  document.cookie = 'region=english';
-
-                }
-            };
-            request.send();
 
 
       

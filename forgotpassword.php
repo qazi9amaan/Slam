@@ -36,6 +36,20 @@
 
 
     <link href="assets/css/style.css" rel="stylesheet">
+    <link href="assets/css/login_darkmode.css" rel="stylesheet">
+
+
+
+    <style>
+        @media (prefers-color-scheme: dark) {
+          .card{
+        background: #3d3d3d !important;
+        border-color: #3d3d3d !important;
+        box-shadow: 0 4px 15px -2px rgba(0, 0, 0, 0.5) !important;
+    }
+        }
+    </style>
+
     
     <style>
       .card-title img{
@@ -195,13 +209,13 @@ user i {
                                   <small class="lead">
                                   New password
                                 </small>
-                                <input type="password" name="password" id="newpass" class="form-control">
+                                <input required type="password" name="password" id="newpass" class="form-control">
                                 </p>
                                 <p class="text-left">
                                   <small class="lead ">
                                  Confirm New password
                                 </small>
-                                <input type="password" name="confirmpassword" id="confirmnewpass" class="form-control">
+                                <input required type="password" name="confirmpassword" id="confirmnewpass" class="form-control">
                                 </p>
                                 <p class="text-left">
                                   <small class="lead" style="color: red;" id="changenewpass-helptext"></small>

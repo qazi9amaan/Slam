@@ -187,7 +187,7 @@ $(document).on('click', '#select_question_btn', function() {
 
         $('.questionid-' + i).css('background', ' #E50000')
         $('.questionid-' + i).css('border-color', ' #E50000')
-        $('.questionid-' + i).fadeOut(1000);
+        $('.questionid-' + i).fadeOut(190);
         selected_questions_list = $.grep(selected_questions_list, function(value) {
             return value != question_alpahbet;
         });
@@ -206,10 +206,10 @@ $(document).on('focusout', '.faq-list input', function() {
         var id = $(this).attr('data-id');
         var ans = capitalizeFirstLetter($(this).val());
         console.log(ans)
-        $('.faq-list #hide' + id).fadeOut(500, function() {
+        $('.faq-list #hide' + id).fadeOut(100, function() {
             var val = '<div style="color: #7cc576;" class="text-center">' + ans + ' <i class="icofont-tick-mark"></i> </div>';
             $('#show' + id).html(val);
-            $('#show' + id).fadeIn(300)
+            $('#show' + id).fadeIn(100)
         });
 
     }

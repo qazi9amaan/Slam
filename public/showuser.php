@@ -504,7 +504,7 @@ transition: all 0.3s ease-in-out;
           </div>
        
         <div class="user">
-            <a href="account"><i id = "/home" class="icofont-home"></i></a>
+            <a href="account"><i id = "home" class="icofont-home"></i></a>
             <a href="<?php  echo $username;?>/ask"><i id = "askquestion" class="icofont-paper-plane"></i></a>
 
             
@@ -691,11 +691,13 @@ transition: all 0.3s ease-in-out;
         
         success: function(data)
         {
+            var i =0;
             $(data.questions).each(function(index,value){
                 if(jQuery.inArray(value.id, selected_questions_list)!== -1) {
                     
-                  var t = '   <div class="question"><li id = "hidefaq'+index+'" data-aos="fade-up"><a id = "showhandler" data-toggle="collapse" class="collapsed" href="#faq'+index+'">'+value.question+'<i class="bx bx-chevron-down icon-show"></i><i class="bx bx-x icon-close"></i></a><div id="faq'+index+'" class="collapse" data-parent=".faq-list"><div class="md-form"><input title ="question" required name = "'+value.id+'" data-id = "faq'+index+'" type="text" id="question'+index+'" class="form-control"></div></div></li><li  id = "showfaq'+index+'" class = "Answered"></li></div>';
+                  var t = '   <div class="question"><li id = "hidefaq'+i+'" ><a id = "showhandler" data-toggle="collapse" class="collapsed" href="#faq'+i+'">'+value.question+'<i class="bx bx-chevron-down icon-show"></i><i class="bx bx-x icon-close"></i></a><div id="faq'+i+'" class="collapse" data-parent=".faq-list"><div class="md-form"><input title ="question" required name = "'+value.id+'" data-id = "faq'+i+'" type="text" id="question'+i+'" class="form-control"></div></div></li><li  id = "showfaq'+i+'" class = "Answered"></li></div>';
                    $('#getallquestions').append(t);
+                   i =i+1;
                 } 
 
                
@@ -857,6 +859,35 @@ setInterval(function()
 $(document).on('click', '#posts', function(e){  
    $('#carouselExampleIndicators').carousel('next');
 });
+
+
+$(document).on('focusout', '.form-control', function(e){  
+  console.log('yes');
+  var currentid =parseInt($(this).attr('id').substring(8));
+  console.log(this)
+   var newid = currentid+1;
+   $('#faq'+newid).addClass('show');
+console.log(newid)
+   $('#faq'+currentid).removeClass('show');
+   $('#hidefaq'+newid+' a').removeClass('collapsed');
+  
+  $('#question'+newid).focus();
+   
+});
+
+
+$(document).on('change', '.form-control', function(e){  
+  var currentid =parseInt($(this).attr('id').substring(8));
+   var newid = currentid+1;
+   
+   $('#faq'+currentid).removeClass('show');
+   $('#hidefaq'+newid+' a').removeClass('collapsed');
+   $('#faq'+newid).addClass('show');
+
+  $('#question'+newid).focus();
+   
+});
+
 
 
 </script>

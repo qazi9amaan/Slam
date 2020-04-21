@@ -32,6 +32,8 @@ if(!empty($_FILES['picture']['name'])){
             $sql = "UPDATE users set profile_picture = '$upload_target' WHERE username ='$username';";
             if (mysqli_query($conn, $sql)) {
                 $_SESSION['currentimageurl'] =$targetPath;
+                setcookie('profile_pic', $targetPath, time() + (86400 * 30), "/");
+
               echo "Profile Updated!";
             } else{
                 echo("failed!");

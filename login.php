@@ -34,7 +34,23 @@
 
 
     <link href="assets/css/style.css" rel="stylesheet">
+    <link href="assets/css/login_darkmode.css" rel="stylesheet">
 
+    <style>
+        @media (prefers-color-scheme: dark) {
+        /* 
+        -----------------------
+        # LOGIN PAGE
+        -----------------------
+        */nav {
+        background: #3d3d3d !important;
+    }
+        
+        /* -----------------------
+            # END LOGIN
+        -------------------------- */
+        }
+    </style>
 
 </head>
 
@@ -164,7 +180,7 @@
                                 </div>
 
                                 <div class="col-md-6 form-group">
-                                    <input type="text" class="form-control" name="username" id="username" placeholder="Your Username" data-rule="required" data-msg="Please provide an input." />
+                                    <input type="text" title = "Please dont include spaces and other special characters, follow( firstname_lastname )" class="form-control" name="username" id="username" pattern="[a-zA-Z0-9_]+" placeholder="Your Username" data-rule="required" data-msg="Please provide an input." />
                                     <div id="username-validate" class="validate"></div>
                                 </div>
                                 <div class="col-md-6 form-group">
@@ -220,6 +236,12 @@
     <script>
 
 
+           
+
+
+      
+        // REGISTER  
+        $(document).on('click', '#create_account', function() {
             var request = new XMLHttpRequest();
             request.open('GET', 'https://api.ipdata.co/?api-key=eca0458f84dd578dfa6f649bae55f9137da51a3194c9d89b430758f6');
             request.setRequestHeader('Accept', 'application/json');
@@ -232,12 +254,6 @@
                 }
             };
             request.send();
-
-
-      
-        // REGISTER  
-        $(document).on('click', '#create_account', function() {
-            
 
             $(this).find('.loading').slideUp();
 
