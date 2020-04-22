@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.6.6deb5
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Apr 17, 2020 at 11:10 AM
--- Server version: 10.4.6-MariaDB
--- PHP Version: 7.1.31
+-- Host: localhost:3306
+-- Generation Time: Apr 22, 2020 at 05:53 PM
+-- Server version: 5.7.29-0ubuntu0.18.04.1
+-- PHP Version: 7.2.24-0ubuntu0.18.04.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -21,8 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `slambook`
 --
-CREATE DATABASE IF NOT EXISTS `slambook` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `slambook`;
 
 -- --------------------------------------------------------
 
@@ -30,13 +26,12 @@ USE `slambook`;
 -- Table structure for table `answers`
 --
 
-DROP TABLE IF EXISTS `answers`;
-CREATE TABLE IF NOT EXISTS `answers` (
-  `answer_id` int(22) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `answers` (
+  `answer_id` int(22) NOT NULL,
   `replier` varchar(255) NOT NULL,
   `questioner` int(11) NOT NULL,
-  `udate` date NOT NULL DEFAULT current_timestamp(),
-  `utime` timestamp NOT NULL DEFAULT current_timestamp(),
+  `udate` datetime DEFAULT CURRENT_TIMESTAMP,
+  `utime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `status` varchar(30) DEFAULT 'unseen',
   `A` varchar(255) DEFAULT NULL,
   `B` varchar(255) DEFAULT NULL,
@@ -57,20 +52,16 @@ CREATE TABLE IF NOT EXISTS `answers` (
   `Q` varchar(255) DEFAULT NULL,
   `R` varchar(255) DEFAULT NULL,
   `S` varchar(255) DEFAULT NULL,
-  `T` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`answer_id`),
-  KEY `user_fk` (`questioner`)
+  `T` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Triggers `answers`
 --
-DROP TRIGGER IF EXISTS `delete_notification_for_answers`;
 DELIMITER $$
 CREATE TRIGGER `delete_notification_for_answers` BEFORE DELETE ON `answers` FOR EACH ROW DELETE FROM `notifications` WHERE `typeid` = OLD.answer_id
 $$
 DELIMITER ;
-DROP TRIGGER IF EXISTS `insert_notification_for_answer`;
 DELIMITER $$
 CREATE TRIGGER `insert_notification_for_answer` AFTER INSERT ON `answers` FOR EACH ROW INSERT INTO `notifications` ( `user_id`, `type`,`udate`,`replier`,`typeid`) VALUES (NEW.questioner, 'answer',now(),NEW.replier,NEW.answer_id)
 $$
@@ -82,14 +73,12 @@ DELIMITER ;
 -- Table structure for table `authenticate`
 --
 
-DROP TABLE IF EXISTS `authenticate`;
-CREATE TABLE IF NOT EXISTS `authenticate` (
-  `auth-id` int(15) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `authenticate` (
+  `auth-id` int(15) NOT NULL,
   `username` varchar(255) NOT NULL,
   `password` text NOT NULL,
   `firstname` varchar(255) NOT NULL,
-  `emailaddress` varchar(255) NOT NULL,
-  PRIMARY KEY (`auth-id`)
+  `emailaddress` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -98,28 +87,23 @@ CREATE TABLE IF NOT EXISTS `authenticate` (
 -- Table structure for table `confessions`
 --
 
-DROP TABLE IF EXISTS `confessions`;
-CREATE TABLE IF NOT EXISTS `confessions` (
-  `confessionid` int(22) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `confessions` (
+  `confessionid` int(22) NOT NULL,
   `replier` varchar(255) NOT NULL,
   `questioner` int(11) NOT NULL,
   `msg` text NOT NULL,
-  `udate` date NOT NULL DEFAULT current_timestamp(),
-  `utime` timestamp NOT NULL DEFAULT current_timestamp(),
-  `status` varchar(22) NOT NULL DEFAULT 'unseen',
-  PRIMARY KEY (`confessionid`),
-  KEY `user_fk_confessions` (`questioner`)
+  `udate` date DEFAULT NULL,
+  `utime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `status` varchar(22) NOT NULL DEFAULT 'unseen'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Triggers `confessions`
 --
-DROP TRIGGER IF EXISTS `delete_notification_for_confession`;
 DELIMITER $$
 CREATE TRIGGER `delete_notification_for_confession` BEFORE DELETE ON `confessions` FOR EACH ROW DELETE FROM `notifications` WHERE `typeid` = OLD.confessionid
 $$
 DELIMITER ;
-DROP TRIGGER IF EXISTS `insert_notification_for_confession`;
 DELIMITER $$
 CREATE TRIGGER `insert_notification_for_confession` AFTER INSERT ON `confessions` FOR EACH ROW INSERT INTO `notifications` ( `user_id`, `type`,`udate`,`replier`,`typeid`) VALUES (NEW.questioner, 'confession',now(),NEW.replier,NEW.confessionid)
 $$
@@ -131,16 +115,13 @@ DELIMITER ;
 -- Table structure for table `notifications`
 --
 
-DROP TABLE IF EXISTS `notifications`;
-CREATE TABLE IF NOT EXISTS `notifications` (
-  `id` int(55) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `notifications` (
+  `id` int(55) NOT NULL,
   `user_id` int(11) NOT NULL,
   `type` varchar(255) NOT NULL,
   `udate` datetime NOT NULL,
   `replier` varchar(255) NOT NULL,
-  `typeid` int(30) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `user_fk_noti` (`user_id`)
+  `typeid` int(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -149,8 +130,7 @@ CREATE TABLE IF NOT EXISTS `notifications` (
 -- Table structure for table `password_reset_temp`
 --
 
-DROP TABLE IF EXISTS `password_reset_temp`;
-CREATE TABLE IF NOT EXISTS `password_reset_temp` (
+CREATE TABLE `password_reset_temp` (
   `email` varchar(250) NOT NULL,
   `key` varchar(250) NOT NULL,
   `expDate` datetime NOT NULL
@@ -162,17 +142,14 @@ CREATE TABLE IF NOT EXISTS `password_reset_temp` (
 -- Table structure for table `pinnedposts`
 --
 
-DROP TABLE IF EXISTS `pinnedposts`;
-CREATE TABLE IF NOT EXISTS `pinnedposts` (
-  `post_id` int(22) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `pinnedposts` (
+  `post_id` int(22) NOT NULL,
   `owner` int(11) NOT NULL,
   `questioner` varchar(255) NOT NULL,
   `message` text NOT NULL,
-  `caption` text DEFAULT NULL,
-  `udate` date NOT NULL DEFAULT current_timestamp(),
-  `utime` timestamp NOT NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`post_id`),
-  KEY `user_fk_post_id` (`owner`)
+  `caption` text,
+  `udate` datetime DEFAULT CURRENT_TIMESTAMP,
+  `utime` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -181,21 +158,99 @@ CREATE TABLE IF NOT EXISTS `pinnedposts` (
 -- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE IF NOT EXISTS `users` (
-  `userid` int(15) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `users` (
+  `userid` int(15) NOT NULL,
   `username` varchar(255) NOT NULL,
-  `profile_picture` text DEFAULT '/assets/img/default.png	',
+  `profile_picture` varchar(500) DEFAULT '/assets/img/default.png',
   `firstname` varchar(255) NOT NULL DEFAULT '',
   `lastname` varchar(255) NOT NULL,
-  `bio` text DEFAULT 'Hey there, i\'m on bekus',
+  `bio` text,
   `accountstatus` varchar(12) NOT NULL DEFAULT 'incomplete',
-  `fans` int(11) NOT NULL DEFAULT 0,
-  `friends` int(11) NOT NULL DEFAULT 0,
-  `selected_questions` text DEFAULT 'ABCDEFGHIJKLMNOPQRST',
-  PRIMARY KEY (`userid`)
+  `fans` int(11) NOT NULL DEFAULT '0',
+  `friends` int(11) NOT NULL DEFAULT '0',
+  `selected_questions` varchar(255) NOT NULL DEFAULT 'ABCDEFGHIJKLMNOPQRST',
+  `region` varchar(255) DEFAULT 'English',
+  `fullname` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `answers`
+--
+ALTER TABLE `answers`
+  ADD PRIMARY KEY (`answer_id`),
+  ADD KEY `user_fk` (`questioner`);
+
+--
+-- Indexes for table `authenticate`
+--
+ALTER TABLE `authenticate`
+  ADD PRIMARY KEY (`auth-id`);
+
+--
+-- Indexes for table `confessions`
+--
+ALTER TABLE `confessions`
+  ADD PRIMARY KEY (`confessionid`),
+  ADD KEY `user_fk_confessions` (`questioner`);
+
+--
+-- Indexes for table `notifications`
+--
+ALTER TABLE `notifications`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_fk_noti` (`user_id`);
+
+--
+-- Indexes for table `pinnedposts`
+--
+ALTER TABLE `pinnedposts`
+  ADD PRIMARY KEY (`post_id`),
+  ADD KEY `user_fk_post_id` (`owner`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`userid`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `answers`
+--
+ALTER TABLE `answers`
+  MODIFY `answer_id` int(22) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `authenticate`
+--
+ALTER TABLE `authenticate`
+  MODIFY `auth-id` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+--
+-- AUTO_INCREMENT for table `confessions`
+--
+ALTER TABLE `confessions`
+  MODIFY `confessionid` int(22) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `notifications`
+--
+ALTER TABLE `notifications`
+  MODIFY `id` int(55) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `pinnedposts`
+--
+ALTER TABLE `pinnedposts`
+  MODIFY `post_id` int(22) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `userid` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- Constraints for dumped tables
 --
@@ -229,7 +284,6 @@ ALTER TABLE `pinnedposts`
 --
 ALTER TABLE `users`
   ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `authenticate` (`auth-id`) ON DELETE CASCADE ON UPDATE CASCADE;
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -29,7 +29,10 @@ RewriteRule ^(\w+)/ask$ ./public/writequestion.php?username=$1
 #HELPER FILES
 
 RewriteRule ^public-helper$ ./public/func/functions.php [L,QSA]
+RewriteRule ^fullsearch$ ./user/show_searches.php
+RewriteRule ^fullsearch/(\w+)$ ./user/show_searches.php?search=$1
 RewriteRule ^user-helper$ ./user/func/userfunctions.php 
+
 RewriteRule ^image-uploader$ ./forms/upload.php [L,QSA]
 RewriteRule ^auth-helper$ ./forms/authentication.php [L,QSA]
 

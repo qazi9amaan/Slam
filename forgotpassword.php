@@ -15,9 +15,10 @@
     <meta charset="utf-8">
     <meta conntent="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Knight Bootstrap Template - Index</title>
-    <meta conntent="" name="descriptison">
-    <meta conntent="" name="keywords">
+    <title>Zaan- Forgot & Reset password</title>
+    <meta content="Find out what people think about you. Confess your feelings and get answers on any topic!" name="descriptison">
+    <meta content="Ask, Confess, complements, slambook, slam, questions abut me, answer anonymously, ask anonymously, anonymously, confessions" name="keywords">
+
 
     <!-- Faviconns -->
     <link href="assets/img/faviconn.png" rel="iconn">

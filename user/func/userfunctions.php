@@ -520,7 +520,7 @@ if(isset($_GET['searchuser'])){
     {
 
 
-     $sql ="SELECT * FROM users u WHERE  username LIKE '".$name."%' LIMIT 10";
+     $sql ="SELECT * FROM users u WHERE  username LIKE '".$name."%' LIMIT 4";
     $result = mysqli_query($conn, $sql);
     if (mysqli_num_rows($result) > 0) {
         while($row = mysqli_fetch_assoc($result)) {
@@ -572,6 +572,29 @@ if(isset($_GET['searchuser'])){
       </div>
            ';
         }
+        echo '
+        <div class="row">
+   <div class="col-12">
+     <div class="card" style="
+           border-bottom-left-radius: 0rem;
+           border-top: none;
+           border-left: none;
+           border-right: none;
+           ">
+           <div class="card-body" style="margin: 0;">
+             <div class="container">
+             <div class="col-12 mb-0">    
+                    Show more ...
+                </div>
+             </div>
+           </div>
+           <a href="/fullsearch/'.$name.'" class="stretched-link"></a>
+           </div>
+         </div>
+       </div>
+          
+   
+      ';
     }else{
         echo '
     <div class="row">
@@ -583,7 +606,7 @@ if(isset($_GET['searchuser'])){
                 border-right: none;
                 ">
                 <div class="card-body" style="margin: 0;">
-              <div class="container">
+              <div class="container text-center">
                     <div class="row">
                             <div class="col-12 mb-0">    
                                         Sorry no results found!
@@ -603,7 +626,7 @@ if(isset($_GET['searchuser'])){
   {
   
   }else{
-    $sql ="SELECT * FROM users u WHERE  firstname LIKE '".$name."%' OR lastname LIKE '".$name."%' LIMIT 10";
+    $sql ="SELECT * FROM users u WHERE  firstname LIKE '".$name."%' OR lastname LIKE '".$name."%' LIMIT 4";
     $result = mysqli_query($conn, $sql);
     if (mysqli_num_rows($result) > 0) {
         while($row = mysqli_fetch_assoc($result)) {
@@ -655,6 +678,32 @@ if(isset($_GET['searchuser'])){
       </div>
            ';
         }
+
+        echo '
+        <div class="row">
+   <div class="col-12">
+     <div class="card" style="
+           border-bottom-left-radius: 0rem;
+           border-top: none;
+           border-left: none;
+           border-right: none;
+           ">
+           <div class="card-body" style="margin: 0;">
+             <div class="container text-center">
+             <div class="col-12 mb-0 text-center">    
+                    Show more ...
+                </div>
+             </div>
+           </div>
+           <a href="/fullsearch/'.$name.'" class="stretched-link"></a>
+           </div>
+         </div>
+       </div>
+          
+   
+      ';
+
+
     }else{
         echo '
     <div class="row">
@@ -688,7 +737,7 @@ if(isset($_GET['searchuser'])){
 
 if(isset($_POST['changelanguage'])){
   $region = $_POST['region'];
-  
+ 
   $sql = "UPDATE users set region = '$region'  WHERE userid ='$Current_user_id';";
   $sql .= "UPDATE users set selected_questions = 'ABCDEFGHIJKLMNOPQRST'  WHERE userid ='$Current_user_id';";
   if (mysqli_multi_query($conn, $sql)){
@@ -699,6 +748,191 @@ if(isset($_POST['changelanguage'])){
       echo "Error";
   }
 }
+
+
+
+//SEARCH ALL USERS
+
+if(isset($_GET['searchallusers'])){
+  
+  $name = trim($_GET['value']);
+  $id = (int)$_GET['id'];
+  $counter=(int)$_GET['counter'];
+  if(substr($_GET['value'],0,1) =='@')
+  {
+    $name = substr($_GET['value'],1);
+    if($name!= "" || $name != null)
+    {
+        $count ="SELECT count(*) as t_number FROM users u WHERE  firstname LIKE '".$name."%' ";
+        $count_res = mysqli_query($conn, $count);
+        if (mysqli_num_rows($count_res) > 0) {
+            while($count = mysqli_fetch_assoc($count_res)) {
+                $total= $count['t_number'];
+            }
+        }  
+
+     $sql ="SELECT * FROM users u WHERE  userid >= '$id' AND  username LIKE '".$name."%' LIMIT 10";
+    $result = mysqli_query($conn, $sql);
+    if (mysqli_num_rows($result) > 0) {
+        $last_id ="";
+        while($row = mysqli_fetch_assoc($result)) {
+          echo '
+          <div class="row mt-1">
+              <div class="col-12">
+                  <div class="card" style="">
+                      <div class="card-body" style="margin: 0;">
+                              <div class="container">
+                                  <div class="row">
+                                      <div class="col-2 text-right pl-0 ml-0">
+                                          <img src="'.$row['profile_picture'].'" alt="" style="border-radius: 50%; WIDTH: 46px;HEIGHT: 46px;">
+                                      </div>
+                                          <div class="col p-0 m-0" >
+                                              <div class="container">
+                                                  <div class="row">
+                                                      <div class="col-12 text-capitalize" style="font-size: 20px; margin-top: -7px;">
+                                                      '.$row['firstname'].' '.$row['lastname'].'
+                                                      </div>
+                                                      <div class="col-12" style=" margin-top: -4px;">
+                                                      <small>  @'.$row['username'].' </small>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                  </div>
+                              </div>
+                      </div>
+                      <a href="/'.$row['username'].'" class="stretched-link"></a>
+                  </div>
+              </div>
+          </div>
+          ';
+          $last_id = $row['userid']+1;
+          $counter =$counter+1;
+        }
+
+        echo '
+        <script>
+        $("#last").attr("value","'.$last_id.'");
+        $("#total").attr("value","'.$total.'");
+        $("#counter").attr("value","'.$counter.'");
+        </script>
+          
+        ';  
+
+       
+    }else
+    {
+      echo '
+      <div class="row mt-1">
+          <div class="col-12">
+              <div class="card" style="">
+                  <div class="card-body" style="margin: 0; font-size: 18px">
+                          <div class="container">
+                              <div class="row">
+                                  <div class="col-12">
+                                  <p class="lead">
+                                  Sorry, no results found!
+                                  </p></div> 
+                              </div>
+                          </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      ';
+      }
+    }
+  }else{
+
+  if($name=='')
+  {
+  
+  }else{
+
+    $count ="SELECT count(*) as t_number FROM users u WHERE  firstname LIKE '".$name."%' ";
+    $count_res = mysqli_query($conn, $count);
+    if (mysqli_num_rows($count_res) > 0) {
+        while($count = mysqli_fetch_assoc($count_res)) {
+            $total= $count['t_number'];
+        }
+    }  
+
+    $sql ="SELECT * FROM users u WHERE  userid >= '$id' AND firstname LIKE '".$name."%' OR lastname LIKE '".$name."%' LIMIT 10 ";
+    $result = mysqli_query($conn, $sql);
+    if (mysqli_num_rows($result) > 0) {
+        $last_id ="";
+        
+        while($row = mysqli_fetch_assoc($result)) {
+          echo '
+          <div class="row mt-1">
+              <div class="col-12">
+                  <div class="card" style="">
+                      <div class="card-body" style="margin: 0;">
+                              <div class="container">
+                                  <div class="row">
+                                      <div class="col-2 text-right pl-0 ml-0">
+                                          <img src="'.$row['profile_picture'].'" alt="" style="border-radius: 50%; WIDTH: 46px;HEIGHT: 46px;">
+                                      </div>
+                                          <div class="col p-0 m-0" >
+                                              <div class="container">
+                                                  <div class="row">
+                                                      <div class="col-12 text-capitalize" style="font-size: 20px; margin-top: -7px;">
+                                                      '.$row['firstname'].' '.$row['lastname'].'
+                                                      </div>
+                                                      <div class="col-12" style=" margin-top: -4px;font-size: 18px">
+                                                      <small>  @'.$row['username'].' </small>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                  </div>
+                              </div>
+                      </div>
+                      <a href="/'.$row['username'].'" class="stretched-link"></a>
+                  </div>
+              </div>
+          </div>
+          ';
+          $last_id = $row['userid']+1;
+          $counter =$counter+1;
+        }
+       
+         echo '
+         <script>
+         $("#last").attr("value","'.$last_id.'");
+         $("#total").attr("value","'.$total.'");
+         $("#counter").attr("value","'.$counter.'");
+         </script>
+           
+         ';  
+      
+         
+
+    }else{
+       echo '
+      <div class="row mt-1">
+          <div class="col-12">
+              <div class="card" style="">
+                  <div class="card-body" style="margin: 0;">
+                          <div class="container">
+                              <div class="row">
+                                  <div class="col-12">
+                                  <p class="lead">
+                                  Sorry, no results found!
+                                  </p></div> 
+                              </div>
+                          </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  ';
+    }
+  }
+   }  
+
+}
+
 
 
 ?>
