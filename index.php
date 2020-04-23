@@ -14,9 +14,9 @@
   <meta content="Find out what people think about you. Confess your feelings and get answers on any topic!" name="descriptison">
   <meta content="Ask, Confess, complements, slambook, slam, questions abut me, answer anonymously, ask anonymously, anonymously, confessions" name="keywords">
 
-  <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link class="title-img" href="/assets/img/friends/friends-outline-green.png" rel="icon">
+    <link class="title-img" href="/assets/img/friends/friends-outline-green.png" rel="apple-touch-icon">
+
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -30,8 +30,8 @@
   <link href="assets/vendor/aos/aos.css" rel="stylesheet">
 
   <!-- Template Main CSS File -->
-  <link href="assets/css/style.css" rel="stylesheet">
-  <link href="assets/css/login_darkmode.css" rel="stylesheet">
+  <link   href="assets/css/style.css" rel="stylesheet">
+  <link  href="assets/css/login_darkmode.css" rel="stylesheet">
 
  
 </head>
@@ -42,19 +42,25 @@
         # INDEX PAGE
         -----------------------
         */
+
+        html {
+  --text-color-normal: #0a244d;
+  --text-color-light: #8cabd9;
+}
         #large_searchresult {
         background: #2d2d2d  !important;
         }
         .btn-get-started{
           background: #2d2d2d !important;
-        color: #999 !important;
-        box-shadow: 0 4px 15px -2px rgba(0, 0, 0, 0.5) !important;
+          color: #999 !important;
+          box-shadow: 0 4px 15px -2px rgba(0, 0, 0, 0.5) !important;
         }
 
         #searchmodal i{
           background: #4d4d4d !important;
           color:#fafafa !important;
         }
+
         
         /* -----------------------
             # END INDEX
@@ -64,38 +70,40 @@
         #searchmodal .modal-content{
           background: none !important;
         }
+
+        .st0{fill:#fafafa !important;}
+
     </style>
   <style>
 
     
     
   .user i {
-          font-size: 18px;
-  color: #fff;
-  float: right;
-  width: 35px;
-  height: 35px;
-  background: #7cc576;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50px;
-  transition: all 0.3s ease-in-out;
+      font-size: 18px;
+      color: #fff;
+      float: right;
+      width: 35px;
+      height: 35px;
+      background: #7cc576;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50px;
+      transition: all 0.3s ease-in-out;
   }
   .user{
       position: fixed;
       right: 15px;
-
-  top: 20px;
-  z-index: 9998;
-  border: 0;
-  background: none;
-  font-size: 24px;
-  transition: all 0.4s;
-  outline: none !important;
-  line-height: 1;
-  cursor: pointer;
-  text-align: right;
+      top: 20px;
+      z-index: 9998;
+      border: 0;
+      background: none;
+      font-size: 24px;
+      transition: all 0.4s;
+      outline: none !important;
+      line-height: 1;
+      cursor: pointer;
+      text-align: right;
   }
   .user #askquestion {
       right: 45px;
@@ -147,6 +155,16 @@
 
   
 
+#hero h1 {
+    color:#6c757d;
+  }
+  
+ 
+.st0{fill:#7CC576;}
+ #img-hero{
+   height:150px;
+ }
+ #i
   </style>
 <body>
 
@@ -193,7 +211,7 @@
   <section id="hero">
     <div class="hero-container">
       <a href="#" class="hero-logo" data-aos="zoom-in"><img src="<?php echo $_COOKIE['profile_pic']; ?>" alt=""></a>
-      <h1 data-aos="zoom-in">Hey <?php echo $_COOKIE['f_name'];?>!<h2>
+      <h1  class ="hero-name" data-aos="zoom-in">Hey <?php echo $_COOKIE['f_name'];?>!<h2>
             <?php
             if(isset($_SESSION['currentuserid'])) {
           ?>
@@ -218,9 +236,16 @@
 
   <section id="hero">
       <div class="hero-container">
-        <a href="index.html" class="hero-logo" data-aos="zoom-in"><img src="assets/img/hero-logo.png" alt=""></a>
-        <h1 data-aos="zoom-in">BE-KUS</h1>
-        <h2 data-aos="fade-up">Curious? Find Mates & ask Anonymously</h2>
+        <a href="/home" class="hero-logo mb-sm-5" data-aos="zoom-in">
+        <img style = "height:150px;" class = "big-main img-fluid mb-3" responsive src = "/assets/img/test/main.svg"  alt="">
+       
+     
+       
+       
+       
+       
+        <h1 class ="hero-name" data-aos="zoom-in">ZAAN, ASK & CONFESS</h1>
+        <h2 data-aos="fade-up">CURIOUS? FIND MATES & ASK ANONYMOUSLY</h2>
               <?php
               if(isset($_SESSION['currentuserid'])) {
             ?>
@@ -263,8 +288,8 @@
           ?>
            <li><a href="account">My Account</a></li>
           <li><a href="#">Share Link</a></li>
-
-          <li class="nav-logo"><a href="home"><img src="assets/img/logo.png" alt="" class="img-fluid"></a></li>
+          <!-- IMAGES CHANGE -->
+          <li class="nav-logo"><a href="home"><img style = "height: 46px;" src="/assets/img/friends/friends-green.png" alt="" class="img-fluid center-img"></a></li>
            <li><a href="account/wall/<?php echo $_SESSION['currentusername']; ?> ">  <?php echo $_SESSION['currentusername']; ?>'s Wall</a></li>
           <li><a href="logout">Logout</a></li>
 
@@ -273,7 +298,8 @@
          ?> 
           <li class="active"><a href="home">Home</a></li>
           <li><a href="#services">About</a></li>
-          <li class="nav-logo"><a href="home"><img src="assets/img/logo.png" alt="" class="img-fluid"></a></li>
+          <!-- IMAGES CHANGE -->
+          <li class="nav-logo"><a href="home"><img style = "height: 46px;" src="/assets/img/friends/friends-green.png" alt="" class="center-img img-fluid"></a></li>
           <li><a href="login">Login</a></li>
           <li><a href="register">Register</a></li>            
          <?php
@@ -297,7 +323,7 @@
       <div class="container">
 
         <div class="section-title" data-aos="fade-up">
-          <h2>BE-KUS . ML</h2>
+          <h2>ZAAN . ML</h2>
           <p id ="loac">
             Let world find you! we allows you to receive feedback from whoever there is and give you a feeling of what world thinks about you.
             </p>
@@ -328,10 +354,6 @@
       </div>
     </section><!-- End Services Section -->
 
- 
-   
-
-
   </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->
@@ -340,10 +362,7 @@
 
     <div class="container footer-bottom clearfix">
       <div class="copyright">
-        &copy; Copyright <strong><span>Knight</span></strong>. All Rights Reserved
-      </div>
-      <div class="credits">
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        &copy; Copyright <strong><span>Zaan 2020</span></strong>. All Rights Reserved 
       </div>
     </div>
   </footer><!-- End Footer -->
@@ -425,7 +444,14 @@ $('#cookie_login').click(function(){
                }
                 });
 });
-         
+     
+
+if (window.matchMedia &&
+    window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      $('.center-img').attr('src','/assets/img/friends/999.png');
+      $('.big-main').attr('src','/assets/img/test/999.svg');
+}
+
 
   </script>
 </body>

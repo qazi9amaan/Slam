@@ -18,9 +18,9 @@
   <meta content="Ask, Confess, complements, slambook, slam, questions abut me, answer anonymously, ask anonymously, anonymously, confessions" name="keywords">
 
 
-    <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon">
-    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  
+    <link class="title-img"  href="/assets/img/friends/friends-outline-green.png" rel="icon">
+    <link  class="title-img" href="/assets/img/friends/friends-outline-green.png" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -47,7 +47,10 @@
         background: #3d3d3d !important;
     }
         
-        /* -----------------------
+        .loading{
+            background #3d3d3d !important;
+        }
+            /* -----------------------
             # END LOGIN
         -------------------------- */
         }
@@ -67,7 +70,7 @@
         <ul class="nav-inner">
                <li class=""><a href="home">Home</a></li>
                   <li><a href="home#services">About</a></li>
-                  <li class="nav-logo"><a href="home"><img src="assets/img/logo.png" alt="" class="img-fluid"></a></li>
+                  <li class="nav-logo"><a href="home"><img style = "height: 41px;" src="/assets/img/friends/friends-green.png" alt="" class="center-img img-fluid"></a></li>
                   <li class="active"><a  href="login">Login</a></li>
                    <li><a href="home#askquestion">Search</a></li>
 
@@ -352,6 +355,19 @@
                });
            });
     
+
+           if (window.matchMedia &&
+    window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      $('.center-img-big').attr('src','/assets/img/friends/friends-dark.png');
+      $('.center-img').attr('src','/assets/img/friends/999.png');
+}
+
+
+
+
+
+
+
     </script>
 </body>
 

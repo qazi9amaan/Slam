@@ -218,6 +218,14 @@ $(document).on('focusout', '.faq-list input', function() {
 
 
 
+if (window.matchMedia &&
+    window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      $('.title-img').attr('href','/assets/img/friends/friends-outline-dark.png');
+}
+
+
+
+
 
 
 

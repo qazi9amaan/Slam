@@ -20,9 +20,9 @@
     <meta content="Ask, Confess, complements, slambook, slam, questions abut me, answer anonymously, ask anonymously, anonymously, confessions" name="keywords">
 
 
-    <!-- Faviconns -->
-    <link href="assets/img/faviconn.png" rel="iconn">
-    <link href="assets/img/apple-touch-iconn.png" rel="apple-touch-iconn">
+    <link  class ="title-img"  href="/assets/img/friends/friends-outline-green.png" rel="icon">
+    <link   class ="title-img" href="/assets/img/friends/friends-outline-green.png" rel="apple-touch-icon">
+
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -36,8 +36,8 @@
     <link href="assets/vendor/aos/aos.css" rel="stylesheet">
 
 
-    <link href="assets/css/style.css" rel="stylesheet">
-    <link href="assets/css/login_darkmode.css" rel="stylesheet">
+    <link  href="assets/css/style.css" rel="stylesheet">
+    <link   href="assets/css/login_darkmode.css" rel="stylesheet">
 
 
 

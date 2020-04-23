@@ -1,6 +1,6 @@
 <?php
-        include('connection.php');
-        session_start();
+  include('connection.php');
+  session_start();
 
    
 function savecookie($user,$auth,$fname,$pic)
@@ -19,48 +19,47 @@ function savecookie($user,$auth,$fname,$pic)
 // LOGIN PROCESS
 function setSession($conn,$user,$auth)
 {
-        $usr = $_SESSION['currentusername'];
-        $sql = "SELECT * FROM users WHERE username ='$usr'";
-        if ($result = mysqli_query($conn, $sql)) {
-         while ($row = mysqli_fetch_assoc($result)){
-             $_SESSION['currentuserid']=  $row["userid"];
-             $_SESSION['currentimageurl'] = $row["profile_picture"];
-              $_SESSION['currentuserbio'] = $row["bio"];
-              $_SESSION['selected_questions']= $row["selected_questions"];
-              $_SESSION['region']= $row["region"];
-              setcookie('region', $row["region"], time() + (86400 * 30), "/");
+  $usr = $_SESSION['currentusername'];
+  $sql = "SELECT * FROM users WHERE username ='$usr'";
+  if ($result = mysqli_query($conn, $sql)) {
+    while ($row = mysqli_fetch_assoc($result)){
+        $_SESSION['currentuserid']=  $row["userid"];
+        $_SESSION['currentimageurl'] = $row["profile_picture"];
+        $_SESSION['currentuserbio'] = $row["bio"];
+        $_SESSION['selected_questions']= $row["selected_questions"];
+        $_SESSION['region']= $row["region"];
+        setcookie('region', $row["region"], time() + (86400 * 30), "/");
 
-              
-               $_SESSION['accountstatus']= $row["accountstatus"];
-               if(isset($_POST['signedin']))
-                {
-                          savecookie($user,$auth,$row["firstname"],$row["profile_picture"]);
-                }
-          }     
-        }
+        
+          $_SESSION['accountstatus']= $row["accountstatus"];
+          if(isset($_POST['signedin']))
+          {
+                    savecookie($user,$auth,$row["firstname"],$row["profile_picture"]);
+          }
+    }     
+  }
 }
 
 
 function login_user($conn,$user,$auth)
 {
-  
   $query="select * from authenticate where username = '$user' or  emailaddress = '$user'";
-   if ($result = mysqli_query($conn, $query)) 
-   {
-         while ($row = mysqli_fetch_row($result)) 
-         {
-                if($row[2]==$auth)
-                {
-                   $_SESSION['currentusername']=$row[1];
-                   
-                    setSession($conn,$user,$auth) ;                         
-                    echo 'OK';
+    if ($result = mysqli_query($conn, $query)) 
+    {
+      while ($row = mysqli_fetch_row($result)) 
+      {
+            if($row[2]==$auth)
+            {
+                $_SESSION['currentusername']=$row[1];
+                
+                setSession($conn,$user,$auth) ;                         
+                echo 'OK';
 
 
-                }else{
-                  echo('Sorry wrong credential!');
-                }
-          }
+            }else{
+              echo('Sorry wrong credential!');
+            }
+      }
     }else{
         
           echo('No user found!');
@@ -81,7 +80,6 @@ if(isset($_POST['login'])){
     }
 } 
 
-
 if(isset($_POST['cookielogin'])){
 
     $user = $_COOKIE['user_name'];
@@ -89,13 +87,9 @@ if(isset($_POST['cookielogin'])){
     login_user($conn,$user,$auth);
 } 
 
-
-
-
-
 // REGISTRATION PROCESS
- function presentindb($username,$conn)
- {
+function presentindb($username,$conn)
+{
    $sql="select * from authenticate where username = '$username' or  emailaddress = '$username'";
    $result = mysqli_query($conn, $sql);
    if (mysqli_num_rows($result) == 0) { 
@@ -103,34 +97,38 @@ if(isset($_POST['cookielogin'])){
     }else{
      return true;
     }   
-
-    
-      
 }
 
+
+
+function setupinitialaccount($username ,$firstname ,$lastname,$pass,$conn)
+{
+  $region= 'english';
+  if(isset($_COOKIE['region'])){
+    $region = $_COOKIE['region'];
+  }
+    setcookie('region', $region, time() + (86400 * 30), "/");
+    $sql = "INSERT INTO users(username,firstname,lastname,region)
+    VALUES ('$username', '$firstname', '$lastname','$region')";
+    if (mysqli_query($conn, $sql)) {
+      savecookie($username,$pass,$firstname,$pic);
+    } else {
+        return false;
+    }
+  
+}
 function create_account($username,$pass,$firstname,$lastname,$phonenumber,$conn)
 {
   $pass = md5($pass);
-  $pic =  '';
-  if(isset($_COOKIE['region'])){
-    $region = $_COOKIE['region'];
-  }else{
-    $region = "english";
-    setcookie('region', "english", time() + (86400 * 30), "/");
-  }
   $sql = "INSERT INTO authenticate(username,password,firstname,emailaddress)
     VALUES ('$username', '$pass', '$firstname', '$phonenumber');";
-  $sql .= "INSERT INTO users(username,firstname,lastname,region)
-  VALUES ('$username', '$firstname', '$lastname','$region');";
-  if (mysqli_multi_query($conn, $sql)) {
-    savecookie($username,$pass,$firstname,$pic);
+  if (mysqli_query($conn, $sql)) {
+    setupinitialaccount($username , $firstname , $lastname,$pass,$conn);
     return true;
   } else {
       return false;
   }
 }
-
-
 
 if(isset($_POST['checkusername']))
 {
@@ -157,7 +155,6 @@ if(isset($_POST['checkemail']))
 }
 
 
-
 if(isset($_POST['register_now']))
 {
 
@@ -171,7 +168,6 @@ if(isset($_POST['register_now']))
    $firstname = $_POST['firstname'];
    $lastname = $_POST['lastname'];
    $phonenumber = $_POST['phonenumber'];
-   
    
     if(create_account($username,$pass,$firstname,$lastname,$phonenumber,$conn))
     {
@@ -201,6 +197,7 @@ function updateaccount($username,$bio,$conn)
         return false;
     }
 }
+
 if(isset($_POST['update_details']))
 {
     $bio = $_POST['bio'];
@@ -223,11 +220,7 @@ if(isset($_POST['update_details']))
 }
 
 
-
-
-
 //UPDATING USER DETAILS
-
 function execute($conn, $sql){
   
       if (mysqli_query($conn, $sql)) {
@@ -241,7 +234,6 @@ function execute($conn, $sql){
     
 
 }
-
 
 if(isset($_POST['updatepassword']))
 {
@@ -335,66 +327,64 @@ if(isset($_GET['findaccount']))
 }
 
   // SENDING MAIL
-  if(isset($_POST['sendlink']))
-  {
-    $email = $_POST['useremail'];
-   
-    $expFormat = mktime(date("H")+4, date("i"), date("s"), date("m") ,date("d"), date("Y"));
-    $expDate = date("Y-m-d H:i:s",$expFormat);
-    $key = md5(2418*2+(int)$email);
-    $addKey = substr(md5(uniqid(rand(),1)),3,10);
-    $key = $key . $addKey;
+if(isset($_POST['sendlink']))
+{
+  $email = $_POST['useremail'];
+  
+  $expFormat = mktime(date("H")+4, date("i"), date("s"), date("m") ,date("d"), date("Y"));
+  $expDate = date("Y-m-d H:i:s",$expFormat);
+  $key = md5(2418*2+(int)$email);
+  $addKey = substr(md5(uniqid(rand(),1)),3,10);
+  $key = $key . $addKey;
 
 
-    // Insert Temp Table
-    mysqli_query($conn,"INSERT INTO `password_reset_temp` (`email`, `key`, `expDate`) VALUES ('".$email."', '".$key."', '".$expDate."');");
+  // Insert Temp Table
+  mysqli_query($conn,"INSERT INTO `password_reset_temp` (`email`, `key`, `expDate`) VALUES ('".$email."', '".$key."', '".$expDate."');");
 
-      $output='<p>Dear user,</p>';
-      $output.='<p>You have recently requested for the reset link to change your accounts password.</p>';
-       $output.='<p>Please click on the attached link or be sure to copy the entire link into your browser, to navigate to the reset page.
-      The link will expire after 4 hours for security reason.</p>';
+    $output='<p>Dear user,</p>';
+    $output.='<p>You have recently requested for the reset link to recover you password.</p>';
+      $output.='<p>Please click on the attached link or be sure to copy the entire link into your browser, to navigate to the reset page.
+    The link will expire after 24 hours for security reason.</p>';
 
-      $output.= '<p>................................................</p>';
-      $output.='<p><a href=" localhost/forgotpassword.php?
-      key='.$key.'&email='.$email.'&action=reset" target="_blank">
-      localhost/forgotpassword.php
-      ?key='.$key.'&email='.$email.'&action=reset</a></p> <br>';   
-      $output.= '<p>................................................</p>';
+    $output.= '<p>.................................................................................................</p>';
+    $output.='<p><a href=" zaan.ml/forgotpassword.php?key='.$key.'&email='.$email.'&action=reset" target="_blank">
+    zaan.ml/forgotpassword.php?key='.$key.'&email='.$email.'&action=reset</a></p> <br>';   
+    $output.= '<p>.................................................................................................</p>';
 
-      $output.='<p>If you did not request this forgotten password email, no action 
-      is needed, your password will not be reset. However, you may want to log into 
-      your account and change your security password as someone may have guessed it.</p>';    
-      $output.='<p>Thanks,</p>';
-      $output.='<p>Team</p>';
+    $output.='<p>If you did not request this forgotten password email, no action 
+    is needed, your password will not be reset.<br> However, you may want to log into 
+    your account and change your security password as someone may have guessed it.</p>';    
+    $output.='<p>Thanks,</p>';
+    $output.='<p>Team</p>';
 
-      $body=$output;
-      $subject = "Password Recovery - MY-SLAM";
-      $email_to = $email;
-      $fromserver = "qazi9amaan@gmail.com"; 
+    $body=$output;
+    $subject = "Password Recovery - ZAAN";
+    $email_to = $email;
+    $fromserver = "qazi9amaan@gmail.com"; 
 
 
-      require("PHPMailer/PHPMailerAutoload.php");
-      $mail = new PHPMailer();
-      $mail->IsSMTP();
-      $mail->Host = "smtp.gmail.com"; // Enter your host here
-      $mail->SMTPAuth = true;
-      $mail->Username = "qazi9amaan@gmail.com"; // Enter your email here
-      $mail->Password = "prvkjphlnydkxenq"; //Enter your password here
-      $mail->Port = 587;
-      $mail->IsHTML(true);
-      $mail->From = "noreply@bekus.com";
-      $mail->FromName = "My-SLAM | Password Recovery";
-      $mail->Sender = $fromserver; // indicates ReturnPath header
-      $mail->Subject = $subject;
-      $mail->Body = $body;
-      $mail->AddAddress($email_to);
+    require("PHPMailer/PHPMailerAutoload.php");
+    $mail = new PHPMailer();
+    $mail->IsSMTP();
+    $mail->Host = "smtp.gmail.com"; // Enter your host here
+    $mail->SMTPAuth = true;
+    $mail->Username = "qazi9amaan@gmail.com"; // Enter your email here
+    $mail->Password = "prvkjphlnydkxenq"; //Enter your password here
+    $mail->Port = 587;
+    $mail->IsHTML(true);
+    $mail->From = "noreply@zaan.ml";
+    $mail->FromName = "ZAAN| Password Recovery";
+    $mail->Sender = $fromserver; // indicates ReturnPath header
+    $mail->Subject = $subject;
+    $mail->Body = $body;
+    $mail->AddAddress($email_to);
 
-      if(!$mail->Send()){
-      echo "Mailer Error: " . $mail->ErrorInfo;
-      }else{
-      echo "SUCCESS";
-    }
+    if(!$mail->Send()){
+    echo "Mailer Error: " . $mail->ErrorInfo;
+    }else{
+    echo "SUCCESS";
   }
+}
   
 // CHANGING PASSWORS
 if(isset($_POST['changepassword']))
