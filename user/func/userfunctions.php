@@ -149,7 +149,7 @@ function getallanswers($conn, $user){
                               </div>
                                   <div.col-6
                               <div class="col-6 mx-auto">
-                                  <p class = "text-center mt-1"> bekus.ml/'.$_SESSION['currentusername'] .'</p>
+                                  <p class = "text-center mt-1"> zaan.ml/'.$_SESSION['currentusername'] .'</p>
                               </div>
                                       </div>
                       </div>
@@ -237,7 +237,7 @@ function getallmsgs($conn, $user){
                         </div>
                             <div.col-6
                         <div class="col-6 mx-auto">
-                            <p class = "text-center mt-1"> localhost/'.$_SESSION['currentusername'] .'</p>
+                            <p class = "text-center mt-1"> zaan.ml/'.$_SESSION['currentusername'] .'</p>
                         </div>
                                 </div>
                 </div>
@@ -481,11 +481,13 @@ if(isset($_GET['searchuser'])){
                       <div class="col-12 text-capitalize" style="
                             font-size: 17px;
                             margin-top: -7px;
+                            overflow:hidden;
                         ">
                         '.$row['firstname'].' '.$row['lastname'] .'
                       </div>
                       <div class="col-12" style="
                             margin-top: -4px;
+                            overflow:hidden;
                         ">
                             <small style="
                         ">   @ '.$row['username'].'</small>

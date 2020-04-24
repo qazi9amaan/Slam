@@ -91,9 +91,6 @@
     #searchresult .card .card-body {
         border-bottom: .1rem solid #777 !important;
     }
-    .loader img {
-        background: #333 !important;
-    }
     .contact .php-email-form .loading {
         background: #333 !important;
     }
@@ -313,6 +310,12 @@
     }
     #carouselExampleIndicators .carousel-indicators li {
         background-color: #555;
+    }
+    #hello .modal-content {
+        background: #2d2d2d !important;
+        border-color: #2d2d2d;
+        color: #999 !important;
+        box-shadow: 0 0 .5rem .2rem rgba(0, 0, 0, 0.15) !important;
     }
     /* SHARE 
     MODAL */
@@ -543,12 +546,50 @@
         border-color: #4d4d4d !important;
         color: #999 !important;
     }
+    #hello ul {
+        background: none !important;
+    }
+    #hello li {
+        background: #3d3d3d !important;
+        color: #999 !important;
+        border-radius: .35rem;
+        margin-bottom: .2rem;
+    }
+    #hello li i {
+        margin-top: 2rem;
+        background: #2d2d2d !important;
+        padding: 5px;
+        font-size: 21px;
+        color: #555 !important;
+        border-radius: 50%;
+    }
+    #hello .btn-success {
+        background: #1d1d1d !important;
+        border-color: #1d1d1d !important;
+        color: #999 !important;
+        box-shadow: 0 0 .5rem .2rem rgba(0, 0, 0, 0.15) !important;
+    }
+}
+
+#hello #profile img {
+    height: 85px;
+    width: 85px;
+    border-radius: 50%;
 }
 
 
 /*--------------------------------------------------------------
 # END DARK MODE
 --------------------------------------------------------------*/
+
+#hello li i {
+    margin-top: 2rem;
+    padding: 5px;
+    color: #fff;
+    background: #7cc576;
+    font-size: 21px;
+    border-radius: 50%;
+}
 
 body {
     font-family: "Open Sans", sans-serif;

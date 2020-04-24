@@ -8,7 +8,7 @@
 	setcookie("f_name", "", time() - 3600);
 	setcookie("profile_pic", "", time() - 3600);
 	setcookie("region", "", time() - 3600);
-
+	exit();
 
 ?>	
 

@@ -528,7 +528,7 @@ transition: all 0.3s ease-in-out;
   <main id="main">
 
     <!-- =======  Section ======= -->
-    <section id="about" class="about">
+    <section id="about" class="about mt-2">
       <div class="container">
             <div class="col-12">
               </div>

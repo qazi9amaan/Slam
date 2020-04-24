@@ -555,7 +555,7 @@ user i {
                  data: "update_details=true&" + str,
                 success: function(data) {
                      if (data == 'OK') {
-                             window.location = '/account';
+                             window.location = '/account/start';
                         }
                     else{
                         alert(data);

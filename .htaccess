@@ -8,7 +8,7 @@ RewriteCond %{REQUEST_FILENAME} !-d
 # HTML PAGES
 RewriteRule /answer/([0-9]+)$ ./user/getanswerdetails.php?answer=$1
 RewriteRule /message/([0-9]+)$ ./user/getquestiondetails.php?id=$1
-
+RewriteRule ^account/start$ ./user/useraccount.php?start=true[L,QSA]
 RewriteRule ^account$ ./user/useraccount.php [L,QSA]
 
 RewriteRule (\w+)/write$ ./public/writequestion.php?username=$1
@@ -19,6 +19,8 @@ RewriteRule ^setupaccount/new$ ./forms/setupaccount.php?accountcreated
 RewriteRule ^forgotpassword$ forgotpassword.php
 RewriteRule ^logout$ logout.php
 RewriteRule ^home$ index.php
+
+RewriteRule ^error$ 404.html
 RewriteRule ^login$ login.php
 RewriteRule ^register$ login.php#register
 
@@ -36,5 +38,6 @@ RewriteRule ^user-helper$ ./user/func/userfunctions.php
 RewriteRule ^image-uploader$ ./forms/upload.php [L,QSA]
 RewriteRule ^auth-helper$ ./forms/authentication.php [L,QSA]
 
-
-
+ErrorDocument 404 /error
+ErrorDocument 403 /error
+ErrorDocument 500 /error

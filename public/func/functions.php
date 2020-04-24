@@ -12,8 +12,8 @@
    // UPLOADING THE SAVED ANSWERS
           if(isset($_POST['submitanswers'])){
 
-          	$replier = $_POST['replier'];
-          	$questioner = $_POST['questioner'];
+          	$replier = mysqli_real_escape_string($conn, $_POST['replier']);
+          	$questioner = mysqli_real_escape_string($conn, $_POST['questioner']);
             $dt = date('Y-m-d');
 	        $sql = "INSERT INTO answers(replier,questioner,udate)
 	        VALUES ('$replier', '$questioner','$dt')";
@@ -37,6 +37,7 @@
 
 				}else
 				{
+          $value = mysqli_real_escape_string($conn,$value);
 					$sql2 = "UPDATE answers set $key = '$value' WHERE answer_id = '$last_id'";
 		    	  if (mysqli_query($conn, $sql2)) {
 					} else{
@@ -53,9 +54,9 @@
         //SUBMITTING CONFESSION
          if(isset($_POST['submitquestion'])){
 
-          	$replier = $_POST['replier'];
-          	$questioner = $_POST['questioner'];
-            $msg = $_POST['msg'];
+          	$replier = mysqli_real_escape_string($conn,$_POST['replier']);
+          	$questioner = mysqli_real_escape_string($conn,$_POST['questioner']);
+            $msg =mysqli_real_escape_string($conn, $_POST['msg']);
             $dt = date('Y-m-d');
 	        $sql = "INSERT INTO confessions(replier,questioner,msg ,udate)
 	        VALUES ('$replier', '$questioner','$msg','$dt')";

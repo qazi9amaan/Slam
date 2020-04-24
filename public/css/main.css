@@ -69,6 +69,7 @@ section {
 
 #header .logo img {
     padding: 0;
+    width: 94px;
     max-height: 94px;
     margin-left: -30px;
 }
@@ -270,4 +271,22 @@ a {
 
 #posts :hover {
     cursor: pointer;
+}
+
+.loader {
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    transform: translate(50%, -50%);
+    z-index: 555;
+    display: block;
+}
+
+.loader img {
+    height: 100px;
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    transform: translate(50%, -50%);
+    z-index: 555;
 }

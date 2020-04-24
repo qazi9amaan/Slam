@@ -32,12 +32,12 @@
 
           }     
         }else{
-          header("Location: home");
+          header("Location: /error");
         }
 
        if((!isset( $username)) || (!isset($fname)) || (!isset($lname)) || (!isset($profile)) || (!isset($fans)) || (!isset($bio)) || (!isset($questions)) || (!isset($friends)) || (!isset($userid)))
        {
-         header("Location: home");
+         header("Location: /error");
        }
 
   }
@@ -89,6 +89,11 @@
 
 
 
+
+
+<div class="loader">
+    <img src="/assets/img/loading.gif" alt="Loader!">
+</div>
 
 
 <!-- STORIES -->
@@ -405,6 +410,12 @@
   <!-- Template Main JS File -->
   <script src="/assets/js/main.js"></script>
 <script>
+
+
+  $(document).ready(function () {
+    $(".loader").fadeOut(300)
+    });
+    
     var question_ini = $("#questions").val();
     var selected_questions_list = getArray(question_ini);
     var region = $("#region").val();

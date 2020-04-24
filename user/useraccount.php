@@ -53,6 +53,93 @@
 <body>
 
 
+<!-- STARTUP -->
+<div class="modal fade bd-example-modal-lg" id="hello" tabindex="-1" role="dialog" aria-labelledby="helloTitle" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      
+      <div class="modal-body">
+          <div class="container">
+               <div class="row text-center">
+                <div class="col-12 ">
+                <p class="h3">ZAAN</p>
+                <p class="h5"> <small>Ask & confess </small> </p>
+                </div>
+                <div class="col-12 text-center mt-1">
+                <a id = "profile" href="#"><img src="<?php echo $_SESSION['currentimageurl']; ?>" alt=""></a>
+                </div>
+                <div class="col-12 mt-2">
+                 <p> Hola <?php echo $_SESSION['currentusername']; ?>!</p>
+                </div>
+               </div> 
+               <div class="row text-center">
+               <div class="col-12 ">
+                <p> <small>We are happy to see you here <?php echo $_COOKIE['f_name']; ?>! Please get familiar to those points to get started with zaan.</small>  </p>
+                </div>
+               </div>
+               <div class="row">
+              <ul class="list-group mx-auto">
+                <li class="list-group-item">
+                  <div class="container">
+                  <div class="row">
+                  <div class="col-1" style = "padding-left: 20px;padding-top: 13px;">
+                  <i class="icofont-star-shape"></i> 
+                  </div>
+                  <div class="col mt-1 ">
+                   <small> are the anonymous replies to your profile, we call it as fans.</small>
+                  </div>
+                  </div>
+                  </div>
+                </li>
+                <li class="list-group-item">
+                <div class="container">
+                  <div class="row">
+                  <div class="col-1" style = "padding-left: 20px;padding-top: 13px;">
+                  <i class="icofont-ui-user-group"></i>                   
+                  </div>
+                  <div class="col mt-1 ">
+                   <small> are the replies to your profile from your friends.</small>
+                  </div>
+                  </div>
+                  </div>
+                </li>
+                <li class="list-group-item">
+                  <small>All of your messages & answers gets deleted once seen you can screenshot your favourites.</small>
+                </li>
+
+                <li class="list-group-item">
+                  <small>You can pin a confessions as story to let people find it, visit the message to pin it with a reply.</small>
+                </li>
+                <li class="list-group-item">
+                  <small>You can reset all your questions back to default by resetting the language. A minimum of 7 questions is required, please save your changes</small>
+                </li>
+                <li class="list-group-item">
+                  <small>You can make changes to your profile in settings, changing the profile picture doesnot require you to save  changes</small>
+                </li>
+                <li class="list-group-item">
+                  <small> We tend to store your privacy details encypted in your device for better and faster login</small>
+                </li>
+              </ul>
+               </div> 
+               <div class="row text-center mt-1">
+               <div class="col-12 ">
+                <p> <small>Well we hope you will love zaan, thankyou <?php echo $_COOKIE['f_name']; ?>!</small>  </p>
+                </div>
+               </div>
+               <div class="row text-center mt-1">
+                  <div class="col-12">
+                  <a id ="understandbtn" href="#" data-dismiss="modal" class="btn btn-success" >I understood!</a>
+
+                  </div>
+               </div>
+         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 <!-- LANGUAGES -->
 <div class="modal fade bd-example-modal-lg" id="languagemodal" tabindex="-1" role="dialog" aria-labelledby="searchmodalTitle" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
@@ -227,11 +314,12 @@
     <div class="logo d-block d-lg-none">
       <div class="container">
         <div class="row">
-          <div class="col-1 p-0 m-0 text-left">
+          <div id="profilepicture"class="col-1 p-0 m-0 text-left">
             <a href="<?php echo $_SESSION['currentusername']; ?> " class="img-fluid">
             <img class = "profile_image_main img-responsive" src="<?php echo $_SESSION['currentimageurl']; ?>" alt="">
-          </a>
+            </a>
           </div>
+          
           <div id = "searchbtn" class="col-1 ml-4 pl-2 p-0 m-0 mt-2 mr-0 text-left">
             <a href=""> <i class="icofont-search"></i></a>
           </div>
@@ -714,7 +802,7 @@ $('.pinnedpostshowbtn').click(function(e){
   }else{
 
     // CLOSING THE SEARCH MENu
-
+    $('#profilepicture').css('display','block');
    $('#searchbtn').css('display','block');
    $('#showusername').css('display','block');
    $('#showsearchbar').css('display','none');
@@ -744,7 +832,6 @@ $(document).on('click', '#delete_pin', function(e){
     success: function(data) {
        if(data=="OK")
         {
-          $('#pinnedpostmodal').modal('hide');
         }      
     }
   });
@@ -774,15 +861,16 @@ $(document).on('click', '#copybtn', function(e){
 
 $('#searchbtn').click(function(e){
   e.preventDefault();
+  $('#profilepicture').css('display','none');
   $('#searchbtn').css('display','none');
- $('#showusername').css('display','none');
- $('#showsearchbar').css('display','block');
- $('#searchresult').css('display','block');
+  $('#showusername').css('display','none');
+  $('#showsearchbar').css('display','block');
+  $('#searchresult').css('display','block');
   $('.mobile-nav-toggle').css('display','none');
 
 
  $('#showsearchbar').css('margin-left','2.2rem !important');
- $('#searchdiv').attr('style','margin-left: 2.2rem !important; margin-right: 3rem!important;');
+ $('#searchdiv').attr('style','margin-left: 0rem !important; margin-right: 3rem!important;');
   $('#searchdiv').attr('class','col p-0 m-0 mt-1 text-left');
  $('#askquestion').attr('class','icofont-close');
  $('#askquestion').css('right','1px');
@@ -835,10 +923,17 @@ $(document).on('click', '#posts', function(e){
 });
 
 
+$('#understandbtn').click(function(){
+            window.location='/account';
+        });          
+
 </script>
 
-                        
-
+<?php if(isset($_GET['start'])){?>                   
+<script>
+  $('#hello').modal('show');
+</script>
+<?php }?>                   
 
 
 

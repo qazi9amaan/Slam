@@ -132,7 +132,7 @@ function create_account($username,$pass,$firstname,$lastname,$phonenumber,$conn)
 
 if(isset($_POST['checkusername']))
 {
-  $username = $_POST['username'];
+  $username = mysqli_real_escape_string($conn,$_POST['username']);
   if($username != "")
   {
      if(presentindb($username,$conn))
@@ -144,7 +144,7 @@ if(isset($_POST['checkusername']))
 
 if(isset($_POST['checkemail']))
 {
-  $email = $_POST['email'];
+  $email = mysqli_real_escape_string($conn,$_POST['email']);
  if($email != "")
   {
      if(presentindb($email,$conn))
@@ -163,11 +163,11 @@ if(isset($_POST['register_now']))
    echo 'empty!';
  }
  else{
-   $username = $_POST['username'];
-   $pass = $_POST['password'];
-   $firstname = $_POST['firstname'];
-   $lastname = $_POST['lastname'];
-   $phonenumber = $_POST['phonenumber'];
+   $username = mysqli_real_escape_string($conn,$_POST['username']);
+   $pass = mysqli_real_escape_string($conn,$_POST['password']);
+   $firstname = mysqli_real_escape_string($conn,$_POST['firstname']);
+   $lastname = mysqli_real_escape_string($conn,$_POST['lastname']);
+   $phonenumber = mysqli_real_escape_string($conn,$_POST['phonenumber']);
    
     if(create_account($username,$pass,$firstname,$lastname,$phonenumber,$conn))
     {
@@ -253,9 +253,9 @@ if(isset($_POST['updatepassword']))
 if(isset($_POST['updateuserdetails']))
 {
   $user = $_SESSION['currentusername'];
-  $firstname = $_POST['firstname'];
-  $lastname = $_POST['lastname'];
-  $bio = $_POST['bio'];  
+  $firstname = mysqli_real_escape_string($conn,$_POST['firstname']);
+  $lastname = mysqli_real_escape_string($conn,$_POST['lastname']);
+  $bio = mysqli_real_escape_string($conn,$_POST['bio']);  
 
   $sql = "UPDATE users set  firstname = '$firstname' , lastname = '$lastname' , bio = '$bio' WHERE username ='$user'";
    if(execute($conn, $sql))
