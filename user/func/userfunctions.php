@@ -1,6 +1,7 @@
 <?php
 include('/var/www/html/connection.php');
 
+
 session_start();
 if(isset($_SESSION['currentuserid']))
 {
@@ -12,9 +13,6 @@ function getcountfor($conn, $user)
 {
   $user = (int)$user;
 
-  //DELETEING THE SEEN ANSWERS
-  $delete_sql = "DELETE FROM answers WHERE questioner='$user' AND status ='seen'";
-  mysqli_query($conn, $delete_sql);
 
   $sql = "SELECT fans, friends FROM users WHERE userid ='$user'";
   $result = mysqli_query($conn, $sql);
@@ -74,9 +72,10 @@ if(isset($_GET['savequestions'])){
 
 function getallanswers($conn, $user){
   $showdate ="";
-  //DELETEING THE SEEN ANSWERS
-  $delete_sql = "DELETE FROM answers WHERE questioner='$user' AND status ='seen'";
+  // DELETING ANSWERS
+  $delete_sql = "  DELETE FROM answers WHERE  TIMESTAMPDIFF(SECOND, `delete_date`, NOW()) >0 AND status = 'seen'";
   mysqli_query($conn, $delete_sql);
+
 
   $sql = "SELECT udate , DATE_FORMAT(udate, '%e %b, %Y') AS u_date FROM answers WHERE questioner='$user' ORDER BY udate DESC ";
   $result = mysqli_query($conn, $sql);
@@ -95,37 +94,71 @@ function getallanswers($conn, $user){
           </div>
         </div>
       ';
-      $sql2 = "SELECT answer_id, replier FROM answers WHERE questioner ='$user' and udate = '$date' ORDER BY utime DESC ";
+      $sql2 = "SELECT answer_id, replier, status FROM answers WHERE questioner ='$user' and udate = '$date' ORDER BY utime DESC ";
       $result2 = mysqli_query($conn, $sql2);
       if (mysqli_num_rows($result2) > 0) {
           while($row = mysqli_fetch_assoc($result2)) {
+           if($row['status']=='unseen')
+           {
             echo'
 
-                <div class="message my-2">
-                            <div class="col-12">
-                                <div class="row">
-                                    <div class="col-10">
-                                        <div class="card  p-4">
-                                            
-                                            <div class="body">
-                                                <span>'.$row['replier'].'</span>   
-                                                answered your questions
-                                            </div>
-                                            
-                                        </div>
-                                    </div>
-                                    <div id = "insbtn"class="col-2" style="margin-left: -1rem;">
-                                        <div class="show">
-                                            <a href = "account/answer/'.$row['answer_id'].'"><i class="icofont-eye-alt"></i></a>
-                                        </div>
+            <div class="new-message my-2">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-10">
+                                    <div class="card  p-4">
+                                        
+                                        <div class="body">
+                                        <span id = "unseen-msg" class="badge badge-gradient ">
 
+                                        </span>
+                                            <span>'.$row['replier'].'</span>   
+                                            answered your questions
+                                        </div>
+                                        
                                     </div>
                                 </div>
-                                
-                            </div>
-                        </div>
+                                <div id = "insbtn"class="col-2" style="margin-left: -1rem;">
+                                    <div class="show">
+                                        <a href = "account/answer/'.$row['answer_id'].'"><i class="icofont-eye-alt"></i></a>
+                                    </div>
 
-            ';
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+
+        ';
+           }else{
+            echo'
+
+              <div class="message my-2">
+                          <div class="col-12">
+                              <div class="row">
+                                  <div class="col-10">
+                                      <div class="card  p-4">
+                                          
+                                          <div class="body">
+                                              <span>'.$row['replier'].'</span>   
+                                              answered your questions
+                                          </div>
+                                          
+                                      </div>
+                                  </div>
+                                  <div id = "insbtn"class="col-2" style="margin-left: -1rem;">
+                                      <div class="show">
+                                          <a class="p-3" href = "account/answer/'.$row['answer_id'].'"><i class="icofont-eye-alt "></i></a>
+                                      </div>
+
+                                  </div>
+                              </div>
+                              
+                          </div>
+                      </div>
+
+        ';
+           }
           }
       }
       $showdate = $date;
@@ -166,9 +199,12 @@ if(isset($_GET['loadanswers'])){
 
 function getallmsgs($conn, $user){
   $showdate ="";
-  //DELETEING THE SEEN MESSAGES
-  $delete_sql = "DELETE FROM confessions WHERE questioner='$user' AND status ='seen'";
+  
+  // DELETING MESSAGES
+  $delete_sql = "  DELETE FROM confessions WHERE  TIMESTAMPDIFF(SECOND, `delete_date`, NOW()) >0 AND status = 'seen'";
   mysqli_query($conn, $delete_sql);
+
+
   $sql = "SELECT udate, DATE_FORMAT(udate, '%e %b, %Y') AS u_date FROM confessions WHERE questioner='$user' ORDER BY udate DESC ";
   $result = mysqli_query($conn, $sql);
   if (mysqli_num_rows($result) > 0) {
@@ -191,29 +227,62 @@ function getallmsgs($conn, $user){
   $result2 = mysqli_query($conn, $sql2);
   if (mysqli_num_rows($result2) > 0) {
       while($row = mysqli_fetch_assoc($result2)) {
-      echo'
-      <div class="message my-2">
-              <div class="col-12">
-                  <div class="row">
-                      <div class="col-10">
-                          <div class="card  p-4">
-                              <div class="body">
-                                  <span>'.$row['replier'].'</span> says   
-                                  <span>
-                                    '.$row['msg'].'
-                                  </span>
-                              </div>
-                          </div>
-                      </div>
-                      <div id = "insbtn"class="col-2" style="margin-left: -1rem;">
-                          <div class="show">
-                            <a href = "account/message/'.$row['confessionid'].'"><i class="icofont-eye-alt"></i></a>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-        ';
+
+
+        if($row['status']=='unseen')
+           {
+            echo'
+
+            <div class="new-message my-2">
+            <div class="col-12">
+                        <div class="row">
+                            <div class="col-10">
+                                <div class="card  p-4">
+                                    <div class="body">
+                                    <span id = "unseen-msg" class="badge badge-gradient ">
+
+                                        </span>
+                                        <span>'.$row['replier'].'</span> says   
+                                        <span>
+                                          '.$row['msg'].'
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id = "insbtn"class="col-2" style="margin-left: -1rem;">
+                                <div class="show">
+                                  <a href = "account/message/'.$row['confessionid'].'"><i class="icofont-eye-alt"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              ';
+           }else{
+            echo'
+            <div class="message my-2">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-10">
+                                <div class="card  p-4">
+                                    <div class="body">
+                                        <span>'.$row['replier'].'</span> says   
+                                        <span>
+                                          '.$row['msg'].'
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id = "insbtn"class="col-2" style="margin-left: -1rem;">
+                                <div class="show">
+                                  <a href = "account/message/'.$row['confessionid'].'"><i class="icofont-'.$row['feedback'].'"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              ';
+           }
       }
   }
   $showdate = $date;
@@ -259,7 +328,7 @@ if(isset($_GET['loadmsgs'])){
 // COUNTING THE UNSEEN REQUESTS
 function getcount($conn, $user,$table)
 {   
-  $sql="SELECT COUNT(*) as t_number FROM $table  WHERE questioner  ='$user'";
+  $sql="SELECT COUNT(*) as t_number FROM $table  WHERE questioner  ='$user' and status ='unseen'";
   $result = mysqli_query($conn, $sql);
   if (mysqli_num_rows($result) > 0) {
       while($row = mysqli_fetch_assoc($result)) {
@@ -279,21 +348,32 @@ if(isset($_GET['messagescount'])){
     getcount($conn, $Current_user_id,'answers');
 }
 
-if(isset($_POST['deleteconfession'])){
-    $user =$Current_user_id;
-      $delete_sql = "DELETE FROM confessions WHERE questioner='$user' AND status ='seen'";
-            mysqli_query($conn, $delete_sql);
-            echo 'OK';
+// GET NOTIFICATION COUNT
+if(isset($_GET['notificationcount'])){
+  $sql="SELECT COUNT(*) as t_number FROM confession_notifications  
+  WHERE questioner ='$Current_user_id' and c_state ='unseen'";
+  $result = mysqli_query($conn, $sql);
+  if (mysqli_num_rows($result) > 0) {
+      while($row = mysqli_fetch_assoc($result)) {
+          echo $row['t_number'];
+      }
+  }  
 }
+
+
+
+// if(isset($_POST['deleteconfession'])){
+//     $user =$Current_user_id;
+//       $delete_sql = "  DELETE FROM answers WHERE  TIMESTAMPDIFF(SECOND, `delete_date`, NOW()) >0 AND status = 'seen'";
+//             mysqli_query($conn, $delete_sql);
+//             echo 'OK';
+// }
 
 // ATATCHING THE POST TO WALL 
 function pushtopined($conn,$replier,$user,$msg,$cap){
     $sql = "INSERT INTO pinnedposts(owner,questioner,message,caption)
     VALUES ('$user','$replier', '$msg','$cap')";
-    if (mysqli_query($conn, $sql)) {
-        //DELETEING THE SEEN MESSAGES
-            $delete_sql = "DELETE FROM confessions WHERE questioner='$user' AND status ='seen'";
-            mysqli_query($conn, $delete_sql);
+    if (mysqli_query($conn, $sql)) {         
             echo 'OK';
     } else{
         echo 'ERROR';
@@ -429,7 +509,7 @@ if(isset($_POST['deletestory'])){
 
 // NOTIFICATION COLOR
 if(isset($_GET['notificationcolor'])){
-   $sql="SELECT COUNT(*) as t_number FROM notifications  WHERE user_id  ='$Current_user_id'";
+   $sql="SELECT COUNT(*) as t_number FROM notifications  WHERE user_id  ='$Current_user_id' and status ='unseen'";
     $result = mysqli_query($conn, $sql);
     if (mysqli_num_rows($result) > 0) {
         while($row = mysqli_fetch_assoc($result)) {
@@ -860,5 +940,122 @@ if(isset($_GET['searchallusers'])){
    }  
 
 }
+
+
+// REPLY TO THE CONFESSION
+if(isset($_POST['addfeedback'])){
+
+  $delete_sql = "  DELETE FROM confession_notifications WHERE  TIMESTAMPDIFF(SECOND, `delete_date`, NOW()) >0 AND c_state = 'seen'";
+  mysqli_query($conn, $delete_sql);
+
+
+  $sendto = trim($_POST['sendto']);
+  $feedback = trim($_POST['feedback']);
+  $symbol = trim($_POST['symbol']);
+  $msg = substr(trim($_POST['msg']),0,18);
+  $sentby = $Current_user_id;
+  $usr = $_POST['confession_id'];
+  if($sendto != 0)
+  {
+    $sql3 = "UPDATE confessions SET feedback = '$symbol' WHERE confessionid='$usr';";
+    mysqli_query($conn, $sql3);
+
+    $sql = "INSERT INTO confession_notifications(questioner,feedback,symbol,msg,sentby)
+          VALUES ('$sendto','$feedback','$symbol','$msg','$sentby')";
+           if (mysqli_query($conn, $sql)) {
+            echo 'Done';
+          }
+  }
+  echo 'Done';
+
+}
+
+
+
+function getallnotifications($conn, $user){
+
+
+
+
+  $sql2 = "SELECT * FROM confession_notifications WHERE questioner ='$user' ORDER BY utime DESC ";
+  $result2 = mysqli_query($conn, $sql2);
+  if (mysqli_num_rows($result2) > 0) {
+      while($row = mysqli_fetch_assoc($result2)) {
+        $sql = "SELECT firstname,lastname FROM users WHERE userid='$user'  ";
+        $result = mysqli_query($conn, $sql);
+        if (mysqli_num_rows($result) > 0) {
+        while($row1 = mysqli_fetch_assoc($result)) {
+          
+          if($row['c_state']==='seen')
+          {
+
+          
+          echo '
+              <small>
+              <a href="#" class="list-group-item list-group-item-action  ">
+                <div class="continer">
+                <div class="row">
+                  <div class="col-1">
+                  <i class="icofont-'.$row['symbol']. '"></i>
+                  </div>
+                  <div class="col">
+                  <div class="msg text-left ">
+                  <span class = "text-capitalize">
+                  '.$row1['firstname'].' '.$row1['lastname'].' </span> '.$row['feedback']. ',
+                  '.$row['msg']. '
+                  </div>
+                  <div class="date text-right">
+                  <small>
+                  '.$row['utime']. '
+                  </small>
+                  </div>
+                  </div>
+                </div>
+                </div>
+            </a>
+          </small>
+        
+          ';
+          }else{
+            echo '
+            <small>
+            <a href="#" class="list-group-item list-group-item-action active ">
+              <div class="continer">
+              <div class="row">
+                <div class="col-1">
+                <i class="icofont-'.$row['symbol']. '"></i>
+                </div>
+                <div class="col">
+                <div class="msg text-left ">
+                <span class = "text-capitalize">
+                '.$row1['firstname'].' '.$row1['lastname'].' </span> '.$row['feedback']. ',
+                '.$row['msg']. '
+                </div>
+                <div class="date text-right">
+                <small>
+                '.$row['utime']. '
+                </small>
+                </div>
+                </div>
+              </div>
+              </div>
+          </a>
+        </small>
+      
+        ';
+          }
+      }}
+
+  }
+}
+$sql3 = "UPDATE confession_notifications SET c_state = 'seen' WHERE questioner ='$user';";
+mysqli_query($conn, $sql3);
+
+}
+if(isset($_GET['searchnotifications'])){
+  getallnotifications($conn, $Current_user_id);
+}
+
+
 
 ?>

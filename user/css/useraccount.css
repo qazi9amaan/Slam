@@ -653,3 +653,64 @@ a.socialIcon:hover,
     transform: translate(50%, -50%);
     z-index: 555;
 }
+
+.mobile-nav-active button {
+    z-index: 9999 !important;
+    position: absolute;
+    right: 10px;
+}
+
+#notification-number {
+    position: absolute;
+    top: 2px;
+    left: 32px;
+}
+
+#notification-navbarbtn #notification-number {
+    padding: 3px !important;
+    position: absolute !important;
+    top: 13px !important;
+    left: 39px;
+}
+
+#notifications-wrapper.notification-plane #wrapper {
+    background: none !important;
+    padding: 5px;
+}
+
+#notification-modal .modal-body {
+    padding: 0px;
+}
+
+#notifications-wrapper .notification-plane #wrapper a {
+    background: #7cc576;
+    color: #fafafa;
+    border-color: #7cc576;
+    border-bottom-color: #fafafa;
+    margin-bottom: 5px;
+}
+
+#notifications-wrapper {
+    display: none;
+}
+
+#notifications-wrapper .notification-plane #wrapper .active {
+    background: #72c76b;
+    color: #fafafa;
+    border-color: #72c76b;
+}
+
+#notifications-wrapper .notification-plane #wrapper .active i {
+    color: #fafafa !important;
+    font-size: 28px !important;
+}
+
+#notifications-wrapper .notification-plane #wrapper i {
+    color: #fafafa !important;
+    font-size: 28px !important;
+}
+
+#unseen-msg {
+    padding: 3px;
+    margin: 2px;
+}

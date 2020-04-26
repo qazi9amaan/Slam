@@ -37,6 +37,14 @@ if(!isset($_SESSION['currentusername']))
             
           }     
         }
+        $sql2 = "SELECT emailaddress FROM authenticate WHERE username ='$usr'";
+        if ($result2 = mysqli_query($conn, $sql2)) {
+         while ($row2 = mysqli_fetch_assoc($result2)){
+            $email    =  $row2["emailaddress"];
+            
+            
+          }     
+        }
 }
     
 ?>
@@ -269,7 +277,10 @@ user i {
     border: 1px solid;
 }
 
+.active_btn{
 
+  display :none;
+}
 </style>
 
 <body>
@@ -406,6 +417,12 @@ user i {
               <input  name="username" type="text" readonly class="form-control-plaintext" id="username" value="<?php echo $username; ?>">
             </div>
           </div>
+          <div class="form-group row">
+            <label for="email" class="col-sm-2 col-form-label">Email</label>
+            <div class="col-sm-10">
+              <input  name="email" type="email" readonly class="form-control-plaintext" id="email" value="<?php echo $email; ?>">
+            </div>
+          </div>
 
           <div class="form-group row">
             <label for="firstname" class="col-sm-2 col-form-label">F-Name </label>
@@ -441,13 +458,13 @@ user i {
            <div class="form-group row">
             <label for="inputPassword" class="col-sm-2 col-form-label">New Password </label>
             <div class="col-sm-10">
-              <input type="password" class="form-control" id="inputPassword" name="password"  placeholder="Password">
+              <input type="password" required class="form-control" id="inputPassword" name="password"  placeholder="Password">
             </div>
           </div>
            <div class="form-group row">
             <label for="confirmpassword" class="col-sm-2 col-form-label">Confirm  Password </label>
             <div class="col-sm-10">
-              <input  name="confirmpassword" type="password" class="form-control" id="confirmpassword" placeholder="Confirm password">
+              <input  name="confirmpassword" required type="password" class="form-control" id="confirmpassword" placeholder="Confirm password">
               <small id="passwordhelp" class="form-text text-muted"></small>
 
             </div>
@@ -578,7 +595,7 @@ user i {
 
 
  $('#updatepassword').click(function(){
-  if($('#inputPassword').val()==$('#confirmpassword').val())
+  if($('#inputPassword').val()==$('#confirmpassword').val() && $('#inputPassword').val()!= "" )
   {
              var str = $("#privacysetting").serialize();
              jQuery.ajax({
@@ -660,6 +677,9 @@ $('#home').click(function(){
    window.location='/account';
 });
 
+$('#user-bio').keyup(function(){
+  $('.active_btn').fadeIn(800);
+});
 
     </script>
 

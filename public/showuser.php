@@ -417,7 +417,7 @@
     });
     
     var question_ini = $("#questions").val();
-    var selected_questions_list = getArray(question_ini);
+    var selected_questions_list = getArray(question_ini.substring(0, 8));
     var region = $("#region").val();
     $.ajax({
         url : "/assets/json/"+region+".json",
@@ -597,30 +597,47 @@ $(document).on('click', '#posts', function(e){
 
 
 $(document).on('focusout', '.form-control', function(e){  
-  console.log('yes');
-  var currentid =parseInt($(this).attr('id').substring(8));
-  console.log(this)
-   var newid = currentid+1;
-   $('#faq'+newid).addClass('show');
-console.log(newid)
-   $('#faq'+currentid).removeClass('show');
-   $('#hidefaq'+newid+' a').removeClass('collapsed');
-  
-  $('#question'+newid).focus();
+
+  if($(this).val()!= "" && $(this).val()!=null)
+  {
+      console.log('yes');
+      var currentid =parseInt($(this).attr('id').substring(8));
+      console.log(this)
+      var newid = currentid+1;
+      $('#faq'+newid).addClass('show');
+    console.log(newid)
+      $('#faq'+currentid).removeClass('show');
+      $('#hidefaq'+newid+' a').removeClass('collapsed');
+      
+      $('#question'+newid).focus();
+  }
    
 });
 
+$(document).on('click', '#showhandler', function(e){  
+  var currentid  =parseInt($(this).attr('href').substring(4));
+  console.log('Currentid'+currentid)
+  $('#question'+currentid).focus();
+   
+})
 
-$(document).on('change', '.form-control', function(e){  
+
+$(document).on('click', '.form-control', function(e){  
   var currentid =parseInt($(this).attr('id').substring(8));
-   var newid = currentid+1;
+  $('#question'+currentid).focus();
    
-   $('#faq'+currentid).removeClass('show');
-   $('#hidefaq'+newid+' a').removeClass('collapsed');
-   $('#faq'+newid).addClass('show');
+});
+$(document).on('change', '.form-control', function(e){  
 
-  $('#question'+newid).focus();
-   
+  var currentid =parseInt($(this).attr('id').substring(8));
+  if($(this).val()!= null || $(this).val()!="")
+  {
+    var newid = currentid+1;
+    $('#faq'+currentid).removeClass('show');
+    $('#hidefaq'+newid+' a').removeClass('collapsed');
+    $('#faq'+newid).addClass('show');
+    $('#question'+newid).focus();
+  }
 });
 
 

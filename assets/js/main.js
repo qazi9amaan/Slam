@@ -178,8 +178,8 @@ function getArray(string) {
 // MYACCOUNTPAGE -- USER
 
 $(document).on('click', '#select_question_btn', function() {
-    if (selected_questions_list.length <= 7) {
-        alert("7 questiions minimum required!");
+    if (selected_questions_list.length <= 8) {
+        alert("8 questiions required!");
     } else {
         var i = $(this).data("questionid");
         var question_alpahbet = $(this).data("questionidname");
@@ -220,7 +220,7 @@ $(document).on('focusout', '.faq-list input', function() {
 
 if (window.matchMedia &&
     window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      $('.title-img').attr('href','/assets/img/friends/friends-outline-dark.png');
+    $('.title-img').attr('href', '/assets/img/friends/friends-outline-dark.png');
 }
 
 

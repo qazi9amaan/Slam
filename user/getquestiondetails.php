@@ -1,3 +1,5 @@
+
+
 <?php 
   session_start();
   include('../connection.php');
@@ -16,6 +18,8 @@
             $replier = $row["replier"];
             $udate =   $row["udate"];
             $msg =   $row["msg"];
+            $sentby  =   $row["sentby"];
+            $feedback  =   $row["feedback"];
 
             // UPADTING STATUS
             $sql2 = "UPDATE confessions SET STATUS = 'seen' WHERE confessionid='$usr';";
@@ -26,7 +30,6 @@
           header("Location: /user/useraccount.php");
         }
   }
-   
 ?>
 
 
@@ -210,6 +213,17 @@ section {
   color:  #fff;
   }
   
+.emoji-title{
+  position: relative;
+top: 3px;
+left: 12px;
+color: #999;
+}
+
+
+
+
+  
 </style>
 <body>
 
@@ -345,7 +359,6 @@ section {
       <br>
             <div class="container">
                 <div class="row">
-
                     <!-- QUESTION CARD  -->
                     <div class="col-12 mb-1">
                         <!-- QUESTION -->
@@ -361,24 +374,83 @@ section {
                         </div>
                         <!-- END QUESTION -->
                     </div>
-                    <!-- END QUESTION CARD -->
+                  </div>
 
+
+                  <?php 
+                    if($sentby != 0)
+                    {
+                  ?>
+                    <!-- END QUESTION CARD -->
+                    <div class = "container">
+                    <div class="row">
+                      
+                       <div class="col-12 d-flex justify-content-center">
+
+                       <?php 
+                          if($feedback == 'eye-alt')
+                          {                        
+                        ?>
+                            <div class="user feedbtn mr-3">
+                            <a  data-sentto="<?php echo $sentby; ?>" data-feedback="liked the confession where you said " data-symbol="like" id= "feedbackbtn" ><i class="icofont-like"></i></a>
+                            <br>
+                            <small class="emoji-title">Like</small>
+                            </div>
+                            <div class="user feedbtn mr-3 ">
+                            <a data-sentto="<?php echo $sentby; ?>" data-feedback="disliked the confession where you said" data-symbol="thumbs-down"  id= "feedbackbtn" ><i class="icofont-thumbs-down"></i></a>
+                            <br>
+                            <small class="emoji-title">Dislike</small>
+                            </div>
+                            <div class="user feedbtn mr-3">
+                            <a data-sentto="<?php echo $sentby; ?>" data-feedback="loved the confession where you said" data-symbol="love"  id= "feedbackbtn" ><i class="icofont-ui-love "></i></a>
+                            <br>
+                            <small class="emoji-title">Love</small>
+                            </div>
+                            <div class="user feedbtn mr-3 ">
+                            <a  data-sentto="<?php echo $sentby; ?>" data-feedback="felt that it was savage to say " data-symbol="ember" id= "feedbackbtn" ><i class="icofont-ember"></i></a>
+                            <br>
+                            <small class="emoji-title">Savage</small>
+                            </div>
+                            <div class="user feedbtn mr-3 ">
+                            <a  data-sentto="<?php echo $sentby; ?>" data-feedback="felt that it was cute to say " data-symbol="qq" id= "feedbackbtn" ><i class="icofont-qq"></i></a>
+                            <br>
+                            <small class="emoji-title">Cute</small>
+                            </div>
+                       <?php 
+                          }else{
+                      ?>
+                        <div class="user">
+                            <a><i class="icofont-<?php echo $feedback; ?>"></i></a>
+                          </div>
+                      <?php 
+                        }
+                      ?>
+                      
+
+                       </div>
+                       <div class="col-12 text-center mt-5">
+                       <div class="d-flex justify-content-center" 
+                       id="feedbackreply">
+                       
+                       </div>
+                      </div>
+                      </div>
                     </div>
+                    <?php 
+                    }
+                  ?>
+
+                   
                     <!-- END QUESTION CARD -->
-
-                </div>
-               
-            </div>
-      
-
-          
-      
+                   
+              
+            
     </section><!-- End Section -->
 
     
 </main>
     
-
+  <input type="text" value="<?php  echo  $usr; ?>" id="confession_id" hidden>
   <a href="#main" class="back-to-top"><i class="icofont-simple-up"></i></a>
 
   <!-- Vendor JS Files -->
@@ -422,21 +494,72 @@ section {
          upload($('#pincaption').val());
     });
 
-    $('#back').click(function(){
-        $.ajax({
+    $('.feedbtn >a').click(function(){
+     
+      
+      var sendto = $(this).attr('data-sentto');
+      var feedback = $(this).attr('data-feedback');
+      var symbol= $(this).attr('data-symbol');
+      var msg = $('.answer').html();
+      
+
+      $.ajax({
       url : "/user-helper",
       type:'post',
-      data: "deleteconfession=true",
+      data: "addfeedback=true"+"&sendto="+sendto+"&feedback="+feedback+"&symbol="+symbol+"&msg="+msg+"&confession_id="+$('#confession_id').val(),
       success: function(data) {
-        if(data=="OK")
-        {
-                window.location ="/account";
-
-        }else{
-          window.location ="/account";
-        }
+        window.location ="/account";
       }
     });
+
+
+    })
+    
+    $('.feedbtn > a>i').on('click', function() {
+
+      var $this = $('.feedbtn > a>i');
+      $this.attr('class','');
+    $this.html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span><span class="sr-only">Loading...</span>')
+     
+  });
+
+    $('#back').click(function(){
+      window.location ="/account";
+
+    //     $.ajax({
+    //   url : "/user-helper",
+    //   type:'post',
+    //   data: "deleteconfession=true",
+    //   success: function(data) {
+    //     if(data=="OK")
+    //     {
+    //             window.location ="/account";
+
+    //     }else{
+    //       window.location ="/account";
+    //     }
+    //   }
+    // });
+});
+
+
+  $(document).on('click','#donebtn', function(){
+
+    window.location ="/account";
+    //     $.ajax({
+    //   url : "/user-helper",
+    //   type:'post',
+    //   data: "deleteconfession=true",
+    //   success: function(data) {
+    //     if(data=="OK")
+    //     {
+    //             window.location ="/account";
+
+    //     }else{
+    //       window.location ="/account";
+    //     }
+    //   }
+    // });
 });
   </script>
 </body>

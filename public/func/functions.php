@@ -1,5 +1,6 @@
 <?php
    include('/var/www/html/connection.php');
+   session_start();
 
 
 
@@ -57,9 +58,15 @@
           	$replier = mysqli_real_escape_string($conn,$_POST['replier']);
           	$questioner = mysqli_real_escape_string($conn,$_POST['questioner']);
             $msg =mysqli_real_escape_string($conn, $_POST['msg']);
+            
+            if(isset($_SESSION['currentuserid'])){
+              $sentby=(int)$_SESSION['currentuserid'];
+            }else{
+              $sentby=0;
+            }
             $dt = date('Y-m-d');
-	        $sql = "INSERT INTO confessions(replier,questioner,msg ,udate)
-	        VALUES ('$replier', '$questioner','$msg','$dt')";
+	        $sql = "INSERT INTO confessions(replier,questioner,msg ,udate,sentby)
+	        VALUES ('$replier', '$questioner','$msg','$dt','$sentby')";
 	        if (mysqli_query($conn, $sql)) {
 			} else{
 				echo("Failure");	

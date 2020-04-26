@@ -243,10 +243,7 @@ if(isset($_POST['updatepassword']))
   $sql = "UPDATE authenticate set  password = '$password' WHERE username ='$user'";
    if(execute($conn, $sql))
    {
-    if(isset($_COOKIE['user_name']) && $_COOKIE['user_name'] == $user )
-    {
-      $_COOKIE['pass_word'] = $password;
-    }
+      setcookie('pass_word', $password, time() + (86400 * 30), "/");
    }
 }
 

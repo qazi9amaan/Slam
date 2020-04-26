@@ -104,20 +104,29 @@
                   </div>
                 </li>
                 <li class="list-group-item">
-                  <small>All of your messages & answers gets deleted once seen you can screenshot your favourites.</small>
+                <small>Only the top <strong>8 questions will be shown to the users,</strong> please choose your questions and save your changes.</small>
+                </li>
+                <li class="list-group-item">
+                  <small>All of your messages & answers gets deleted after 10 minutes once seen you can screenshot your favourites.</small>
                 </li>
 
                 <li class="list-group-item">
                   <small>You can pin a confessions as story to let people find it, visit the message to pin it with a reply.</small>
                 </li>
                 <li class="list-group-item">
-                  <small>You can reset all your questions back to default by resetting the language. A minimum of 7 questions is required, please save your changes</small>
+                  <small>You can reset all your questions back to default by resetting the language. A minimum of 8 questions is required, 
+                    please save your changes</small>
                 </li>
                 <li class="list-group-item">
                   <small>You can make changes to your profile in settings, changing the profile picture doesnot require you to save  changes</small>
                 </li>
                 <li class="list-group-item">
                   <small> We tend to store your privacy details encypted in your device for better and faster login</small>
+                </li>
+                <li class="list-group-item">
+                  <small> 
+                   If a registered user tends to send you a confession you will get option to feedback his confession and he will be notified about it!
+                </small>
                 </li>
               </ul>
                </div> 
@@ -174,7 +183,7 @@
                 </div>
 
             </div>
-            <div style = "margin-top :.3rem !important;" class="col px-3 pt-2 ">
+            <div style = "margin-top :.3rem !important;" class="col px-2 pt-2 ">
               <i style ="font-size: 15px;" class="icofont-search"></i>
             </div>
            </div>
@@ -196,7 +205,7 @@
       <div class="container">
         <div class="row">
           <div class="col-12 text-center text-uppercase">
-            <h5>BE-KUS | Share it now!</h5>
+            <h5>ZAAN | Share it now!</h5>
           </div>
 
         </div>
@@ -228,9 +237,7 @@
                   <div class="input-group mb-3">
              
                 <input id = "share_link" type="text" name="" class="form-control" value = "<?php  echo $sharelink; ?>" id="">
-                <div class="input-group-prepend">
-                  <button id="copybtn" class="btn btn-dark" type="button">Copy to Clipboard</button>
-                </div>
+                
               </div>
 
               </div>
@@ -317,6 +324,8 @@
           <div id="profilepicture"class="col-1 p-0 m-0 text-left">
             <a href="<?php echo $_SESSION['currentusername']; ?> " class="img-fluid">
             <img class = "profile_image_main img-responsive" src="<?php echo $_SESSION['currentimageurl']; ?>" alt="">
+            <span id = "notification-number" class="badge badge-pill badge-gradient notification-number "></span>               
+
             </a>
           </div>
           
@@ -344,28 +353,39 @@
         
           <nav class="nav-menu d-none d-lg-block">
             <ul class="nav-inner">
+              <li><a id = "notification-navbarbtn" href="#"><i  class="icofont-notification"></i>
+              <span id = "notification-number" class="badge badge-pill badge-gradient notification-number "></span>               
+
+            </a></li>
               <li><a class="searchbtnlg" href="#">Search</a></li>
               <li><a class="pinnedpostshowbtn" href="#">Pinned Stories</a></li>
               <li><a class="sharebtn" href="#">Share Link</a></li>
+              <li class="nav-logo"><a href="<?php echo $_SESSION['currentusername']; ?> ">
+              <img src="<?php echo $_SESSION['currentimageurl']; ?>" alt="" 
+              class="img-responsive profile_image_main large img-fluid">
+              <!-- LARGE -->
+                  
 
-
-              <li class="nav-logo"><a href="<?php echo $_SESSION['currentusername']; ?> "><img src="<?php echo $_SESSION['currentimageurl']; ?>" alt="" class="img-responsive profile_image_main large img-fluid"></a></li>
+            </a></li>
 
               <li><a  href="account/settings">Settings</a></li>
 
 
                         <li><a href="<?php echo $_SESSION['currentusername']; ?> ">My wall</a></li>
+                        <li><a href="/account/start">About</a></li>
               <li><a href="logout">Logout</a></li>
 
             </ul>
           </nav><!-- .nav-menu -->
-
-        </div>
+         
 </header><!-- End Header -->
 
 
+<!-- NOTIFICATIONS -->
 
-  <main id="main">
+
+
+<main id="main">
 
     <!-- ======= About Us Section ======= -->
     <section id="about" class="about ">
@@ -389,12 +409,13 @@
                     </a>
                     </li>
                    
+                   
                   </ul>
                   
             </div>
                     <div class="row-fluid mx-2 my-0" data-aos="fade-up" aria-describedby="passwordHelpBlock">
               <small id="passwordHelpBlock" class="form-text text-muted">
-              Please remember, all of your questions and answers will be deleted once seen, we dont keep any of your data wih us. You can use other socail forums to reply to your audience
+              Please remember, all of your questions and answers will be deleted after 10 minutes once seen, we dont keep any of your data wih us. You can use other socail forums to reply to your audience
               </small>
             </div>
             <br>
@@ -476,6 +497,32 @@
 
     
 </main>
+
+<main id="notifications-wrapper">
+    <section id="about" class="about p-0">
+      <div class="container">
+        <br>
+      <div class="notification-plane">
+          <div class="mt-0">
+            <div id = "wrapper" class="card">
+            <div id = "notification-list" class="list-group">
+
+            <!-- // GETTING NOTIFICATIONS -->
+              
+
+
+               </div>  
+            
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</section>
+</main>
+
+
+
     <!-- FROM DATABASE -->
     <input  hidden value = "<?php echo $_SESSION['currentuserid']; ?>" id = "user_id" class="text-muted"/>
     <input type="text" id ="questions" hidden value="<?php echo $_SESSION['selected_questions']; ?>">
@@ -504,7 +551,9 @@
 <!-- DATA RETRIVAL -->
 <script>
 
-	
+
+
+
 // LOADING QUESTIONS  
 var question_ini = $("#questions").val();
 var selected_questions_list = getArray(question_ini);
@@ -566,11 +615,12 @@ $(document).ready(function () {
 
   initialise_counter();
   notification_color();
-   
+  getnotificationCount();
       setInterval(function()
   {
+    getnotificationCount();
     initialise_counter();
-  } ,1300);
+  } ,1000);
   
   // CHECKING LANGUAGE PRESENCE
   $.ajax({
@@ -627,7 +677,7 @@ $(document).ready(function () {
 
     
 // DEACTIVATING BUTTONS
-if(selected_questions_list.length<8){
+if(selected_questions_list.length<9){
    $('.save_choosed_questions').css('display','none');
    $('.b_slam').attr("class","nav-link b_slam");
    $('.b_answers').attr("class","nav-link active b_answers");
@@ -640,13 +690,27 @@ if(selected_questions_list.length<8){
 // COUNTING FANS / FRIENDS
 function getCount()
 {
+  $.ajax({
+      url : "user-helper",
+      type:'get',
+      data: "getcount=true",
+     success: function(data) {
+          $('.count').html(data);
+      }
+  });
+}
+function getnotificationCount()
+{
  var user_id = $('#user_id').val();
   $.ajax({
       url : "user-helper",
       type:'get',
-      data: "getcount=true&userid=" + user_id,
+      data: "notificationcount=true&userid=" + user_id,
      success: function(data) {
-          $('.count').html(data);
+      if(data !=0)
+			{
+          $('.notification-number').html(data);
+      }
       }
   });
 }
@@ -798,7 +862,15 @@ $('.pinnedpostshowbtn').click(function(e){
 
   if($('#askquestion').attr('class')=='icofont-tack-pin')
   {
+    if ($('body').hasClass('mobile-nav-active')) {
+        $('body').removeClass('mobile-nav-active');
+        $('.mobile-nav-toggle i').toggleClass('icofont-navigation-menu icofont-close');
+        $('.mobile-nav-overly').fadeOut();
+    }
   getallpinnedposts()
+  }else if($('#askquestion').attr('class')=='icofont-home')
+  {
+    window.location = '\account';
   }else{
 
     // CLOSING THE SEARCH MENu
@@ -813,6 +885,7 @@ $('.pinnedpostshowbtn').click(function(e){
          $('#searchresult').css('display','none');
          $('.mobile-nav-toggle').css('display','block');
          $('#askquestion').css('right','45px');
+         
 
   }
 
@@ -842,6 +915,11 @@ $(document).on('click', '#delete_pin', function(e){
 $(document).on('click', '.sharebtn', function(e){  
     e.preventDefault();
     getCount();
+    if ($('body').hasClass('mobile-nav-active')) {
+        $('body').removeClass('mobile-nav-active');
+        $('.mobile-nav-toggle i').toggleClass('icofont-navigation-menu icofont-close');
+        $('.mobile-nav-overly').fadeOut();
+    }
   $('#sharemodal').modal('show');
 });
 
@@ -895,8 +973,82 @@ $('#showsearchbar').keyup(function(){
 });
 
 
+// NOTIFICATIONS
+function getNotificationCount()
+{
+  return $('#notification-number').html();
+}
+
+// GETTING NOTIFICATIONS
+function getallnotifications()
+{
+  $(".loader").css("display","block");
+  $.ajax({
+    url : "user-helper",
+    type:'get',
+    data: "searchnotifications=true",
+    success: function(data) {
+      $(".loader").fadeOut(300);
+     $('#notification-list').html(data);
+    }
+  });
+}
+
+$('.profile_image_main').click(function(e){
+  if(getNotificationCount()!=0)
+  {
+    e.preventDefault();
+    $('.mobile-nav-toggle').css('display','none');
+    $('#searchbtn').css('display','none');
+    $('#showusername').css('margin-left','35px');
+
+    $('#askquestion').attr('class','icofont-home');
+    $('#askquestion').css('right','1px');
+    $('#main').css('display','none');
+    $('#notifications-wrapper').fadeIn(300);
+      getallnotifications();
+  }
+});
+
+$('#notification-number').click(function(e){
+
+  if(getNotificationCount()!=0)
+  {
+    e.preventDefault();
+  }
+});
+
+$(document).on('click', '#notification-navbarbtn' , function (e){
+  if($('#notification-navbarbtn >i').attr('class')=='icofont-home')
+  {
+    window.location = '\account';
+  }else{
+  e.preventDefault();
+  if ($('body').hasClass('mobile-nav-active')) {
+        $('body').removeClass('mobile-nav-active');
+        $('.mobile-nav-toggle i').toggleClass('icofont-navigation-menu icofont-close');
+        $('.mobile-nav-overly').fadeOut();
+    }
+  $('.mobile-nav-toggle').css('display','none');
+    $('#searchbtn').css('display','none');
+    $('#showusername').css('margin-left','35px');
+    $('#notification-navbarbtn >i').attr('class','icofont-home');
+    $('#askquestion').attr('class','icofont-home');
+    $('#askquestion').css('right','1px');
+    $('#main').css('display','none');
+    $('#notifications-wrapper').fadeIn(300);
+      getallnotifications();
+  }
+});
+
+
 $('.searchbtnlg').click(function(){
-            $('#searchmodal').modal('show');
+  if ($('body').hasClass('mobile-nav-active')) {
+      $('body').removeClass('mobile-nav-active');
+      $('.mobile-nav-toggle i').toggleClass('icofont-navigation-menu icofont-close');
+      $('.mobile-nav-overly').fadeOut();
+  }
+     $('#searchmodal').modal('show');
 
 })
 
@@ -927,6 +1079,8 @@ $('#understandbtn').click(function(){
             window.location='/account';
         });          
 
+        $('#notification-modal').modal('show');
+
 </script>
 
 <?php if(isset($_GET['start'])){?>                   
@@ -934,7 +1088,6 @@ $('#understandbtn').click(function(){
   $('#hello').modal('show');
 </script>
 <?php }?>                   
-
 
 
 

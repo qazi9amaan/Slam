@@ -191,9 +191,39 @@
     #pills-questions #messages .message #insbtn a i:hover {
         color: #9f9f9f !important;
     }
+    #pills-questions .new-message .card,
+    #pills-questions .new-message #insbtn {
+        background: #484848 !important;
+        color: #5d5d5d !important;
+        border: 1.3px solid #484848 !important;
+    }
+    #pills-questions .new-message .card .body {
+        color: #999 !important;
+    }
+    #pills-questions .new-message #insbtn a i {
+        color: #999 !important;
+    }
+    #pills-questions .new-message #insbtn a i:hover {
+        color: #2d2d2d !important;
+    }
     /* 
     ANSWERS 
     */
+    #pills-answers #answers .new-message .card,
+    #pills-answers #answers .new-message #insbtn {
+        background: #484848 !important;
+        color: #5d5d5d !important;
+        border: 1.3px solid #484848 !important;
+    }
+    #pills-answers #answers .new-message .card .body {
+        color: #999 !important;
+    }
+    #pills-answers #answers .new-message #insbtn a i {
+        color: #999 !important;
+    }
+    #pills-answers #answers .new-message #insbtn a i:hover {
+        color: #2d2d2d !important;
+    }
     #pills-answers #answers .message .card,
     #pills-answers #answers .message #insbtn {
         background: #2d2d2d !important;
@@ -339,15 +369,11 @@
     #sharemodal .modal-body #share_count_btn i {
         color: #999 !important;
     }
-    #sharemodal .modal-body input {
+    #sharemodal .modal-body input {}
+    #sharemodal #share_link {
         color: #999 !important;
-        background: #2d2d2d !important;
-        border-color: #2d2d2d !important;
-    }
-    #sharemodal .modal-body .input-group-prepend button {
-        background: #555 !important;
-        border-color: #555;
-        color: #999 !important;
+        background: #333 !important;
+        border-color: #555 !important;
     }
     #sharemodal .modal-footer {
         background: #555 !important;
@@ -569,6 +595,33 @@
         color: #999 !important;
         box-shadow: 0 0 .5rem .2rem rgba(0, 0, 0, 0.15) !important;
     }
+    #notifications-wrapper .notification-plane #wrapper a {
+        color: #999 !important;
+        background: #3d3d3d !important;
+        border-color: #3d3d3d !important;
+    }
+    #notifications-wrapper .notification-plane #wrapper .active {
+        background: #999 !important;
+        color: #3d3d3d !important;
+        border-color: #999 !important;
+        border-bottom-color: #3d3d3d !important;
+    }
+    #notifications-wrapper .notification-plane #wrapper .active i {
+        color: #3d3d3d !important;
+        font-size: 28px !important;
+    }
+    #notifications-wrapper .notification-plane #wrapper i {
+        color: #999 !important;
+        font-size: 28px !important;
+    }
+    #notifications-wrapper .card {
+        background: #2d2d2d !important;
+        color: #888 !important;
+    }
+}
+
+#notifications-wrapper .card {
+    border: none !important;
 }
 
 #hello #profile img {
