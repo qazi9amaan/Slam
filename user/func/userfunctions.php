@@ -981,7 +981,8 @@ function getallnotifications($conn, $user){
   $result2 = mysqli_query($conn, $sql2);
   if (mysqli_num_rows($result2) > 0) {
       while($row = mysqli_fetch_assoc($result2)) {
-        $sql = "SELECT firstname,lastname FROM users WHERE userid='$user'  ";
+        $sentby = $row['sentby'];
+        $sql = "SELECT firstname,lastname, username FROM users WHERE userid='$sentby'  ";
         $result = mysqli_query($conn, $sql);
         if (mysqli_num_rows($result) > 0) {
         while($row1 = mysqli_fetch_assoc($result)) {
@@ -992,7 +993,7 @@ function getallnotifications($conn, $user){
           
           echo '
               <small>
-              <a href="#" class="list-group-item list-group-item-action  ">
+              <a href="/'.$row1['username'].'" class="list-group-item list-group-item-action  ">
                 <div class="continer">
                 <div class="row">
                   <div class="col-1">
@@ -1011,7 +1012,7 @@ function getallnotifications($conn, $user){
                   </div>
                   </div>
                 </div>
-                </div>
+                                </div>
             </a>
           </small>
         
