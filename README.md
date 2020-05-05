@@ -5,10 +5,8 @@
     out what people think about you. Confess your feelings and get answers on any topic!
 </p>
 <center>
-<a  style ="background: #28a745; color : #fff; padding 5px;  text-decoration: none;" href="#mobile">Mobile view</a> &nbsp; 
-
 <a style ="background: #28a745; color : #fff; padding 5px;  text-decoration: none;" href="#desktop">Desktop View</a>
-
+<a  style ="background: #28a745; color : #fff; padding 5px;  text-decoration: none;" href="#mobile">Mobile view</a>
 </center>
 <p>
     <h4>About Zaan</h4>
