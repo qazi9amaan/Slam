@@ -8,6 +8,15 @@
 <a style ="background: #28a745; color : #fff; padding 5px;  text-decoration: none;" href="#desktop">Desktop View</a>
 <a  style ="background: #28a745; color : #fff; padding 5px;  text-decoration: none;" href="#mobile">Mobile view</a>
 </center>
+
+<hr>
+
+<p id="desktop">
+    <h2>Zaan -Desktop View</h2>
+    <h5>Light Theme</h5>
+    <p> Zaan is available in both themes depending on your browser's theme it adjusts itself.</p>
+    <img src="/assets/img/ss/desk/1.png">
+</p>
 <p>
     <h4>About Zaan</h4>
     <ul>
@@ -22,16 +31,6 @@
         <li> If a registered user tends to send you a confession you will get option to feedback his confession and he will be notified about it! </li>
     </ul>
 </p>
-
-<hr>
-
-<p id="desktop">
-    <h2>Zaan -Desktop View</h2>
-    <h5>Light Theme</h5>
-    <p> Zaan is available in both themes depending on your browser's theme it adjusts itself.</p>
-    <img src="/assets/img/ss/desk/1.png">
-</p>
-
 <img src="/assets/img/ss/desk/2.png">
 <img src="/assets/img/ss/desk/3.png">
 <img src="/assets/img/ss/desk/4.png">
