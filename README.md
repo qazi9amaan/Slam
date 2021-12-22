@@ -4,19 +4,6 @@
     Zaan is a break from the current social media platforms. Here you can answer things about users, ask them questions anonymously, react to the messages you get, it's a step to complete encryption as all of the data get deleted once seen by user. Zaan helps
     out what people think about you. Confess your feelings and get answers on any topic!
 </p>
-<center>
-<a style ="background: #28a745; color : #fff; padding 5px;  text-decoration: none;" href="#desktop">Desktop View</a>
-<a  style ="background: #28a745; color : #fff; padding 5px;  text-decoration: none;" href="#mobile">Mobile view</a>
-</center>
-
-<hr>
-
-<p id="desktop">
-    <h2>Zaan -Desktop View</h2>
-    <h5>Light Theme</h5>
-    <p> Zaan is available in both themes depending on your browser's theme it adjusts itself.</p>
-    <img src="/assets/img/ss/desk/1.png">
-</p>
 <p>
     <h4>About Zaan</h4>
     <ul>
@@ -31,12 +18,6 @@
         <li> If a registered user tends to send you a confession you will get option to feedback his confession and he will be notified about it! </li>
     </ul>
 </p>
-<img src="/assets/img/ss/desk/2.png">
-<img src="/assets/img/ss/desk/3.png">
-<img src="/assets/img/ss/desk/4.png">
-<img src="/assets/img/ss/desk/5.png">
-<img src="/assets/img/ss/desk/6.png">
-<img src="/assets/img/ss/desk/7.png">
 <p>
     <h5>Zaan -Dark Theme</h5>
     <img src="/assets/img/ss/desk/8.png">
@@ -49,21 +30,9 @@
 <img src="/assets/img/ss/desk/13.png">
 <img src="/assets/img/ss/desk/14.png">
 
-<p id="mobile">
-    <h2>Zaan -Mobile View</h2>
-    <h5>Light Theme</h5>
-</p>
-
-<img src="/assets/img/ss/mob/3.png">
-<img src="/assets/img/ss/mob/4.png">
-<img src="/assets/img/ss/mob/5.png">
-<img src="/assets/img/ss/mob/6.png">
 <p>
     <h5>Zaan -Dark Theme</h5>
     <img src="/assets/img/ss/mob/7.png">
 </p>
 <img src="/assets/img/ss/mob/1.png">
 <img src="/assets/img/ss/mob/2.png">
-<img src="/assets/img/ss/mob/8.png">
-<img src="/assets/img/ss/mob/9.png">
-<img src="/assets/img/ss/mob/10.png">
